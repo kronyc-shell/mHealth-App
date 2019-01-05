@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Material Design for Bootstrap fonts and icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+
+    <link rel="stylesheet" href="../css/bootstrap.css">
+
+
+    <!-- <link rel="stylesheet" href="../css/bootstrap-material-design.css"> -->
+
+    <link rel="stylesheet" href="../css/main.css">
+
+    <title>Login</title>
+  </head>
+
+
+  <body>
+    <button type="button" class="btn btn-main btn-block" name="button" onclick="window.location.replace('index.html')" id="9">Goto Dashboard</button>
+
+
+    <div class="container">
+      <br>
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 style="font-weight: 100; font-size: 20px; text-align: center" id="8">Follow up</h2>
+          <hr>
+          <div id="animationWindow"></div>
+          <div id="main_display">
+            <div class="form-group">
+              <label for="patient_name" id="10">Patient's name</label>
+              <input type="text" id="patient_name" disabled class="form-control">
+              <script>
+                document.getElementById("patient_name").placeholder = sessionStorage.getItem("userName");
+              </script>
+            </div>
+            <div class="jumbotron">
+              <h5 id="7">Lab Results</h5>
+              <u><small>SMR results</small></u>
+              <p><small id="result1">Result 1: </small> <br> <small id="result2">Result 2: </small></p>
+              <u><small>Xpert results</small></u>
+              <p><small id="result_1">MTB: </small> <br> <small id="result_2">RIF: </small></p>
+            </div><hr>
+            <div class="card">
+              <script>
+                document.getElementById("patient_name").innerHTML = sessionStorage.getItem("userName");
+              </script>
+              <div class="card-body" id="follow_up_action">
+                <form id="follow_up_form">
+                  <!-- <h5 class="card-title">Follow-up action taken</h5> -->
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="xray">
+                    <label class="custom-control-label form-check-label" for="xray" id="0">X-RAY</label>
+                  </div><br>
+                  <div class="custom-control custom-checkbox">
+                    <input value="" type="checkbox" class="custom-control-input" id="amoxicilin">
+                    <label class="custom-control-label form-check-label" for="amoxicilin" id="1">Amoxicillin prescribed</label>
+                  </div><br>
+                  <div class="form-group">
+                    <label for="otherAntibiotic" id="2">Other Antibiotic</label>
+                    <input type="text" class="form-control" id="otherAntibiotic">
+                  </div><br>
+                  <!-- <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="follow_up">
+                    <label class="custom-control-label form-check-label" for="follow_up">Follow-up visit scheduled</label>
+                  </div> -->
+                  <div class="form-group" id="fl_up" >
+                    <label for="follow_up_date" id="3">Follow-up Scheduled Date</label>
+                    <input type="date" class="form-control" id="follow_up_date">
+                    <script>document.getElementById("follow_up_date").valueAsDate=new Date();</script>
+                  </div><br>
+                  <div class="form-group">
+                    <label for="comments" id="4">Comments</label>
+                    <input type="text" id="comments" class="form-control">
+                  </div>
+
+                  <br>
+                  <div class="row">
+                    <div class="col">
+                      <div class="text-center">
+                        <small style="color: white; background-color: grey" id="5">Good Job! <br>Review everything and click record!</small><br>
+                        <button type="submit" class="btn btn-succ" name="button" id="6">Record!</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery.js"></script>
+    <script src="../js/popper.js" ></script>
+    <script src="../js/bootstrap.js"></script>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/4.8.0/bodymovin.min.js"></script> -->
+    <script type="text/javascript" src="../js/bodymovin.min.js"></script>
+
+
+
+    <script src="../js/main.js"></script>
+    <script src="js/follow_up.js"></script>
+    <script>
+      var text = [
+        "Radiographie",
+        "L'amoxicilline a été prescrite",
+        "Autre antibiotique",
+        "Date de rendez-vous",
+        "Commentaires",
+        "Bon travail! <br>Tout revoir et cliquer sur s'inscrire", "Registre!",
+        "Résultats de laboratoire",
+        "Mesures de suivi prises",
+        "Retourner au tableau de bord",
+        "Le nom du patient"
+    ];
+    </script>
+    <script>
+    var success = function(sr) {
+      var smr_result1 = document.getElementById("result1");
+      var smr_result2 = document.getElementById("result2");
+
+      var xpert_result1 = document.getElementById("result_1");
+      var xpert_result2 = document.getElementById("result_2");
+
+      smr_result1.innerHTML += sr.smr_results.result_1;
+      smr_result2.innerHTML += sr.smr_results.result_2;
+
+      xpert_result1.innerHTML += sr.xpert_results.mtb_result;
+      xpert_result2.innerHTML += sr.xpert_results.rif_results;
+    }
+
+    var success2 = function(sr) {
+      var form = document.forms['follow_up_form'];
+      form.xray.checked = sr.xray;
+      form.amoxicilin.checked = sr.amoxicillin;
+      form.otherAntibiotic.value = sr.otherAntibiotic;
+      form.follow_up_date.value = sr.follow_up_date;
+      form.comments.value = sr.comments;
+    }
+
+    transmission._fetch("lab", sessionStorage.getItem("userId"), success);
+    transmission._fetch("follow_up", sessionStorage.getItem("useId"), success2);
+
+    </script>
+  </body>
+</html>

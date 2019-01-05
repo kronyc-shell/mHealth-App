@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- <allow-intent href="*" /> -->
+<widget id="com.afkanerd.tbbamenda" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="https://phonegap.com/ns/1.0">
+	<name>TB Bamenda</name>
+	<description>
+		You've got a TB Patient, register and run to the lab now!
+	</description>
+
+	<author email="info@afkanerd.com" href="https://afkanerd.com">
+	   Developers at Afkanerd
+	</author>
+	<icon src="icon.png" />
+
+	<access origin="*"/>
+	<plugin name="cordova-plugin-whitelist" version="1" />
+	<allow-navigation href="*" />
+	<allow-navigation href="data:*" />
+	<allow-intent href="*" />
+	<!-- <allow-intent href="itms:*" />
+	<allow-intent href="itms-apps:*" />
+	<allow-intent href="http://*/*" />
+	<allow-intent href="https://*/*" />
+	<allow-intent href="tel:*" />
+	<allow-intent href="sms:*" />
+	<allow-intent href="mailto:*" />
+	<allow-intent href="geo:*" />
+	<allow-intent href="market:*" /> -->
+
+</widget>

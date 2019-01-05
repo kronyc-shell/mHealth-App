@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Material Design for Bootstrap fonts and icons -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"> -->
+
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+
+    <link rel="stylesheet" href="../css/bootstrap.css">
+
+    <!-- <link rel="stylesheet" href="../css/bootstrap-material-design.css"> -->
+
+    <link rel="stylesheet" href="../css/main.css">
+
+
+
+    <title>Login</title>
+  </head>
+
+
+  <body>
+    <button type="button" class="btn btn-main btn-block" name="button" onclick="window.location.replace('index.html')" id="28">Goto Dashboard</button>
+    <div class="container">
+      <br>
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 style="font-weight: 100; font-size: 25px; text-align: center" id="27">LAB</h2><br>
+          <div id="animationWindow"></div>
+          <div id="main_display">
+            <div class="form-group">
+              <label for="patient_name" id="29">Patient's name</label>
+              <input type="text" id="patient_name" disabled class="form-control">
+              <script>
+                document.getElementById("patient_name").placeholder = sessionStorage.getItem("userName");
+              </script>
+            </div>
+            <form id="smear_results_form">
+              <div class="form-group">
+                <label for="date_specimen_received" id="0">Date specimen received</label>
+                <input required type="date" name="date_specimen_received" class="form-control" id="date_specimen_received" value="">
+                  <script>document.getElementById("date_specimen_received").valueAsDate = new Date();</script>
+                </input>
+              </div>
+              <div class="form-group">
+                <label for="received_by" id="1">Received by</label>
+                <input required type="text" name="received_by" class="form-control" id="received_by" value="">
+              </div><hr width="25%">
+              <div class="card">
+                <div class="card-header text-center" id="2">Smear microscopy result</div>
+                <div class="card-body">
+                  <div class="form-group" id="results_1_form">
+                    <label for="results" style="color: grey; font-size: 14px" id="4">Result 1</label><br>
+                    <div class="custom-control custom-radio custom-control-inline" id="results">
+                      <input onclick="toggle_no_results()" checked type="radio" value="no_afb" id="no_afb" checked name="result_1" class="custom-control-input">
+                      <label class="custom-control-label" for="no_afb" id="5">No AFB seen</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input onclick="toggle_no_results()" type="radio" value="scanty" id="scanty" name="result_1" class="custom-control-input">
+                      <label class="custom-control-label" for="scanty" id="6">scanty</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input onclick="toggle_no_results()" type="radio" value="plus_one" id="plus_one" name="result_1" class="custom-control-input">
+                      <label class="custom-control-label" for="plus_one">1+</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input onclick="toggle_no_results()" type="radio" value="plus_two" id="plus_two" name="result_1" class="custom-control-input">
+                      <label class="custom-control-label" for="plus_two">2+</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input onclick="toggle_no_results()" type="radio" value="plus_three" id="plus_three" name="result_1" class="custom-control-input">
+                      <label class="custom-control-label" for="plus_three">3+</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input checked onclick="toggle_no_results()" type="radio" value="not_done" id="no_results" name="result_1" class="custom-control-input">
+                      <label  class="custom-control-label" for="no_results" id="7">Not done</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group" id="results_2_form">
+                    <label for="results" style="color: grey; font-size: 14px" id="8">Result 2</label><br>
+                    <div class="custom-control custom-radio custom-control-inline" id="results">
+                      <input type="radio" value="no_afb" id="no_afb_2" checked name="result_2" class="custom-control-input">
+                      <label class="custom-control-label" for="no_afb_2" id="9">No AFB seen</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" value="scanty" id="scanty_2" name="result_2" class="custom-control-input">
+                      <label class="custom-control-label" for="scanty_2" id="10">scanty</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" value="plus_one" id="plus_one_2" name="result_2" class="custom-control-input">
+                      <label class="custom-control-label" for="plus_one_2">1+</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" value="plus_two" id="plus_two_2" name="result_2" class="custom-control-input">
+                      <label class="custom-control-label" for="plus_two_2">2+</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" value="plus_three" id="plus_three_2" name="result_2" class="custom-control-input">
+                      <label class="custom-control-label" for="plus_three_2">3+</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input  checked type="radio" value="not_done" id="no_results_2" name="result_2" class="custom-control-input">
+                      <label class="custom-control-label" for="no_results_2" id="11">Not done</label>
+                    </div>
+                  </div><hr>
+                  <!-- <h5 class="card-title text-center" style="font-weight: thin">Smear microscopy result</h5> -->
+                  <div class="form-group">
+                    <label for="lsn" id="3">Lab serial Number</label>
+                    <input required type="text" class="form-control" id="lsn" value="">
+                  </div>
+                  <div class="form-group">
+                    <label for="date1">Date</label>
+                    <input required type="date" class="form-control" id="date1" value="">
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <script type="text/javascript">
+            toggle_no_results();
+            function toggle_no_results() {
+              var smear_results = document.forms['smear_results_form'];
+              for(var x in smear_results) {
+                if(smear_results[x] === null) continue;
+
+                if(smear_results[x].checked) {
+                  if(smear_results[x].id == "no_results") {
+                    console.log("Clicked no results");
+                    document.getElementById("results_2_form").setAttribute("hidden", "hidden");
+                    document.getElementById("lsn").setAttribute("hidden", "hidden");
+                    document.getElementById("date1").setAttribute("hidden", "hidden");
+                    // document.getElementById("results_2_form").value = "";
+                    document.getElementById("lsn").removeAttribute("required");
+                    document.getElementById("date1").removeAttribute("required");
+                    document.getElementById("no_results_2").checked;
+                    break;
+                  } else {
+                    document.getElementById("results_2_form").removeAttribute("hidden");
+                    document.getElementById("lsn").removeAttribute("hidden");
+                    document.getElementById("date1").removeAttribute("hidden");
+                    document.getElementById("date1").setAttribute("required",  "required");
+                    document.getElementById("lsn").setAttribute("required",  "required");
+
+                    break;
+                  }
+                }
+              }
+            }
+            </script>
+            <br>
+            <div class="card">
+              <div class="card-header text-center" id="12">Xpert MTB/RIF assay</div>
+              <div class="card-body">
+                <form id="machine_results">
+                  <h5 class="card-title">
+                    <div class="custom-control custom-checkbox">
+                      <input value="automatic" onclick="toggle_forms(this)" type="checkbox" class="custom-control-input" id="automatic_input"></input>
+                      <label class="custom-control-label" for="automatic_input" id="13">Automatic from xpert machine</label>
+                    </div>
+                  </h5><br>
+                  <div id="mtb_results_group">
+                    <label for="results" style="color: grey; font-size: 14px" id="15">MTB result</label><br>
+                    <div class="custom-control custom-radio custom-control-inline" id="results">
+                      <input onclick="trigger_toggle()" type="radio" value="detected" id="detected" name="mtb_results" class="custom-control-input">
+                      <label class="custom-control-label" for="detected" id="16">Detected</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input onclick="trigger_toggle()" type="radio" value="not_detected" id="not_detected" name="mtb_results" class="custom-control-input">
+                      <label class="custom-control-label" for="not_detected" id="17">Not detected</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input onclick="trigger_toggle()" type="radio" value="error_invalid" id="indeterminate" name="mtb_results" class="custom-control-input">
+                      <label class="custom-control-label" for="indeterminate" id="18">Error/Invalid</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input checked onclick="trigger_toggle()" type="radio" value="not_done" id="not_done" name="mtb_results" class="custom-control-input">
+                      <label class="custom-control-label" for="not_done" id="19">Not done</label>
+                    </div><br><br>
+                  </div>
+                  <div id="rif_results_group">
+                    <label for="results" style="color: grey; font-size: 14px" id="20">RIF result</label><br>
+                    <div class="custom-control custom-radio custom-control-inline" id="results">
+                      <input type="radio" checked value="detected" id="detected_1" name="rif_results" class="custom-control-input">
+                      <label class="custom-control-label" for="detected_1" id="21">Detected</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" value="not_detected" id="not_detected_1" name="rif_results" class="custom-control-input">
+                      <label class="custom-control-label" for="not_detected_1" id="22">Not detected</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" value="error_invalid" id="indeterminate_1" name="rif_results" class="custom-control-input">
+                      <label class="custom-control-label" for="indeterminate_1" id="23">Error/Invalid</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline" id="not_done_label">
+                      <input type="radio" value="not_done" id="not_done_1" name="rif_results" class="custom-control-input">
+                      <label class="custom-control-label" for="not_done_1" id="24">Not done</label>
+                    </div>
+                  </div><hr>
+                  <div class="form-group">
+                    <label for="unique_code" id="14">Unique Code</label>
+                    <input required type="text" class="form-control" id="unique_code">
+                  </div>
+                  <div class="form-group">
+                    <label for="mtb_date">Date</label>
+                    <input type="date" required class="form-control" id="mtb_date">
+                    <script>
+                      document.getElementById('mtb_date').valueAsDate = new Date();
+                    </script>
+                  </div><br>
+                </form>
+              </div>
+            </div><br>
+            <div class="text-center">
+              <small style="color: white; background-color: grey" id="25">Good Job! <br>Review everything and click Save</small><br>
+              <button form="smear_results_form" type="submit" class="btn btn-succ" name="button" id="26">Save!</button>
+            </div>
+            <br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery.js"></script>
+    <script src="../js/popper.js" ></script>
+    <script src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/bodymovin.min.js"></script>
+    <script>
+      var text = ["Date de réception de l’échantillon", "Reçu par", "Résultats de microscopie de frottis", "Numéro de série du laboratoire",
+      "Résultat 1", "Aucun BAAR Vu", "Rare", "Pas fait",
+      "Résultat 2", "Aucun BAAR Vu", "Rare", "Pas fait",
+      "Xpert MTB/RIF essai",
+      "Automatique de la machine xpert",
+      "Code unique",
+      "MTB Résultat", "Détecté", "Non Détecté", "Erreur / Invalide", "Pas fait",
+      "RIF Résultat", "Détecté", "Non Détecté", "Erreur / Invalide", "Pas fait",
+      "Bon travail! <br>Tout revoir et cliquer sur s'inscrire", "Registre!",
+      "Laboratoire",
+      "Aller au panneau de contrôle",
+      "Le nom du patient"
+     ];
+    </script>
+    <script src="../js/main.js"></script>
+    <script src="js/lab.js"></script>
+
+    <script>
+      trigger_toggle();
+      var _form = document.forms['smear_results_form'];
+      var _form_xpert = document.forms['machine_results'];
+
+      var success = function(sr) {
+        console.log("controller - fetching lab - SUCCESSFUL");
+        sessionStorage.setItem("lab_fetch", "true");
+        // console.log(sr);
+        _form.date_specimen_received.valueAsDate = new Date(sr.date_specimen_received);
+        _form.received_by.value = sr.received_by;
+        _form.lsn.value = sr.lab_serial_number;
+        // console.log
+        _form.date1.value = sr.smr_date;
+        if(sr.smr_results !== null) {
+          _form.elements.result_1.value = sr.smr_results.result_1;
+          for(var x in _form.elements.result_1)
+            if(_form.elements.result_1[x].value == sr.smr_results.result_1)
+              _form.elements.result_1[x].click();
+          _form.elements.result_2.value = sr.smr_results.result_2;
+        }
+
+        if(sr.xpert_results !== null) {
+          if(sr.xpert_results.mtb_results !== 'undefined') {
+            // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
+            for(var i=0;i<_form_xpert.elements.mtb_results.length; ++i) {
+              // console.log(_form_xpert.elements.mtb_results[i].value);
+              if(typeof sr.xpert_results.mtb_result != 'undefined') {
+                if(_form_xpert.elements.mtb_results[i].value == sr.xpert_results.mtb_result) {
+                  console.log("Found match");
+                  _form_xpert.elements.mtb_results[i].click();
+                  break;
+                } else {
+                  console.log( _form_xpert.elements.mtb_results[i].value == sr.xpert_results.mtb_result);
+                  console.log( _form_xpert.elements.mtb_results[i].value,sr.xpert_results.mtb_result);
+                }
+              }
+            }
+          }
+          if(sr.xpert_results.rif_results !== 'undefined') {
+            // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
+            for(var i=0;i<_form_xpert.elements.rif_results.length; ++i) {
+              if(_form_xpert.elements.rif_results[i].value == sr.xpert_results.rif_results) {
+                _form_xpert.elements.rif_results[i].click();
+                break;
+              }
+            }
+          }
+        }
+
+        _form_xpert.unique_code.value = sr.unique_code;
+        _form_xpert.mtb_date.value = sr.xpert_date;
+
+        if(sr.auto == "automatic")
+          _form_xpert.automatic_input.click();
+        // _form_xpert.automatic_input.checked = sr.auto == "automatic" ? true : false;
+
+      }
+
+      transmission._fetch("lab", sessionStorage.getItem("userId"), success);
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/main.css">
+  </head>
+
+
+  <body>
+
+    <button type="button" class="btn btn-main btn-block" name="button" onclick="window.location.replace('index.html')" id="40">Goto Dashboard</button>
+    <div class="container">
+      <br>
+      <div class="row">
+        <div class="col-12">
+          <h2 style="font-weight: 100; font-size: 16px; text-align: center" id="41">New Patient Registration</h2><hr>
+          <div id="animationWindow"></div>
+          <div id="main_display">
+            <form id="new_patient_form">
+              <div id="demographic_information">
+                <div class="form-group" id='form_input'>
+                  <label for="patient_name" id="0">Patient's Name</label>
+                  <input required type="text" class="form-control" id='name'>
+                </div>
+
+                <div class="form-group" id='form_input'>
+                  <label for="age" id="1">Age</label>
+                  <input  required type="number" class="form-control" id='age' onkeypress="child_click(this)" value="" min="1" max="100">
+                  <script type="text/javascript">
+                    function child_click(input) {
+                      console.log("child click");
+                      if(input.value > 15) {
+                        document.getElementById("chi").checked = false;
+                      }
+                    }
+                  </script>
+                </div>
+
+                <br>
+                <fieldset class="form-group">
+                  <div class="row">
+                    <legend style="font-size: 13px; color: #c3c3c3" class="col-form-label col-sm-2 pt-0" id="2">Sex</legend>
+                    <div class="col-sm-10">
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input class="custom-control-input" type="radio" name="gender" id="female" value="female" checked>
+                        <label style="font-size: 12px;" class="custom-control-label" for="female" id="3">
+                          female
+                        </label>
+                      </div>
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input class="custom-control-input" type="radio" name="gender" id="male" value="male">
+                        <label style="font-size: 12px;" class="custom-control-label" for="male" id="4">
+                          male
+                        </label>
+                      </div>
+
+                    </div>
+                  </div>
+                </fieldset>
+
+                <div class="form-group" id='form_input'>
+                  <label for="patient_name" id="5">Address</label>
+                  <input required type="text" class="form-control" id='address'>
+                </div>
+
+                <div class="form-group" id='form_input'>
+                  <label for="telephone" id="6">Telephone</label>
+                  <input required type="tel" class="form-control" id='telephone'>
+                </div>
+
+                <div class="form-group" id='form_input'>
+                  <label for="telephone_2" id="7">Telephone 2</label>
+                  <input type="tel" class="form-control" id='telephone_2' value="">
+                  <small id="8" class="form-text text-muted">optional</small>
+                </div>
+
+                <fieldset class="form-group">
+                  <div class="row">
+                    <legend style="font-size: 13px; color: #c3c3c3" class="col-form-label col-sm-2 pt-0" id="9">Has ART unique code</legend>
+                    <div class="col-sm-10">
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input checked class="custom-control-input" type="radio" name="has_art" id="art_no" value="no">
+                        <label style="font-size: 12px;" class="custom-control-label" for="art_no" id="10">
+                          No
+                        </label>
+                      </div>
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input class="custom-control-input" type="radio" name="has_art" id="art_yes" value="yes">
+                        <label style="font-size: 12px;" class="custom-control-label" for="art_yes" id="11">
+                          Yes
+                        </label>
+                      </div>
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input class="custom-control-input" type="radio" name="has_art" id="art_unknown" value="unknown">
+                        <label style="font-size: 12px;" class="custom-control-label" for="art_unknown" id="55">
+                          Unknown
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group" hidden id="art_code_holder">
+                    <label for="art_code" id="56">ART Unique code</label>
+                    <input type="text" class="form-control" placeholder="ART code" id="art_code" value="">
+                  </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                  <div class="row">
+                    <legend style="font-size: 13px; color: #c3c3c3" class="col-form-label col-sm-2 pt-0" id="57">Status</legend>
+                    <div class="col-sm-10">
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input checked class="custom-control-input" type="radio" name="status" id="status_out_patient" value="out_patient">
+                        <label style="font-size: 12px;" class="custom-control-label" for="status_out_patient" id="58">
+                          Outpatient
+                        </label>
+                      </div>
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input class="custom-control-input" type="radio" name="status" id="status_ward_bed" value="ward_bed">
+                        <label style="font-size: 12px;" class="custom-control-label" for="status_ward_bed" id="59">
+                          Ward - Bed
+                        </label>
+                      </div>
+                      <div class="form-group" hidden id="ward_bed_holder">
+                        <label for="ward_bed_number" id="60">Ward - Bed number</label>
+                        <input type="text" id="ward_bed_number" class="form-control" value="">
+                      </div>
+                      <script>
+                        document.getElementById("status_ward_bed").onchange = function() {
+                          if(this.checked) {
+                            document.getElementById("ward_bed_holder").removeAttribute("hidden");
+                          }
+                        }
+
+                        document.getElementById("status_out_patient").onchange = function() {
+                          if(this.checked) {
+                            if(!document.getElementById("ward_bed_holder").hasAttribute('hidden'))
+                              document.getElementById("ward_bed_holder").setAttribute("hidden", "hidden");
+                            document.getElementById("ward_bed_number").value = "";
+                          }
+                        }
+                      </script>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <script>
+                  document.getElementById("art_yes").onchange = function() {
+                    var art_field = document.getElementById("art_code_holder");
+                    if(art_field.hasAttribute('hidden')) {
+                      art_field.removeAttribute('hidden');
+                    }
+                  };
+
+                  document.getElementById("art_no").onclick = function() {
+                    var art_field = document.getElementById("art_code_holder");
+                    if(!art_field.hasAttribute('hidden')) {
+                      art_field.setAttribute('hidden', 'hidden');
+                    }
+                    document.getElementById("art_code").value = "";
+                  };
+
+                  document.getElementById("art_unknown").onclick = function() {
+                    var art_field = document.getElementById("art_code_holder");
+                    if(!art_field.hasAttribute('hidden')) {
+                      art_field.setAttribute('hidden', 'hidden');
+                    }
+                    document.getElementById("art_code").value = "";
+                  };
+                </script>
+              </div>
+              <br>
+              <div id="symmptoms">
+                <h5 class="card-title" id="12">Symptoms</h5>
+                <div id="checkboxes">
+                  <div class="custom-control custom-checkbox">
+                    <input name="symptoms" class="custom-control-input" onclick="disable_none()" type="checkbox" value="current_cough" id="cough">
+                    <label class="custom-control-label" for="cough" id="13">
+                      Current cough
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox">
+                    <input name="symptoms" class="custom-control-input" onclick="disable_none()" type="checkbox" value="fever" id="fever">
+                    <label class="custom-control-label" for="fever" id="14">
+                      Fever
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox">
+                    <input name="symptoms" class="custom-control-input" onclick="disable_none()" type="checkbox" value="night_sweats" id="night_sweats">
+                    <label class="custom-control-label" for="night_sweats" id="15">
+                      Night sweats
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox">
+                    <input name="symptoms" class="custom-control-input" onclick="disable_none()" type="checkbox" value="weight_loss" id="weight_loss">
+                    <label class="custom-control-label" for="weight_loss" id="16">
+                      Weight loss
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox">
+                    <input name="symptoms" class="custom-control-input" onclick="nofa(this.id)" type="checkbox" value="none_of_the_above" id="none_of_the_above">
+                    <label class="custom-control-label" for="none_of_the_above" id="17">
+                      None of the above
+                    </label>
+                  </div>
+
+                  <script>
+                    function disable_none() {
+                      document.getElementById("none_of_the_above").checked = false;
+                    }
+                    function nofa(id) {
+                      if(document.getElementById(id).checked) {
+                        document.getElementById("cough").checked = false;
+                        document.getElementById("fever").checked = false;
+                        document.getElementById("night_sweats").checked = false;
+                        document.getElementById("weight_loss").checked = false;
+                      }
+                    }
+                  </script>
+
+                </div>
+              </div>
+              <br>
+              <div id="patient_category">
+                <h5 class="card-title" id="18">Patient Category</h5>
+                <div id="checkboxes">
+                  <div class="custom-control custom-checkbox">
+                    <input name="patient_category" onclick="disable_pc(this)" class="custom-control-input" type="checkbox" value="hos" id="hos">
+                    <label class="custom-control-label" for="hos" id="19">
+                      Hospitalized (HOS)
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox">
+                    <input name="patient_category" onclick="disable_pc(this)" class="custom-control-input" type="checkbox" value="chi" id="chi">
+                    <label class="custom-control-label" for="chi" id="label_child">
+                      Child (CHI)
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox">
+                    <input name="patient_category" onclick="disable_pc(this)" class="custom-control-input" type="checkbox" value="art" id="art">
+                    <label class="custom-control-label" for="art" id="20">
+                      To initiate ART (ART)
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox">
+                    <input name="patient_category" onclick="disable_pc(this)" class="custom-control-input" type="checkbox" value="plh" id="plh">
+                    <label class="custom-control-label" for="plh" id="21">
+                      On ART, symptomatic (PLH)
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox">
+                    <input name="patient_category" onclick="disable_pc(this)" class="custom-control-input" type="checkbox" value="opd" id="opd">
+                    <label class="custom-control-label" for="opd" id="22">
+                      Out Patient
+                    </label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox">
+                    <input name="patient_category" onclick="disable_pc(this)" class="custom-control-input" type="checkbox" value="other_other" id="other_other">
+                    <label class="custom-control-label" for="other_other" id="23">
+                      Other
+                    </label>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="pc_other" id="24">other</label>
+                    <input type="text" class="form-control" id="pc_other">
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div id="specimen_type">
+                <h5 class="card-title" id="25">Specimen Type</h5>
+                <div class="custom-control custom-checkbox">
+                  <input name="specimen_type" onclick="disable_st(this)" class="custom-control-input" type="checkbox" value="sputum" id="sputum">
+                  <label class="custom-control-label" for="sputum" id="26">
+                    Sputum
+                  </label>
+                </div>
+
+                <div class="custom-control custom-checkbox">
+                  <input name="specimen_type" onclick="disable_st(this)" class="custom-control-input" type="checkbox" value="csf" id="CSF">
+                  <label class="custom-control-label" for="CSF" id="27">
+                    CSF
+                  </label>
+                </div>
+
+                <div class="custom-control custom-checkbox">
+                  <input name="specimen_type" onclick="disable_st(this)" class="custom-control-input" type="checkbox" value="lymph" id="lymph">
+                  <label class="custom-control-label" for="lymph"  id="28">
+                    Lymph node aspirate
+                  </label>
+                </div>
+
+                <div class="custom-control custom-checkbox">
+                  <input name="specimen_type" onclick="disable_st(this)" class="custom-control-input" type="checkbox" value="gastric" id="gastric">
+                  <label class="custom-control-label" for="gastric" id="29">
+                    Gastric aspirate
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label for="st_other" id="30">other</label>
+                  <input value="" required type="text" class="form-control" id="st_other">
+                </div>
+
+                <script type="text/javascript">
+                  function disable_st(id) {
+                    if(id.checked)
+                      document.getElementById("st_other").removeAttribute("required");
+                  }
+                </script>
+              </div>
+              <br>
+              <div id="reason_for_test">
+                <h5 class="card-title" id="31">Reason for test</h5>
+                <div class="custom-control custom-checkbox">
+                  <input checked class="custom-control-input" type="checkbox" value="presumptive_tb" id="presumption">
+                  <label class="custom-control-label" for="presumption" id="32">
+                    Presumptive TB <small>(Pre-treament)</small>
+                  </label>
+                </div>
+              </div>
+              <br><br>
+              <div id="tb_treatment_history">
+                <h5 class="card-title" id="33">TB treatment history</h5>
+                <div class="custom-control custom-radio">
+                  <input class="custom-control-input" type="radio" name="tb_treatment_history" id="new" value="new" checked>
+                  <label class="custom-control-label" for="new" id="34">
+                    New <small>(never treaated > 1 month) </small>
+                  </label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input class="custom-control-input" type="radio" name="tb_treatment_history" id="relapse" value="relapse">
+                  <label class="custom-control-label" for="relapse" id="35">
+                    Relapse <small>(completed previous TB Rx)</small>
+                  </label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input class="custom-control-input" type="radio" name="tb_treatment_history" id="loss" value="loss">
+                  <label class="custom-control-label" for="loss" id="36">
+                    After loss to follow up <small>(&ge; 2 months of Tx interruption)</small>
+                  </label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input class="custom-control-input" type="radio" name="tb_treatment_history" id="failure" value="failure">
+                  <label class="custom-control-label" for="failure" id="37">
+                    Failure <small>(2 smears AFB positive at &ge; 5 months on Rx)</small>
+                  </label>
+                </div>
+
+                <div class="custom-control custom-checkbox">
+                  <input class="custom-control-input" type="checkbox" name="tb_treatment_history" value="contact" id="contact">
+                  <label class="custom-control-label" for="contact" id="38">
+                    Contact of TB patient
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label for="tb_his_other" id="39">other</label>
+                  <input value="" type="text" class="form-control" id="tb_his_other">
+                </div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="region" id="52">Community</label>
+                <select class="custom-select" id="region">
+                  <!-- important information goes in here  -->
+                </select>
+                <select class="custom-select" id="sub_region">
+                </select>
+              </div>
+              <div id="requester">
+                <h5 class="card-title" id="42">Requester</h5>
+                <div class="jumbotron" id="requester_id_review">
+                  <p class="lead" id="43"><b>Username</b></p>
+                  <p class="lead" id="44"><b>Phonenumber</b></p>
+                  <hr>
+                  <button type="button" class="btn btn-warn btn-sm" onclick="document.getElementById('another_requester').removeAttribute('hidden');" id="45">Not my account</button>
+                </div>
+                <br>
+                <div class="modal-content" id="another_requester" hidden>
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="46">Another Requester</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button> -->
+                  </div>
+                  <div class="modal-body" id="other_account">
+                    <div class="form-group">
+                      <label for="req_name" id="49">Names</label>
+                      <input value="" type="text" class="form-control" id="req_name">
+                    </div>
+                    <div class="form-group">
+                      <label for="req_phonenumber" id="50">Phone</label>
+                      <input value="" type="tel" class="form-control" id="req_phonenumber">
+                    </div>
+                    <div class="form-group">
+                      <label for="req_email" >Email</label>
+                      <input value="" type="email" class="form-control" id="req_email">
+                    </div>
+                    <div class="form-group">
+                      <label for="req_other" id="51">other</label>
+                      <input value="" type="text" class="form-control" id="req_other">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label for="req_date" id="53">Date requested</label>
+                      <input value="" type="date" class="form-control" id="req_date">
+                    </div>
+                    <div class="modal-footer">
+                      <button onclick="document.getElementById('another_requester').setAttribute('hidden', 'hidden')" type="button" class="btn btn-secondary" data-dismiss="modal" id="54">cancel</button>
+                    </div>
+                  </div>
+                </div>
+                <hr><br>
+                <div class="text-center">
+                  <small style="color: white; background-color: grey" id="47">Good Job! <br>Review everything and click register</small><br>
+                  <button type="submit" id="48" class="btn btn-succ" name="button">Register!</button>
+                </div>
+                <br><br>
+              </div>
+              <input hidden type="date" id="date">
+              <script>
+                document.getElementById('date').valueAsDate = new Date();
+              </script>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // QUICK TEST SCRIPT
+
+       // var form = document.forms['new_patient_form'];
+       // form.name.value = "wisdom";
+       // form.age.value = "16";
+       // form.elements.gender.value = "male";
+       // form.address.value ="metta quarters";
+       // form.telephone.value = "652156811";
+       // form.telephone_2.value = "652156811";
+       // form.elements.has_art.value = "yes";
+       // form.art_code.value = "1122345";
+       // form.fever.checked = "true";
+       // form.hos.checked = "true";
+       // form.pc_other.value = "other value";
+       // form.sputum.checked = "true";
+       // form.st_other.value ="other value";
+       //
+       // form.req_name.value = "sherlock";
+       // form.req_email.value = "wisdomnji@gmail.com";
+       // form.req_phonenumber.value = "652156811";
+       // // form.req_community..north_west.select = "selected";
+       // // form.req_sub_community.value = "mezam_polyclinic";
+       // form.req_date.value = "2018-10-10";
+    </script>
+
+    <script>
+      var text = [
+        "Le nom du patient",
+        "Âge",
+        "Sexe", "Féminin", "Masculin",
+        "Adresse",
+        "Téléphone",
+        "Téléphone 2", "optionnel",
+        "A un code unique ARV", "Non", "Oui",
+        "Symptômes", "Toux", "Fièvre", "Sueurs nocturnes", "Perte de poids", "Aucune de ces réponses",
+        "Catégorie patient", "Hospitalisé (HOS)", "Initiation des ARV (ART)", "Sur ARV, symptomatique (PLH)", "Ambulatoire", "Autre", "Autre",
+        "Type de spécimen", "Crachats", "LCR", "Ponction ganglionnaire", "Lavage gastrique", "autres",
+        "Motif de l’examen", "Présomption de  TB <small>(avant le traitement)</small>", "Antécédents de traitement de TB", "Nouveau <small>(pas sous traitement  pendant >1 mois) </small>", "Rechute <small>(guéri après régime RHEZ)</small>", "Reprise <small>(&ge;2 mois d’interruption du Tx)</small>", "Echec <small>(2 frottis positifs pour BAAR à &ge;5 mois du Tx)</small>", "Contact d’un patient TB", "Autres",
+        "Aller au panneau de contrôle", "Enregistrement du nouveau patient",
+        "Demandeur", "Nom d'utilisateur", "Numéro de téléphone", "pas mon compte",
+        "Un autre demandeur", "Bon travail! <br>Tout revoir et cliquer sur s'inscrire", "Registre!", "prénom", "Téléphone", "Autres", "Communauté", "Date demandée", "Annuler",
+        "Inconnu", "Code unique", "Statut", "Ambulatoire", "Quartier - Lit", "Quartier - Lit nombre"
+      ];
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery.js"></script>
+    <script src="../js/popper.js" ></script>
+    <script src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/bodymovin.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="js/new_patient.js"></script>
+
+    <script type="text/javascript">
+      console.log("Requesting for regions");
+      console.log("Region ID: ", localStorage.getItem("region_id"));
+      console.log("Sub Region ID: ", localStorage.getItem("sub_region_id"));
+      var region = document.getElementById("region");
+      var sub_region = document.getElementById("sub_region");
+      var success = function(sr) {
+        console.log("found regions");
+        for(var i in sr) {
+          var name = sr[i].name;
+          var id = sr[i].id;
+          var option = id == localStorage.getItem("region_id") ? new Option(name, id, true) : new Option(name, id);
+          region.appendChild(option);
+        }
+
+        region.onchange = function() {
+          console.log("getting sub regions");
+          var id = this.value;
+          var success = function(sr) {
+            console.log("found subregions let's move on");
+            sub_region.innerHTML = "";
+            for(var i in sr) {
+              var name = sr[i].name;
+              var id = sr[i].id;
+              var option = new Option(name, id);
+              sub_region.appendChild(option);
+            }
+          };
+          transmission._fetch("sub_regions", id, success);
+        }
+      };
+
+      var default_success = function(sr) {
+        console.log("found subregions let's move on");
+        sub_region.innerHTML = "";
+        for(var i in sr) {
+          var name = sr[i].name;
+          var id = sr[i].id;
+          var option = id == localStorage.getItem("sub_region_id") ? new Option(name, id, true, true) : new Option(name, id);
+          sub_region.appendChild(option);
+        }
+      };
+      transmission._fetch("sub_regions", localStorage.getItem("region_id"), default_success);
+      transmission.fetch("communities", success);
+    </script>
+
+
+    <script type="text/javascript">
+      // alert(sessionStorage.getItem("userId"));
+    </script>
+
+
+  </body>
+</html>

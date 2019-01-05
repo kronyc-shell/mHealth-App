@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Material Design for Bootstrap fonts and icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/main.css">
+
+    <title>Login</title>
+  </head>
+
+
+  <body>
+    <button type="button" class="btn btn-main btn-block" name="button" onclick="window.location.replace('index.html')" id="24">Goto Dashboard</button>
+    <div class="container">
+      <br>
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 style="font-weight: 100; font-size: 24px; text-align: center" id="23">Outcome recorded</h2>
+          <hr>
+          <div id="animationWindow"></div>
+          <div id="main_display">
+            <div class="form-group">
+              <label for="patient_name" id="27">Patient's name</label>
+              <input type="text" id="patient_name" disabled class="form-control">
+              <script>
+                document.getElementById("patient_name").placeholder = sessionStorage.getItem("userName");
+              </script>
+            </div>
+            <div id="lab_results_record">
+              <div class="jumbotron">
+                <h5 id="25">Lab Results</h5>
+                <u><small>SMR results</small></u>
+                <p><small id="result1">Result 1: </small> <br> <small id="result2">Result 2: </small></p>
+                <u><small>Xpert results</small></u>
+                <p><small id="result_1">MTB: </small> <br> <small id="result_2">RIF: </small></p>
+              </div>
+              <div id="follow_up_record" hidden>
+                <div class="jumbotron">
+                  <h5 id="26">Follow Up Recorded</h5>
+                  <p><small id="xray">xray: </small> <br> <small id="amoxicilin">Amoxicilin: </small> <br> <small id="other_antibiotic">Other Antibiotic: </small><br> <small id="follow_up_date">Follow up date(Y-m-d): </small> <br> <small id="comments">Comments: </small></p>
+                </div><hr>
+              </div>
+            </div>
+            <form id="outcome_form">
+              <div class="card" >
+                <div class="card-body" id="outcome_recorded">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="started" value="started_tb_treatment" name="treatment" class="custom-control-input">
+                    <label class="custom-control-label" for="started" id="0">Started TB Treatment</label>
+                  </div>
+                  <div class="form-group" id="started_write" hidden>
+                    <label for="start_tb_rx_number_write" id="1">TB Rx number</label>
+                    <input id="start_tb_rx_number_write" type="text" class="form-control" value="">
+                  </div>
+                  <script>
+                    document.getElementById("started").onclick = function() {
+                      if(this.checked) {
+                        document.getElementById("started_write").removeAttribute('hidden');
+                        document.getElementById("referred_write").setAttribute('hidden', 'hidden');
+
+                      } else if(!this.checked) {
+                        document.getElementById("started_write").setAttribute('hidden', 'hidden');
+                      }
+                    }
+                  </script>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="Referred" value="referred_for_treatment" name="treatment" class="custom-control-input">
+                    <label class="custom-control-label" for="Referred" id="2">Referred for treatment</label>
+                  </div>
+                  <div class="form-group" id="referred_write" hidden>
+                    <label for="referred_tb_rx_number_write">TB Rx number</label>
+                    <input id="referred_tb_rx_number_write" type="text" class="form-control" value="">
+                  </div>
+                  <script>
+                    document.getElementById("Referred").onclick = function() {
+                      if(this.checked) {
+                        document.getElementById("referred_write").removeAttribute('hidden');
+                        document.getElementById("started_write").setAttribute('hidden', 'hidden');
+
+                      } else if(!this.checked) {
+                        document.getElementById("referred_write").setAttribute('hidden', 'hidden');
+                      }
+                    }
+                  </script>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="improved" checked value="patient_improved" name="treatment" class="custom-control-input" value="">
+                    <label class="custom-control-label" for="improved" id="3">Patient improved, unlikely TB</label>
+                  </div>
+                  <script>
+                    document.getElementById("improved").onclick = function() {
+                      if(this.checked) {
+                        // document.getElementById("referred_write").removeAttribute('hidden');
+                        document.getElementById("started_write").setAttribute('hidden', 'hidden');
+                        document.getElementById("referred_write").setAttribute('hidden', 'hidden');
+                      }
+                    }
+                  </script>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="lost" value="lost_patient" name="treatment" class="custom-control-input">
+                    <label class="custom-control-label" for="lost" id="4">Lost Patient to follow up</label>
+                  </div><br>
+                  <script>
+                    document.getElementById("lost").onclick = function() {
+                      if(this.checked) {
+                        // document.getElementById("referred_write").removeAttribute('hidden');
+                        document.getElementById("started_write").setAttribute('hidden', 'hidden');
+                        document.getElementById("referred_write").setAttribute('hidden', 'hidden');
+                      }
+                    }
+                  </script>
+
+                  <div class="form-group">
+                    <label for="other" id="5">Other</label>
+                    <input type="text" class="form-control" id="other" value="">
+                  </div>
+                  <div class="form-group">
+                    <label for="comments" id="6">Comments</label>
+                    <input type="text" class="form-control" id="comments" value="">
+                  </div>
+                  <!-- <div class="form-group">
+                    <label for="date_closed">Date outcome closed</label>
+                    <input required type="date" class="form-control">
+                  </div> -->
+                  <br>
+                  <!-- Modal -->
+
+                  <div class="modal fade" id="closePatient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="7">Please read!</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" id="8">
+                          This affects patients visibility on the app.
+                          Closing would remove patient from list and won't be accessible for any updates
+                          Please be CAREFUL when selecting this option
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="close_patient">
+                    <label class="custom-control-label form-check-label" for="close_patient" data-toggle="modal" data-target="#closePatient" id="9">Close Patient File</label>
+                  </div>
+                  <script>
+                    document.getElementById("close_patient").onclick = function() {
+                      console.log("btn clicked");
+                      if(!this.checked)
+                        document.getElementById("close_ques_modal").click();
+                      else console.log("Button said: " + this.checked);
+                    }
+                  </script>
+                </div>
+              </div><br>
+
+              <div id="requester">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title" id="10">Requester</h5>
+                    <div class="jumbotron" id="requester_id_review">
+                      <p class="lead" id="11"><b>Username</b></p>
+                      <p class="lead" id="12"><b>Phonenumber</b></p>
+                      <hr>
+                      <button type="button" class="btn btn-warn btn-sm" onclick="toggle_required()" id="13">Not my account</button>
+                    </div>
+                    <br>
+                    <div class="modal-content" id="another_requester" hidden>
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="14">Another Requester</h5>
+                        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button> -->
+                      </div>
+                      <div class="modal-body" id="other_account">
+                        <div class="form-group">
+                          <label for="req_name" id="15">Names</label>
+                          <input value="" type="text" class="form-control" id="req_name">
+                        </div>
+                        <div class="form-group">
+                          <label for="req_phonenumber" id="16">Phone</label>
+                          <input value="" type="text" class="form-control" id="req_phonenumber">
+                        </div>
+                        <div class="form-group">
+                          <label for="req_email" id="17">Email</label>
+                          <input value="" type="email" class="form-control" id="req_email">
+                        </div>
+                        <div class="form-group">
+                          <label for="req_other" id="18">other</label>
+                          <input value="" type="text" class="form-control" id="req_other">
+                        </div>
+                        <div class="form-group">
+                          <label for="req_date" id="19">Date requested</label>
+                          <input value="" type="date" class="form-control" id="req_date">
+                        </div>
+                        <div class="modal-footer">
+                          <button onclick="document.getElementById('another_requester').setAttribute('hidden', 'hidden')" type="button" class="btn btn-secondary" data-dismiss="modal" id="20">cancel</button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div><br>
+
+
+
+              <div class="text-center">
+                <small style="color: white; background-color: grey" id="21">Good Job! <br>Review everything and click record!</small><br>
+                <button type="submit" id="22" class="btn btn-succ" name="button">Record!</button>
+              </div>
+            </form>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery.js"></script>
+    <script src="../js/popper.js" ></script>
+    <script src="../js/bootstrap.js"></script>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/4.8.0/bodymovin.min.js"></script> -->
+    <script type="text/javascript" src="../js/bodymovin.min.js"></script>
+
+
+    <script src="../js/main.js"></script>
+    <script src="js/outcome_recorded.js"></script>
+    <script>
+      var text = [
+        "Traitement de la TB commencé",
+        "TB Rx nombre",
+        "Référé pour traitement",
+        "Patient amélioré, TB improbable",
+        "Patient perdu à suivre",
+        "Autre",
+        "Commentaires",
+        "Lisez s'il vous plaît!", "Cela affecte la visibilité des patients sur l'application. La fermeture supprimera le patient de la liste et ne sera accessible pour aucune mise à jour S'il vous plaît soyez prudent lorsque vous sélectionnez cette option",
+        "Fermer le dossier patient",
+        "Demandeur", "Nom d'utilisateur", "Numéro de téléphone", "pas mon compte",
+        "Un autre demandeur", "prénom", "Téléphone", "Autres", "Communauté", "Date demandée", "Annuler", "Bon travail! <br>Tout revoir et cliquer sur s'inscrire", "Registre!",
+        "Issue du malade",
+        "Retourner au tableau de bord",
+        "Résultats de laboratoire",
+        "Suivi enregistré",
+        "Le nom du patient"
+      ];
+    </script>
+    <script>
+      $(document).ready(function() {
+        $('body').bootstrapMaterialDesign();
+
+        var success = function(sr) {
+          var smr_result1 = document.getElementById("result1");
+          var smr_result2 = document.getElementById("result2");
+
+          var xpert_result1 = document.getElementById("result_1");
+          var xpert_result2 = document.getElementById("result_2");
+
+          smr_result1.innerHTML += sr.smr_results.result_1;
+          smr_result2.innerHTML += sr.smr_results.result_2;
+
+          xpert_result1.innerHTML += sr.xpert_results.mtb_result;
+          xpert_result2.innerHTML += sr.xpert_results.rif_results;
+        }
+
+        var success2 = function(sr) {
+          if(sr.date !== null || typeof sr.date !== 'undefined') {
+            document.getElementById("follow_up_record").removeAttribute("hidden"); //add an if function here
+
+            var xray = document.getElementById("xray");
+            var amoxicilin = document.getElementById("amoxicilin");
+            var otherAntibiotic = document.getElementById("other_antibiotic");
+            var follow_up_date = document.getElementById("follow_up_date");
+            var comments = document.getElementById("comments");
+
+            xray.innerHTML += sr.xray == true ? "done" : "not done";
+            amoxicilin.innerHTML += sr.amoxicilin == true ? "given" : "not given";
+            otherAntibiotic.innerHTML += sr.otherAntibiotic == "" ? "n/a" : sr.otherAntibiotic;
+            follow_up_date.innerHTML += sr.follow_up_date == "" ? "n/a" : sr.follow_up_date;
+            comments.innerHTML += sr.comments == "" ? "n/a" : sr.comments;
+          }
+        }
+
+
+        var success3 = function(sr) {
+          var form = document.forms['outcome_form'];
+
+          form.elements.treatment.value = sr.outcome_recorded;
+          if(sr.outcome_recorded ==  "started_tb_treatment" || sr.outcome_recorded == "referred_for_treatment")
+          {
+            document.getElementById("referred_tb_rx_number_write").value = sr.tb_rx_number;
+            document.getElementById("referred_write").removeAttribute("hidden");
+          }
+          form.other.value = sr.other;
+          form.comments.value = sr.comments;
+        }
+
+        transmission._fetch("lab", sessionStorage.getItem("userId"), success);
+        transmission._fetch("follow_up", sessionStorage.getItem("userId"), success2);
+        transmission._fetch("outcome_recorded", sessionStorage.getItem("userId"), success3);
+      });
+    </script>
+
+    <script type="text/javascript">
+      function toggle_required() {
+        document.getElementById('another_requester').removeAttribute('hidden'); document.getElementById(req_name).setAttribute('required', 'required');document.getElementById(req_phonenumber).setAttribute('required', 'required');
+      }
+    </script>
+  </body>
+</html>

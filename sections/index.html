@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../css/all.css">
+
+    <link rel="stylesheet" href="../css/bootstrap-material-design.css">
+    <link rel="stylesheet" href="../css/main.css">
+
+    <title>Login</title>
+  </head>
+
+  <script>
+    if(localStorage.getItem("userId") === null)
+      window.location.replace("../index.html");
+    sessionStorage.setItem("_todays_date", new Date().toJSON().slice(0,10).replace(/-/g,'-'));
+  </script>
+
+  <body >
+    <div id="main_display" style="height: 100vh">
+      <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
+        <header class="bmd-layout-header" style="background-color: white">
+          <div class="navbar navbar-light bg-faded">
+            <button class="btn btn-sm" type="button" data-toggle="drawer" data-target="#dw-s2">
+              <span class="sr-only">Toggle drawer</span>
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <button onclick="window.location.href='new_patient.html'" class="btn btn-main btn-sm" id="6"><i class="fas fa-plus"></i>New Patient</button>
+            <p id="working_state" id="12"></p>
+          </div>
+        </header>
+        <div id="dw-s2" class="bmd-layout-drawer bg-faded">
+          <header>
+            <a class="navbar-brand" id="1">Dashboard</a>
+          </header>
+          <ul class="list-group">
+            <a class="list-group-item" onclick="logout()" id="2">Logout</a>
+            <a class="list-group-item" onclick="synchronize()" id="sync_btn" hidden>Synchronize</a>
+            <hr>
+            <a class="list-group-item" onclick="window.location.reload(1)" id="3">Refresh</a>
+            <a class="list-group-item" onclick="localStorage.setItem('connection', 'online'); window.location.reload(1)" id="4" hidden>Switch online</a>
+
+            <a class="list-group-item" onclick="localStorage.setItem('connection', 'offline'); window.location.reload(1)" id="5" hidden>Switch offline</a>
+          </ul>
+        </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12">
+              <form id="search_form">
+                <div class="form-group">
+                  <label for="search_query" id="0">Patient's name or phonenumber</label>
+                  <div class="input-group mb-5">
+                    <input required id="search_query" type="text" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-main btn-sm">Search</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <main class="bmd-layout-content">
+
+          <div class="container">
+            <div id="main_display_2">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div id="animationWindow"></div>
+                  <div id="noRecords" class="jumbotron" style="background-color: #31b5f6" hidden>
+                    <h3 style="color: white; font-weight: 100; text-align: center" id="7">No Records!</h3>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-header text-center" id="main_card_header" hidden></div>
+                    <div class="card-body" id="patientDisplay" hidden></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br><br>
+        </main>
+      </div>
+    </div>
+
+    <!--  -->
+
+    <script src="../js/jquery.js"></script>
+    <script src="../js/popper.js" ></script>
+    <script src="../js/bootstrap-material-design.js"></script>
+    <script type="text/javascript" src="../js/bodymovin.min.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+
+    <script>
+      var anim = bodymovin.loadAnimation(animData);
+      anim.setSpeed(2.6);
+      var text = ["Rechercher des dossiers de patients (nom ou numéro de téléphone)", "Panneau de contrôle", "Déconnecter", "Recharger", "Utiliser en ligne", "Utiliser hors ligne", "Nouveau patient", "Pas d'enregistrements"];
+    </script>
+
+    <script>
+
+      function logout() {
+        sessionStorage.removeItem("userId");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("lang");
+        localStorage.removeItem("userAccess");
+        localStorage.removeItem("phonenumber");
+        sessionStorage.removeItem("_todays_date");
+        window.location.replace("../index.html");
+      }
+
+      $(document).ready(function() {
+        // Default on load behaviour
+        $('body').bootstrapMaterialDesign();
+        var lang = localStorage.getItem("lang");
+        // var lang = "fr";
+        console.log("lang: " + lang);
+        sessionStorage.removeItem("userId");
+
+        var dashboard = new Dashboard(lang);
+        dashboard.default();
+
+        var success = function(sr) {
+          if(sr.length < 1) {
+            failed();
+            return;
+          }
+          setTimeout(function(){
+            document.getElementById("animationWindow").innerHTML = "";
+            var patientId;
+            var name;
+            var gender;
+            var duration;
+            var phonenumber;
+            var age;
+            var pc = new PatientCard;
+            var size = sr.length;
+            for(var i=size-1;i>=0;i--) {
+              // if(i > 20) {
+              //   console.log("Greater than 20");
+              //   break;
+              // };
+              patientId = sr[i].id;
+              age = sr[i].age;
+              name = sr[i].name;
+              gender = sr[i].gender;
+              duration = sr[i].duration;
+              phonenumber = sr[i].telephone;
+
+              pc.id = patientId;
+              pc.name = name;
+              pc.gender = gender;
+              pc.duration = duration;
+              pc.phonenumber = phonenumber;
+              pc.age = age;
+              dashboard.addPatient(pc);
+            }
+          }, 10);
+          // console.log("passed here");
+          console.log("Done")
+        };
+
+        var failed = function() {
+          console.log("Failed running");
+          setTimeout(function(){
+            document.getElementById("animationWindow").innerHTML = "";
+            document.getElementById("noRecords").removeAttribute("hidden", "hidden");
+          }, 10);
+        };
+
+        var userId = localStorage.getItem("userId");
+        var connection = localStorage.getItem("connection");
+        transmission.connection = connection;
+        transmission.userId = userId;
+        transmission.fetch("patients", success, failed);
+
+        //Translation
+        translate("dashboard");
+
+        // On search
+        document.forms['search_form'].addEventListener("submit", function(event) {
+          event.preventDefault();
+          dashboard.default();
+
+          var anim = bodymovin.loadAnimation(animData);
+          anim.setSpeed(2.6);
+
+          var query = this.search_query.value;
+          var information = {"query":query, "id":localStorage.getItem("userId")};
+          var success = function(sr) {
+            document.getElementById("animationWindow").innerHTML = "";
+            var ch = document.getElementById("main_card_header");
+            ch.removeAttribute("hidden");
+            ch.innerHTML = localStorage.getItem("lang") == "en" ?  "Search Results - " + query : "Résultats de la recherche - " + query;
+
+            var pc = new PatientCard;
+            for(var i in sr) {
+              patientId = sr[i].id;
+              pc.id = patientId;
+              pc.name = sr[i].name;
+              pc.gender = sr[i].gender;
+              pc.duration = sr[i].duration;
+              pc.phonenumber = sr[i].telephone;
+              pc.age = sr[i].age;
+              dashboard.addPatient(pc);
+            }
+          };
+
+          var failure = function() {
+            document.getElementById("animationWindow").innerHTML = "";
+            var ch = document.getElementById("main_card_header");
+            ch.removeAttribute("hidden");
+            ch.innerHTML = localStorage.getItem("lang") == "en" ?  "Search Results - " + query : "Résultats de la recherche - " + query;
+            localStorage.getItem("lang") == "en" ? dashboard.log("Nothing found!", "<br><a style='font-size: 12px' href='' onclick='window.location.reload(1)'>Click here to refresh</a>") : dashboard.log("Rien n'a été trouvé!", "<br><a style='font-size: 12px' href='' onclick='window.location.reload(1)'>Cliquez ici pour actualiser</a>");
+          };
+
+          transmission._search("patients", information, success, failure);
+        });
+
+      }); //Don't delete
+    </script>
+  </body>
+</html>

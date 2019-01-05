@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Material Design for Bootstrap fonts and icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+
+    <link rel="stylesheet" href="../css/bootstrap-material-design.css">
+
+    <link rel="stylesheet" href="../css/main.css">
+
+    <title>Login</title>
+  </head>
+
+
+  <body>
+    <button type="button" class="btn btn-main btn-block" name="button" onclick="window.location.replace('index.html')" id="8">Goto Dashboard</button>
+    <div class="container">
+      <br>
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 style="font-weight: 100; font-size: 16px; text-align: center" id="9">Specimen Collection</h2><br>
+          <div id="animationWindow"></div>
+          <div id="main_display">
+            <div id="no_specimen" class="jumbotron" style="background-color: #31b5f6">
+              <h1 style="font-size: 20px; color: white; font-weight: 100; text-align: center" id="7">No Specimen Collected!</h1>
+            </div>
+
+            <div id="contents">
+
+            </div>
+            <hr>
+            <div class="card">
+              <div class="card-header" id="name"></div>
+              <div class="card-body" id="specimen_collection">
+                <form id="specimen_form">
+                  <div class="form-group">
+                    <label for="specimen_date">Date</label>
+                    <input name="specimen_date" required type="date" id="date" class="form-control">
+                    <script>
+                      document.getElementById('date').valueAsDate = new Date();
+                    </script>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="spot" value="Spot" checked name="period" class="custom-control-input">
+                      <label class="custom-control-label" for="spot" id="0">Spot</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="morning" value="Morning" name="period" class="custom-control-input">
+                      <label class="custom-control-label" for="morning" id="1">Morning</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="n_a" value="n_a" name="period" class="custom-control-input">
+                      <label class="custom-control-label" for="n_a" id="1">N/A</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" value="Mucopurulent" id="mucopurulent" checked name="aspect" class="custom-control-input">
+                      <label class="custom-control-label" for="mucopurulent" style="font-size: 15px" id="2">Mucopurulent</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" value="Bloody" id="bloody" name="aspect" class="custom-control-input">
+                      <label class="custom-control-label" for="bloody" style="font-size: 15px" id="3">Bloody</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" value="Salivary" id="salivary" name="aspect" class="custom-control-input">
+                      <label class="custom-control-label" for="salivary" style="font-size: 15px" id="4">Salivary</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" value="n_a" id="n_a1" name="aspect" class="custom-control-input">
+                      <label class="custom-control-label" for="n_a1" style="font-size: 15px" id="4">N/A</label>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group" style="text-align: right">
+                        <button class="btn btn-main" type="button" id="5">More Specimen</button>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group" style="text-align: right">
+                        <button class="btn btn-main" type="button" id="6">Done</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/jquery.js"></script>
+    <script src="../js/popper.js" ></script>
+    <script src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/bodymovin.min.js"></script>
+    <script>
+      var text = [
+        "Spot", "Matin",
+        "Mucopurulent", "Sanguinolant", "Salivaire",
+        "Plus spécimen", "Terminé", "Aucun spécimen collecté!",
+        "Aller au panneau de contrôle", "Prélèvement de l’échantillon"
+      ];
+    </script>
+    <script src="../js/main.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('body').bootstrapMaterialDesign();
+
+        var lang = localStorage.getItem("lang");
+        // var lang = "fr";
+        var specimenHistory = new SpecimenHistory(lang);
+        specimenHistory.default();
+
+        var success = function(sr) {
+          var duration, period, aspect;
+
+          for(var i in sr) {
+            if(i == "state") continue;
+
+            duration = sr[i].duration;
+            period = sr[i].period;
+            aspect = sr[i].aspect;
+
+            var sc = new SpecimenCard;
+            sc.duration = duration;
+            sc.period = period;
+            sc.aspect = aspect;
+            specimenHistory.addSpecimen(sc);
+          }
+        };
+        var id = sessionStorage.getItem("userId");
+        console.log("user id: " + id);
+        transmission._fetch("specimen_collection", id, success);
+
+        translate("specimen_collection");
+        document.getElementById("name").innerHTML = sessionStorage.getItem("userName");
+      });
+    </script>
+    <script src="js/specimen_collection.js"></script>
+    
+  </body>
+</html>
