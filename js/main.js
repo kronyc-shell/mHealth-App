@@ -105,8 +105,8 @@ var transmission = {
   _connection : "",
   _userId : "",
 
-  url : "http://142.93.248.15/tbproject_v2/app/",
-  // url : "http://localhost/tbproject_v2/app/",
+  // url : "http://142.93.248.15/tbproject_v2/app/",
+  url : "http://localhost/tbproject_v2/app/",
 
   set connection(connection) {
     this._connection = connection;

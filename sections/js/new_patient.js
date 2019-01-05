@@ -63,21 +63,22 @@ $(document).ready(function() {
       // information = JSON.stringify(information);
       console.log(information);
 
-      var success = function() {
+      var success = function(sr) {
         var msg;
         switch(localStorage.getItem("lang")) {
           case "fr":
-          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5></div>";
+          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">ID DU PATIENT: " +sr.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Aller au panneau de contrôle</a href='index.html'></div>";
           break;
 
           case "en":
-          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Well Done!</h5></div>";
+          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Well Done!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">PATIENT'S ID: " +sr.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Return to Dashboard</a href='index.html'></div>";
           break;
         }
         document.getElementById("animationWindow").innerHTML = msg;
-        setTimeout(function(){
-          window.location.replace("index.html");
-        }, 3000);
+        // setTimeout(function(){
+        //   window.location.replace("index.html");
+        // }, 3000);
+
       };
 
       transmission.insert("information", information, success);
@@ -113,7 +114,7 @@ $(document).ready(function() {
 
       form.name.value = sr.name;
       form.name.setAttribute("disabled", "disabled");
-      
+
       form.age.value = sr.age;
       form.age.setAttribute("disabled", "disabled");
 
