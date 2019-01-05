@@ -265,7 +265,7 @@ function PatientCard() {
     div.className = "card-body text-center";
     div.appendChild(document.createTextNode(this.name));
     div.appendChild(document.createElement("br"));
-    div.appendChild(document.createTextNode(this.translate(this.gender, lang)));
+    div.appendChild(document.createTextNode(this.translate(this.gender, lang) + " | " + this.id));
     div.appendChild(document.createElement("br"));
     div.appendChild(document.createTextNode(this.translate(this.duration, lang) + " | " + this.phonenumber + " | " + this.age + " "+ this.translate("years", lang)));
     var cardBody = div;
