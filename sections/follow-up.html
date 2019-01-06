@@ -33,10 +33,10 @@
           <div id="animationWindow"></div>
           <div id="main_display">
             <div class="form-group">
-              <label for="patient_name" id="10">Patient's name</label>
+              <label for="patient_name" id="10">Patient's name and ID</label>
               <input type="text" id="patient_name" disabled class="form-control">
               <script>
-                document.getElementById("patient_name").placeholder = sessionStorage.getItem("userName");
+                document.getElementById("patient_name").placeholder = sessionStorage.getItem("userName") + " | " + sessionStorage.getItem("userId");
               </script>
             </div>
             <div class="jumbotron">
@@ -120,7 +120,7 @@
         "Résultats de laboratoire",
         "Mesures de suivi prises",
         "Retourner au tableau de bord",
-        "Le nom du patient"
+        "Nom et ID du patient"
     ];
     </script>
     <script>

@@ -106,6 +106,9 @@ $(document).ready(function() {
     var success = function(sr) {
       var form = document.forms["request_form"];
 
+      form.id.value = sessionStorage.getItem("userId");
+      form.id.setAttribute("disabled", "disabled");
+
       form.name.value = sr.name;
       form.name.setAttribute("disabled", "disabled");
 

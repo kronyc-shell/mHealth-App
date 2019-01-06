@@ -147,10 +147,10 @@
         transmission._fetch("specimen_collection", id, success);
 
         translate("specimen_collection");
-        document.getElementById("name").innerHTML = sessionStorage.getItem("userName");
+        document.getElementById("name").innerHTML = sessionStorage.getItem("userName") + " | " + sessionStorage.getItem("userId");
       });
     </script>
     <script src="js/specimen_collection.js"></script>
-    
+
   </body>
 </html>
