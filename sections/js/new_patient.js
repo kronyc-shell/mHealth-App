@@ -5,11 +5,11 @@ $(document).ready(function() {
   if(localStorage.getItem("connection") == "offline") {
     // console.log("Working offline");
     // controller = offlineController;
-  } else {
+  } else if(sessionStorage.getItem("userId") == null) {
     // console.log("Working online");
     // controller = onlineController;
 
-    translate('new_patient');
+    sessionStorage.getItem("userId") != null && translate('new_patient');
 
     // FORM SUBMISSIION
     document.forms['new_patient_form'].onsubmit = function() {
@@ -100,12 +100,6 @@ $(document).ready(function() {
         document.getElementById("label_child").innerHTML = "Enfant (CHI)";
       }
     }
-  }
-
-
-  if(sessionStorage.getItem("userId") == null) {
-    // alert("Is null")
-    // alert(sessionStorage.getItem("userId"))
   } else {
     // alert("Not null")
     // alert(sessionStorage.getItem("userId"));
