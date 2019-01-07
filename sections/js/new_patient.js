@@ -9,7 +9,7 @@ $(document).ready(function() {
     // console.log("Working online");
     // controller = onlineController;
 
-    sessionStorage.getItem("userId") != null && translate('new_patient');
+    sessionStorage.getItem("userId") == null && translate('new_patient');
 
     // FORM SUBMISSIION
     document.forms['new_patient_form'].onsubmit = function() {

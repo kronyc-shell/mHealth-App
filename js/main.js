@@ -374,3 +374,94 @@ var transmission = {
     ajax.send();
   }
 };
+
+function updateConnectionStatus(state) {
+  // alert("Connection type changed from " + type + " to " + connection.type);
+  switch(state) {
+    case true:
+    $("#connectionModal").modal('hide');
+    console.log("Connection changed to online")
+    break;
+
+    case false:
+    network_state_modal();
+    break;
+  }
+}
+
+window.addEventListener('offline', ()=> { updateConnectionStatus(false) });
+window.addEventListener('online', ()=> { updateConnectionStatus(true) });
+
+
+function network_state_modal() {
+  var button = document.createElement("button");
+  button.setAttribute("type", "button");
+  button.setAttribute("class", "btn btn-primary");
+  button.setAttribute("data-toggle", "modal");
+  button.setAttribute("data-target", "#exampleModal");
+  button.appendChild(document.createTextNode("Launch demo modal"));
+
+  var h5 = document.createElement("h5");
+  h5.setAttribute("class", "modal-title");
+  h5.setAttribute("id", "exampleModalLabel");
+  h5.appendChild(document.createTextNode("Network Connection Alert"));
+
+  var span = document.createElement("span");
+  span.setAttribute("aria-hidden", "true");
+  span.appendChild(document.createTextNode("×"));
+
+  var button_ = document.createElement("button");
+  button_.setAttribute("type", "button");
+  button_.setAttribute("class", "close");
+  button_.setAttribute("data-dismiss", "modal");
+  button_.setAttribute("aria-label", "Close");
+  button_.appendChild(span);
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "modal-header");
+  div.appendChild(h5);
+  div.appendChild(button_);
+
+  var div_ = document.createElement("div");
+  div_.setAttribute("class", "modal-body");
+  div_.appendChild(document.createTextNode("You are currently offline!! Please verify your internet connection before going ahead"));
+
+  var button__ = document.createElement("button");
+  button__.setAttribute("type", "button");
+  button__.setAttribute("class", "btn btn-secondary");
+  button__.setAttribute("data-dismiss", "modal");
+  button__.appendChild(document.createTextNode("Close"));
+
+  var button___ = document.createElement("button");
+  button___.setAttribute("type", "button");
+  button___.setAttribute("class", "btn btn-primary");
+  button___.appendChild(document.createTextNode("Save changes"));
+
+  var div__ = document.createElement("div");
+  div__.setAttribute("class", "modal-footer");
+  div__.appendChild(button__);
+  // div__.appendChild(button___);
+
+  var div___ = document.createElement("div");
+  div___.setAttribute("class", "modal-content");
+  div___.appendChild(div);
+  div___.appendChild(div_);
+  div___.appendChild(div__);
+
+  var div____ = document.createElement("div");
+  div____.setAttribute("class", "modal-dialog modal-dialog-centered");
+  div____.setAttribute("role", "document");
+  div____.appendChild(div___);
+
+  var div_____ = document.createElement("div");
+  div_____.setAttribute("class", "modal fade");
+  div_____.setAttribute("id", "connectionModal");
+  div_____.setAttribute("tabindex", "-1");
+  div_____.setAttribute("role", "dialog");
+  div_____.setAttribute("aria-labelledby", "exampleModalLabel");
+  div_____.setAttribute("aria-hidden", "true");
+  div_____.appendChild(div____);
+
+  document.getElementById("main_display").appendChild(div_____);
+  $(div_____).modal('show')
+}
