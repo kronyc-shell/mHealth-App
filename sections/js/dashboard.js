@@ -314,7 +314,7 @@ function change_working_state(state) {
   var working_state = document.getElementById("working_state");
   switch(state) {
     case "online":
-    working_state.innerHTML = "<span style='color:blue'>Online</span>";
+    working_state.innerHTML = "Online";
     break;
 
     // case "offline":

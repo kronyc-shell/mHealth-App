@@ -29,7 +29,7 @@
               <i class="fas fa-ellipsis-v"></i>
             </button>
             <button onclick="window.location.href='new_patient.html'" class="btn btn-main btn-sm" id="6"><i class="fas fa-plus"></i>New Patient</button>
-            <p id="working_state" id="12"></p>
+            <small id="working_state" id="12"></small>
           </div>
         </header>
         <div id="dw-s2" class="bmd-layout-drawer bg-faded">
@@ -41,7 +41,7 @@
             <a class="list-group-item" onclick="synchronize()" id="sync_btn" hidden>Synchronize</a>
             <hr>
             <a class="list-group-item" onclick="localStorage.setItem('lang', 'fr'); window.location.reload(1)" id="3">Refresh</a><hr>
-            <a class="list-group-item" onclick="change_lang('fr'); window.location.reload(1)" id="3"> Changer en français</a>
+            <a class="list-group-item" onclick="change_lang('fr'); window.location.reload(1)" id="3"> Changer en Français</a>
             <a class="list-group-item" onclick="change_lang('en'); window.location.reload(1)" id="3"> Switch to English</a>
             <a class="list-group-item" onclick="localStorage.setItem('connection', 'online'); window.location.reload(1)" id="4" hidden>Switch online</a>
 
@@ -57,7 +57,7 @@
                   <div class="input-group mb-5">
                     <input required id="search_query" type="text" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                      <button type="submit" class="btn btn-main btn-sm">Search</button>
+                      <button type="submit" class="btn btn-main btn-sm" id="__search">Search</button>
                     </div>
                   </div>
                 </div>

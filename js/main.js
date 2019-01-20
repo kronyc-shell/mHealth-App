@@ -51,6 +51,7 @@ function translate(page) {
       }
       document.getElementById("sync_btn").innerHTML = "Synchroniser";
       document.getElementById("working_state").innerHTML = localStorage.getItem("connection") == "online" ? "En Ligne" : "Hors Ligne";
+      document.getElementById("__search").innerHTML = "<small>Rechercher</small>";
       break;
 
       case "specimen_collection":
@@ -380,11 +381,15 @@ function updateConnectionStatus(state) {
   switch(state) {
     case true:
     $("#connectionModal").modal('hide');
-    console.log("Connection changed to online")
+    // console.log("Connection changed to online")
+    localStorage.setItem("connection", "online");
+    document.getElementById("working_state").innerHTML = localStorage.getItem("lang") == "en" ? "Online" : "En Ligne";
     break;
 
     case false:
     network_state_modal();
+    localStorage.setItem("connection", "offline");
+    document.getElementById("working_state").innerHTML = localStorage.getItem("lang") == "en" ? "Offline" : "Hors ligne";
     break;
   }
 }
@@ -404,7 +409,8 @@ function network_state_modal() {
   var h5 = document.createElement("h5");
   h5.setAttribute("class", "modal-title");
   h5.setAttribute("id", "exampleModalLabel");
-  h5.appendChild(document.createTextNode("Network Connection Alert"));
+  var text1 = localStorage.getItem("lang") == "en" ? "Network Connection Alert" : "Alerte de connexion réseau";
+  h5.appendChild(document.createTextNode(text1));
 
   var span = document.createElement("span");
   span.setAttribute("aria-hidden", "true");
@@ -424,7 +430,8 @@ function network_state_modal() {
 
   var div_ = document.createElement("div");
   div_.setAttribute("class", "modal-body");
-  div_.appendChild(document.createTextNode("You are currently offline!! Please verify your internet connection before going ahead"));
+  var text = localStorage.getItem("lang") == "en" ? "You are currently offline!! Please verify your internet connection before going ahead" : "Vous êtes actuellement hors ligne! Veuillez vérifier votre connexion Internet avant de continuer";
+  div_.appendChild(document.createTextNode(text));
 
   var button__ = document.createElement("button");
   button__.setAttribute("type", "button");
