@@ -30,6 +30,9 @@
 <!--===============================================================================================-->
 </head>
 <script>
+	if(localStorage.getItem("lang") != "en" && localStorage.getItem("lang") != "fr") {
+		localStorage.setItem("lang", "en");
+	}
 	if(localStorage.getItem("userId") !== null)
 		window.location.replace("sections/index.html");
 	// localStorage.setItem("lang", "en");
@@ -157,6 +160,7 @@
 					localStorage.setItem("region_id", region_id);
 					localStorage.setItem("sub_region_id", sub_region_id);
 					localStorage.setItem("role", role);
+					// localStorage.setItem("lang", )
 					// localStorage.setItem("userAccess", access.join());
 					window.location.replace("sections/index.html");
 				} else {
