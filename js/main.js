@@ -34,6 +34,13 @@ function translate(page) {
   switch(localStorage.getItem("lang")) {
     case "fr":
     switch(page) {
+      case "information":
+      for(var i in text) {
+        document.getElementById(i).innerHTML = text[i];
+        console.log(i);
+      }
+      break;
+
       case "new_patient":
       for(var i in text) {
         document.getElementById(i).innerHTML = text[i];
