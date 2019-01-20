@@ -27,3 +27,7 @@
 	<allow-intent href="market:*" /> -->
 
 </widget>
+
+<platform name="android">
+    <preference name="android-minSdkVersion" value="14" />
+</platform>
