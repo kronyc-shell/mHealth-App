@@ -17,7 +17,14 @@
 
 
   <body>
-    <button type="button" class="btn btn-main btn-block" name="button" onclick="window.location.replace('index.html')" id="24">Goto Dashboard</button>
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="24">Goto Dashboard</button>
+      </div>
+      <div class="col">
+        <button onclick="patientNavigation(localStorage.getItem('lang'))" id="28" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+      </div>
+    </div>
     <div class="container">
       <br>
       <div class="row">
@@ -253,7 +260,8 @@
         "Retourner au tableau de bord",
         "Résultats de laboratoire",
         "Suivi enregistré",
-        "Nom et ID du patient"
+        "Nom et ID du patient",
+        "Naviguer le patient"
       ];
     </script>
     <script>

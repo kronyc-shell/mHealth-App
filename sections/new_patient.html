@@ -12,7 +12,14 @@
 
   <body>
 
-    <button type="button" class="btn btn-main btn-block" name="button" onclick="window.location.replace('index.html')" id="40">Goto Dashboard</button>
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="40">Goto Dashboard</button>
+      </div>
+      <div class="col">
+        <button onclick="patientNavigation(localStorage.getItem('lang'))" id="navigate_patient_btn" type="button" class="btn btn-info btn-block btn-sm" name="button">Navigate Patient</button>
+      </div>
+    </div>
     <div class="container">
       <br>
       <div class="row">

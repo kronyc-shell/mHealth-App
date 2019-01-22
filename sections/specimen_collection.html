@@ -17,7 +17,14 @@
 
 
   <body>
-    <button type="button" class="btn btn-main btn-block" name="button" onclick="window.location.replace('index.html')" id="8">Goto Dashboard</button>
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="8">Goto Dashboard</button>
+      </div>
+      <div class="col">
+        <button onclick="patientNavigation(localStorage.getItem('lang'))" id="10" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+      </div>
+    </div>
     <div class="container">
       <br>
       <div class="row">
@@ -112,7 +119,8 @@
         "Spot", "Matin",
         "Mucopurulent", "Sanguinolant", "Salivaire",
         "Plus spécimen", "Terminé", "Aucun spécimen collecté!",
-        "Aller au panneau de contrôle", "Prélèvement de l’échantillon"
+        "Aller au panneau de contrôle", "Prélèvement de l’échantillon",
+        "Naviguer le patient"
       ];
     </script>
     <script src="../js/main.js"></script>

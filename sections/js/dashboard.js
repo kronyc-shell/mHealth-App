@@ -23,15 +23,15 @@ function PatientCard() {
 
   }
 
-  this.view = function(lang) {
+  this.view = function(lang, isButton) {
     var div = document.createElement("div");
     div.id = this.id;
     div.name = this.name;
     div.className = "card card-patient";
     div.getText = function(key, lang) {
       // console.log("lang: " + lang);
-      var fr = {"collect_specimen" : "Collecte de l’échantillon", "lab" : "Laboratoire", "follow_up" : "Mesures de suivi", "outcome_recorded" : "Enregistrement des résultats", "Available actions..." : "Actions disponibles...", "information":"information"};
-      var en = {"collect_specimen" : "Collect Specimens", "lab" : "Labs", "follow_up" : "Follow Up", "outcome_recorded" : "Outcome Recorded", "Available actions...":key, "information": "Information"};
+      var fr = {"collect_specimen" : "Collecte de l’échantillon", "lab" : "Laboratoire", "follow_up" : "Mesures de suivi", "outcome_recorded" : "Enregistrement des résultats", "Available actions..." : "Actions disponibles...", "Information":"Information"};
+      var en = {"collect_specimen" : "Collect Specimens", "lab" : "Labs", "follow_up" : "Follow Up", "outcome_recorded" : "Outcome Recorded", "Available actions...":key, "Information": "Information"};
       switch(lang) {
         case "fr":
         return fr[key];
@@ -118,7 +118,7 @@ function PatientCard() {
 
       div = document.createElement("figcaption");
       div.className = "figure-caption";
-      div.appendChild(document.createTextNode(this.getText("information", lang)));
+      div.appendChild(document.createTextNode(this.getText("Information", lang)));
       var figcaption = div;
       figure.appendChild(figcaption);
 
@@ -259,6 +259,13 @@ function PatientCard() {
 
       $(modal).modal("show");
     };
+    if(isButton == true) {
+      var button = document.createElement("button");
+      button.onclick = function() {
+        div.click();
+      }
+      return button;
+    }
     var card = div;
 
     div = document.createElement("div");
@@ -307,7 +314,6 @@ function Dashboard(lang) {
     this.view.appendChild(div);
   }
 }
-
 
 //EVENT HANDLER FOR INTERNET CONNECTION
 function change_working_state(state) {

@@ -20,6 +20,11 @@ input{text-transform: uppercase;}
   color: white;
 }
 
+.btn-main-2 {
+  background-color: #54bdc4;
+  color: white;
+}
+
 .btn-succ {
   background-color: #09d033;
   color: white;

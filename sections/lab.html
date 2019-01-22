@@ -23,7 +23,14 @@
 
 
   <body>
-    <button type="button" class="btn btn-main btn-block" name="button" onclick="window.location.replace('index.html')" id="28">Goto Dashboard</button>
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="28">Goto Dashboard</button>
+      </div>
+      <div class="col">
+        <button onclick="patientNavigation(localStorage.getItem('lang'))" id="30" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+      </div>
+    </div>
     <div class="container">
       <br>
       <div class="row">
@@ -241,7 +248,8 @@
       "Bon travail! <br>Tout revoir et cliquer sur s'inscrire", "Registre!",
       "Laboratoire",
       "Aller au panneau de contrôle",
-      "Nom et ID du patient"
+      "Nom et ID du patient",
+      "Naviguer le patient"
      ];
     </script>
     <script src="../js/main.js"></script>
