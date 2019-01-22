@@ -556,7 +556,7 @@ function patientNavigation(lang) {
   div = document.createElement("figure");
   div.setAttribute("data-dismiss", "modal");
   div.className="figure";
-  div.onclick = function() { window.location.href='information.html' };
+  div.onclick = function() { window.location.replace('information.html') };
   var figure = div;
   col.appendChild(figure);
 
@@ -583,7 +583,7 @@ function patientNavigation(lang) {
   div = document.createElement("figure");
   div.setAttribute("data-dismiss", "modal");
   div.className="figure";
-  div.onclick = function() { window.location.href='specimen_collection.html' };
+  div.onclick = function() { window.location.replace('specimen_collection.html') };
   var figure = div;
   col.appendChild(figure);
 
@@ -610,7 +610,7 @@ function patientNavigation(lang) {
   div = document.createElement("figure");
   div.setAttribute("data-dismiss", "modal");
   div.className="figure";
-  div.onclick = function() { window.location.href='lab.html' };
+  div.onclick = function() { window.location.replace('lab.html') };
 
   var figure = div;
   col.appendChild(figure);
@@ -641,7 +641,7 @@ function patientNavigation(lang) {
   div = document.createElement("figure");
   div.setAttribute("data-dismiss", "modal");
   div.className="figure";
-  div.onclick = function() { window.location.href='follow-up.html' };
+  div.onclick = function() { window.location.replace('follow-up.html') };
   var figure = div;
   col.appendChild(figure);
 
@@ -668,7 +668,7 @@ function patientNavigation(lang) {
   div = document.createElement("figure");
   div.setAttribute("data-dismiss", "modal");
   div.className="figure";
-  div.onclick = function() { window.location.href='outcome.html' };
+  div.onclick = function() { window.location.replace('outcome.html') };
 
   var figure = div;
   col.appendChild(figure);
