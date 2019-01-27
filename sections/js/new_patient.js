@@ -65,6 +65,7 @@ $(document).ready(function() {
 
       var success = function(sr) {
         sessionStorage.setItem("userId", sr.id);
+        sessionStorage.setItem("userName", sr.userName);
         var msg;
         switch(localStorage.getItem("lang")) {
           case "fr":
