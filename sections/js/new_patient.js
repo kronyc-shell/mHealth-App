@@ -64,14 +64,15 @@ $(document).ready(function() {
       console.log(information);
 
       var success = function(sr) {
+        sessionStorage.setItem("userId", sr.id);
         var msg;
         switch(localStorage.getItem("lang")) {
           case "fr":
-          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">ID DU PATIENT: " +sr.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Aller au panneau de contrôle</a href='index.html'></div>";
+          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">ID DU PATIENT: " +sr.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Aller au panneau de contrôle</a href='index.html'><br><br><a class=\"btn btn-info\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Naviguer le patient</a href='index.html'></div>";
           break;
 
           case "en":
-          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Well Done!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">PATIENT'S ID: " +sr.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Return to Dashboard</a href='index.html'></div>";
+          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Well Done!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">PATIENT'S ID: " +sr.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Return to Dashboard</a href='index.html'><br><br><a class=\"btn btn-info\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Navigate Patients</a href='index.html'></div>";
           break;
         }
         document.getElementById("animationWindow").innerHTML = msg;
