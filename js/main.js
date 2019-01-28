@@ -556,14 +556,18 @@ function patientNavigation(lang) {
   div = document.createElement("figure");
   div.setAttribute("data-dismiss", "modal");
   div.className="figure";
-  div.onclick = function() { window.location.replace('information.html') };
+  div.onclick = function() {
+    window.location.replace('information.html')
+    sessionStorage.setItem("pathway", "information");
+
+  };
   var figure = div;
   col.appendChild(figure);
 
   div = document.createElement("img");
   div.src="../img/icons/information.png";
   div.setAttribute("style", "height: 90px; width: 90px");
-  div.className="figure-img img-fluid rounded";
+  div.className= sessionStorage.getItem("pathway") == "information" ? "figure-img img-fluid rounded-circle border border-primary" : "figure-img img-fluid rounded-circle border border-black";
   var figImg = div;
   figure.appendChild(figImg);
 
@@ -583,14 +587,18 @@ function patientNavigation(lang) {
   div = document.createElement("figure");
   div.setAttribute("data-dismiss", "modal");
   div.className="figure";
-  div.onclick = function() { window.location.replace('specimen_collection.html') };
+  div.onclick = function() {
+    window.location.replace('specimen_collection.html')
+    sessionStorage.setItem("pathway", "collect_specimen");
+
+  };
   var figure = div;
   col.appendChild(figure);
 
   div = document.createElement("img");
   div.src="../img/icons/specimen.png";
   div.setAttribute("style", "height: 90px; width: 90px");
-  div.className="figure-img img-fluid rounded";
+  div.className= sessionStorage.getItem("pathway") == "collect_specimen" ? "figure-img img-fluid rounded-circle border border-info" : "figure-img img-fluid rounded-circle border border-black";
   var figImg = div;
   figure.appendChild(figImg);
 
@@ -610,7 +618,10 @@ function patientNavigation(lang) {
   div = document.createElement("figure");
   div.setAttribute("data-dismiss", "modal");
   div.className="figure";
-  div.onclick = function() { window.location.replace('lab.html') };
+  div.onclick = function() {
+    window.location.replace('lab.html')
+    sessionStorage.setItem("pathway", "lab");
+  };
 
   var figure = div;
   col.appendChild(figure);
@@ -618,7 +629,7 @@ function patientNavigation(lang) {
   div = document.createElement("img");
   div.src="../img/icons/lab.png";
   div.setAttribute("style", "height: 90px; width: 90px");
-  div.className="figure-img img-fluid rounded";
+  div.className= sessionStorage.getItem("pathway") == "lab" ? "figure-img img-fluid rounded-circle border border-info" : "figure-img img-fluid rounded-circle border border-black";
   var figImg = div;
   figure.appendChild(figImg);
 
@@ -641,14 +652,17 @@ function patientNavigation(lang) {
   div = document.createElement("figure");
   div.setAttribute("data-dismiss", "modal");
   div.className="figure";
-  div.onclick = function() { window.location.replace('follow-up.html') };
+  div.onclick = function() {
+    sessionStorage.setItem("pathway", "follow_up");
+    window.location.replace('follow-up.html')
+  };
   var figure = div;
   col.appendChild(figure);
 
   div = document.createElement("img");
   div.src="../img/icons/follow-up.png";
   div.setAttribute("style", "height: 90px; width: 90px");
-  div.className="figure-img img-fluid rounded";
+  div.className= sessionStorage.getItem("pathway") == "follow_up" ? "figure-img img-fluid rounded-circle border border-info" : "figure-img img-fluid rounded-circle border border-black";
   var figImg = div;
   figure.appendChild(figImg);
 
@@ -668,7 +682,10 @@ function patientNavigation(lang) {
   div = document.createElement("figure");
   div.setAttribute("data-dismiss", "modal");
   div.className="figure";
-  div.onclick = function() { window.location.replace('outcome.html') };
+  div.onclick = function() {
+    window.location.replace('outcome.html')
+    sessionStorage.setItem("pathway", "outcome_recorded");
+  };
 
   var figure = div;
   col.appendChild(figure);
@@ -676,7 +693,7 @@ function patientNavigation(lang) {
   div = document.createElement("img");
   div.src="../img/icons/outcome.png";
   div.setAttribute("style", "height: 90px; width: 90px");
-  div.className="figure-img img-fluid rounded";
+  div.className= sessionStorage.getItem("pathway") == "outcome_recorded" ? "figure-img img-fluid rounded-circle border border-primary" : "figure-img img-fluid rounded-circle border border-black";
   var figImg = div;
   figure.appendChild(figImg);
 

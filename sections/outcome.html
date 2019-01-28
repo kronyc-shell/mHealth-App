@@ -293,7 +293,7 @@
             var comments = document.getElementById("comments");
 
             xray.innerHTML += sr.xray == true ? "done" : "not done";
-            amoxicilin.innerHTML += sr.amoxicilin == true ? "given" : "not given";
+            amoxicilin.innerHTML += sr.amoxicillin ? "given" : "not given";
             otherAntibiotic.innerHTML += sr.otherAntibiotic == "" ? "n/a" : sr.otherAntibiotic;
             follow_up_date.innerHTML += sr.follow_up_date == "" ? "n/a" : sr.follow_up_date;
             comments.innerHTML += sr.comments == "" ? "n/a" : sr.comments;
