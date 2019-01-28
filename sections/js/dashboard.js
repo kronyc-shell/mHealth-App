@@ -45,6 +45,7 @@ function PatientCard() {
     div.setAttribute("data-toggle", "modal");
     div.setAttribute("data-target", "exampleModal");
     div.onclick = function() {
+      sessionStorage.setItem("pathway", null);
       sessionStorage.setItem("userId", this.id);
       sessionStorage.setItem("userName", this.name);
       var div = document.createElement("div");
@@ -98,14 +99,17 @@ function PatientCard() {
       //information
       div = document.createElement("div");
       div.className = "col-12 text-center";
-      div.id = "specimen_collection";
+      div.id = "information";
       var col = div;
       row.appendChild(col);
 
       div = document.createElement("figure");
       div.setAttribute("data-dismiss", "modal");
       div.className="figure";
-      div.onclick = function() { window.location.href='information.html' };
+      div.onclick = function() {
+        window.location.href='information.html'
+        sessionStorage.setItem("pathway", "information");
+      };
       var figure = div;
       col.appendChild(figure);
 
@@ -132,7 +136,10 @@ function PatientCard() {
       div = document.createElement("figure");
       div.setAttribute("data-dismiss", "modal");
       div.className="figure";
-      div.onclick = function() { window.location.href='specimen_collection.html' };
+      div.onclick = function() {
+        window.location.href='specimen_collection.html'
+        sessionStorage.setItem("pathway", "collect_specimen");
+      };
       var figure = div;
       col.appendChild(figure);
 
@@ -152,14 +159,18 @@ function PatientCard() {
       //labs
       div = document.createElement("div");
       div.className = "col text-center";
-      div.id = "specimen_collection";
+      div.id = "lab";
       var col = div;
       row.appendChild(col);
 
       div = document.createElement("figure");
       div.setAttribute("data-dismiss", "modal");
       div.className="figure";
-      div.onclick = function() { window.location.href='lab.html' };
+      div.onclick = function() {
+        window.location.href='lab.html'
+        sessionStorage.setItem("pathway", "lab");
+
+      };
 
       var figure = div;
       col.appendChild(figure);
@@ -183,14 +194,18 @@ function PatientCard() {
       var row1 = div;
       div = document.createElement("div");
       div.className = "col text-center";
-      div.id = "specimen_collection";
+      div.id = "follow_up";
       var col = div;
       row1.appendChild(col);
 
       div = document.createElement("figure");
       div.setAttribute("data-dismiss", "modal");
       div.className="figure";
-      div.onclick = function() { window.location.href='follow-up.html' };
+      div.onclick = function() {
+        window.location.href='follow-up.html'
+        sessionStorage.setItem("pathway", "follow_up");
+
+      };
       var figure = div;
       col.appendChild(figure);
 
@@ -210,14 +225,17 @@ function PatientCard() {
       //outcome recorded
       div = document.createElement("div");
       div.className = "col text-center";
-      div.id = "specimen_collection";
+      div.id = "outcome_recorded";
       var col = div;
       row1.appendChild(col);
 
       div = document.createElement("figure");
       div.setAttribute("data-dismiss", "modal");
       div.className="figure";
-      div.onclick = function() { window.location.href='outcome.html' };
+      div.onclick = function() {
+        window.location.href='outcome.html'
+        sessionStorage.setItem("pathway", "outcome_recorded");
+      };
 
       var figure = div;
       col.appendChild(figure);
