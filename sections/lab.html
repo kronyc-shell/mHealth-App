@@ -42,7 +42,8 @@
               <label for="patient_name" id="29">Patient's name and ID</label>
               <input type="text" id="patient_name" disabled class="form-control">
               <script>
-                document.getElementById("patient_name").placeholder = sessionStorage.getItem("userName") + " | " + sessionStorage.getItem("userId");
+                var patient = JSON.parse(sessionStorage.getItem("patient"));
+                document.getElementById("patient_name").placeholder = patient.name + " | " + patient.id;
               </script>
             </div>
             <form id="smear_results_form">
@@ -70,15 +71,15 @@
                       <label class="custom-control-label" for="scanty" id="6">scanty</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                      <input onclick="toggle_no_results()" type="radio" value="plus_one" id="plus_one" name="result_1" class="custom-control-input">
+                      <input onclick="toggle_no_results()" type="radio" value="+1" id="plus_one" name="result_1" class="custom-control-input">
                       <label class="custom-control-label" for="plus_one">1+</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                      <input onclick="toggle_no_results()" type="radio" value="plus_two" id="plus_two" name="result_1" class="custom-control-input">
+                      <input onclick="toggle_no_results()" type="radio" value="+2" id="plus_two" name="result_1" class="custom-control-input">
                       <label class="custom-control-label" for="plus_two">2+</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                      <input onclick="toggle_no_results()" type="radio" value="plus_three" id="plus_three" name="result_1" class="custom-control-input">
+                      <input onclick="toggle_no_results()" type="radio" value="+3" id="plus_three" name="result_1" class="custom-control-input">
                       <label class="custom-control-label" for="plus_three">3+</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
@@ -98,15 +99,15 @@
                       <label class="custom-control-label" for="scanty_2" id="10">scanty</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" value="plus_one" id="plus_one_2" name="result_2" class="custom-control-input">
+                      <input type="radio" value="+1" id="plus_one_2" name="result_2" class="custom-control-input">
                       <label class="custom-control-label" for="plus_one_2">1+</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" value="plus_two" id="plus_two_2" name="result_2" class="custom-control-input">
+                      <input type="radio" value="+2" id="plus_two_2" name="result_2" class="custom-control-input">
                       <label class="custom-control-label" for="plus_two_2">2+</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" value="plus_three" id="plus_three_2" name="result_2" class="custom-control-input">
+                      <input type="radio" value="+3" id="plus_three_2" name="result_2" class="custom-control-input">
                       <label class="custom-control-label" for="plus_three_2">3+</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
@@ -123,6 +124,9 @@
                     <label for="date1">Date</label>
                     <input required type="date" class="form-control" id="date1" value="">
                   </div>
+                  <script>
+                    document.getElementById("date1").value = sessionStorage.getItem("_todays_date");
+                  </script>
                 </div>
               </div>
             </form>
@@ -314,7 +318,7 @@
 
       }
 
-      transmission._fetch("lab", sessionStorage.getItem("userId"), success);
+      // transmission._fetch("lab", sessionStorage.getItem("userId"), success);
     </script>
 
   </body>

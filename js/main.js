@@ -157,23 +157,19 @@ var transmission = {
   insert : function(model, information, success) {
     var user_id = JSON.parse(localStorage.getItem("user")).id;
 
-    switch(model) {
-      case "information":
-      var ajax = new XMLHttpRequest;
-      ajax.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-          console.log("server said: " + this.responseText);
-          var serverResponse = JSON.parse(this.responseText);
-          if(serverResponse.code == 200)
-          success(serverResponse.data);
-          else {} //Failed here
-        }
-      };
-      ajax.open("POST", this.url + `/user/${user_id}/patient/`, true);
-      ajax.setRequestHeader("Content-Type", "application/json");
-      ajax.send(JSON.stringify(information));
-      break;
-    }
+    var ajax = new XMLHttpRequest;
+    ajax.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 200) {
+        console.log("server said: " + this.responseText);
+        var serverResponse = JSON.parse(this.responseText);
+        if(serverResponse.code == 200)
+        success(serverResponse.data);
+        else {} //Failed here
+      }
+    };
+    ajax.open("POST", this.url + `/user/${user_id}/patient/`, true);
+    ajax.setRequestHeader("Content-Type", "application/json");
+    ajax.send(JSON.stringify(information));
   },
 
   update : function(model, information, success) {
@@ -185,7 +181,7 @@ var transmission = {
       if(this.readyState == 4 && this.status == 200) {
         // console.log("server said: " + this.responseText);
         var sr = JSON.stringify(this.responseText);
-        // success(sr);
+        success(sr);
       }
     };
     ajax.open(
@@ -195,7 +191,7 @@ var transmission = {
     );
     ajax.setRequestHeader(
       "Content-Type",
-      "application/x-www-form-urlencoded"
+      "application/json"
     );
     ajax.send(
       JSON.stringify(

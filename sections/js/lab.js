@@ -35,7 +35,7 @@ document.forms['smear_results_form'].onsubmit = function() {
   this.lsn.value.toUpperCase();
 
   // console.log("LSN: ", lsn);
-  var date = this.date1.value;
+  var smr_date = this.date1.value;
 
   var smr_result_1 =
   extract_radio(this.elements.result_1);
@@ -46,7 +46,7 @@ document.forms['smear_results_form'].onsubmit = function() {
   var mtb_result =
   extract_radio(xpert_form.elements.mtb_results);
 
-  var rif_results =
+  var rif_result =
   extract_radio(xpert_form.elements.rif_results);
 
   var unique_code = xpert_form.unique_code.value.toUpperCase();
@@ -54,10 +54,11 @@ document.forms['smear_results_form'].onsubmit = function() {
   var xpert_date = xpert_form.mtb_date.value;
 
   var pathway = "lab";
+  var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
 
   var information = {
     "pathway" : pathway,
-    "date" : date,
+    "patient_id" : patient_id,
     "date_specimen_received" : date_specimen_received,
     "received_by" : received_by,
     "lab_serial_number" : lab_serial_number,
@@ -95,7 +96,7 @@ document.forms['smear_results_form'].onsubmit = function() {
   var anim = bodymovin.loadAnimation(animData);
   anim.setSpeed(3.4);
 
-  transmission.update("lab", information, success);
+  transmission.insert("lab", information, success);
 };
 
 function toggle_forms(input) {

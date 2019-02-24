@@ -155,7 +155,8 @@
         transmission._fetch("specimen_collection", id, success);
 
         translate("specimen_collection");
-        document.getElementById("name").innerHTML = sessionStorage.getItem("userName") + " | " + sessionStorage.getItem("userId");
+        var patient = JSON.parse(sessionStorage.getItem("patient"));
+        document.getElementById("name").innerHTML = patient.name+ " | " + patient.id;
       });
     </script>
     <script src="js/specimen_collection.js"></script>
