@@ -178,7 +178,7 @@ var transmission = {
       }
     };
     ajax.open(
-      "POST",
+      "PUT",
       this.url + `/user/${user_id}/patient/${patient_id}`,
       true
     );
