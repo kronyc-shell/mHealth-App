@@ -219,6 +219,11 @@ var transmission = {
     };
 
     switch(model) {
+      case "patient":
+      var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
+      ajax.open("GET", this.url + `/user/${user_id}/patient/${patient_id}`, true);
+      break;
+
       case "patients":
       ajax.open("GET", this.url + `/user/${user_id}/patients`, true);
       break;

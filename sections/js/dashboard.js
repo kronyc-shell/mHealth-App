@@ -1,11 +1,12 @@
 function PatientCard() {
-  this._header;
-  this.name;
-  this.gender;
-  this.duration;
-  this.phonenumber;
-  this.age;
-  this.id;
+  // this._header;
+  // this.name;
+  // this.gender;
+  // this.duration;
+  // this.phonenumber;
+  // this.age;
+  // this.id;
+  this.patient;
 
   this.translate = function(text, lang) {
     if(text === null) return;
@@ -25,8 +26,7 @@ function PatientCard() {
 
   this.view = function(lang, isButton) {
     var div = document.createElement("div");
-    div.id = this.id;
-    div.name = this.name;
+    div.patient = this.patient;
     div.className = "card card-patient";
     div.getText = function(key, lang) {
       // console.log("lang: " + lang);
@@ -46,8 +46,7 @@ function PatientCard() {
     div.setAttribute("data-target", "exampleModal");
     div.onclick = function() {
       sessionStorage.setItem("pathway", null);
-      sessionStorage.setItem("userId", this.id);
-      sessionStorage.setItem("userName", this.name);
+      sessionStorage.setItem("patient", JSON.stringify(this.patient));
       var div = document.createElement("div");
       div.setAttribute("tabIndex", "-1");
       div.setAttribute("role", "dialog");
@@ -288,11 +287,11 @@ function PatientCard() {
 
     div = document.createElement("div");
     div.className = "card-body text-center";
-    div.appendChild(document.createTextNode(this.name));
+    div.appendChild(document.createTextNode(this.patient.name));
     div.appendChild(document.createElement("br"));
-    div.appendChild(document.createTextNode(this.translate(this.gender, lang) + " | " + this.id));
+    div.appendChild(document.createTextNode(this.translate(this.patient.gender, lang) + " | " + this.patient.id));
     div.appendChild(document.createElement("br"));
-    div.appendChild(document.createTextNode(this.translate(this.duration, lang) + " | " + this.phonenumber + " | " + this.age + " "+ this.translate("years", lang)));
+    div.appendChild(document.createTextNode(this.translate(this.duration, lang) + " | " + this.patient.telephone1 + " | " + this.patient.age + " "+ this.translate("years", lang)));
     var cardBody = div;
 
     card.appendChild(cardBody);

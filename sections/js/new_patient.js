@@ -150,49 +150,49 @@ $(document).ready(function() {
       }
     }
   } else {
-    console.log("Got to this option");
-    // alert("Not null")
-    // alert(sessionStorage.getItem("userId"));
-    // var success = function(sr) {
-    //   var form = document.forms["request_form"];
-    //
-    //   form.id.value = sessionStorage.getItem("userId");
-    //   form.id.setAttribute("disabled", "disabled");
-    //
-    //   form.name.value = sr.name;
-    //   form.name.setAttribute("disabled", "disabled");
-    //
-    //   form.age.value = sr.age;
-    //   form.age.setAttribute("disabled", "disabled");
-    //
-    //   form.gender.value = sr.gender;
-    //   form.gender.setAttribute("disabled", "disabled");
-    //
-    //   form.address.value = sr.address;
-    //   form.address.setAttribute("disabled", "disabled");
-    //
-    //   form.telephone.value = sr.telephone;
-    //   form.telephone.setAttribute("disabled", "disabled");
-    //
-    //   form.telephone_2.value = sr.telephone_2;
-    //   form.telephone_2.setAttribute("disabled", "disabled");
-    //
-    //   form.art.value = sr.artCode;
-    //   form.art.setAttribute("disabled", "disabled");
-    //
-    //   form.status.value = sr.wardBedNumber;
-    //   form.status.setAttribute("disabled", "disabled");
-    //
-    //   form.symptoms.value = sr.symptoms;
-    //   form.symptoms.setAttribute("disabled", "disabled");
-    //
-    //   // form.patient_category.value = sr.patientCategory;
-    //   // form.specimen_type.value = sr.specimenType;
-    //   form.reason_for_test.value = sr.reasonForTest;
-    //   form.reason_for_test.setAttribute("disabled", "disabled");
-    //
-    // }
-    // transmission._fetch("information", sessionStorage.getItem("userId"), success);
+    var success = function(patient) {
+      var form = document.forms["request_form"];
+
+      form.id.value = JSON.parse(sessionStorage.getItem("patient")).id;
+      form.id.setAttribute("disabled", "disabled");
+
+      form.name.value = patient.name;
+      form.name.setAttribute("disabled", "disabled");
+
+      form.age.value = patient.age;
+      form.age.setAttribute("disabled", "disabled");
+
+      form.gender.value = patient.gender;
+      form.gender.setAttribute("disabled", "disabled");
+
+      form.address.value = patient.address;
+      form.address.setAttribute("disabled", "disabled");
+
+      form.telephone.value = patient.telephone1;
+      form.telephone.setAttribute("disabled", "disabled");
+
+      form.telephone_2.value = patient.telephone2;
+      form.telephone_2.setAttribute("disabled", "disabled");
+
+      form.art.value = patient.art_code;
+      form.art.setAttribute("disabled", "disabled");
+
+      form.status.value = patient.ward_bed_number;
+      form.status.setAttribute("disabled", "disabled");
+
+      form.symptoms.value = patient.symptoms;
+      form.symptoms.setAttribute("disabled", "disabled");
+
+      form.reason_for_test.value = patient.reason_for_test;
+      form.reason_for_test.setAttribute("disabled", "disabled");
+
+      form.patient_category.value = patient.patient_category;
+      form.patient_category.setAttribute("disabled", "disabled");
+
+    }
+    var failed = function() {}
+    var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
+    transmission.fetch("patient", success, failed, patient_id);
   }
 
 });
