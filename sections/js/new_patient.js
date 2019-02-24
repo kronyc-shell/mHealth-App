@@ -23,33 +23,52 @@ $(document).ready(function() {
       var age = this.age.value;
       var sex = extract_radio(this.elements.gender);
       var address = this.address.value;
-      var telephone = this.telephone.value;
+      var telephone1 = this.telephone.value;
       var telephone2 = this.telephone_2.value;
       // var patient_unique_code = this.patient_unique_code.value;
-      var symptoms = extract_checkbox(this.elements.symptoms);
-      var patientCategory = extract_checkbox(this.elements.patient_category);
-      var artCode = this.art_code.value;
-      patientCategory.push({"other":this.pc_other.value});
+      var art_code = this.art_code.value;
+
+      var symptoms =
+      extract_checkbox(this.elements.symptoms);
+
+      var patient_category =
+      extract_checkbox(this.elements.patient_category);
+
+      patient_category.push({"other":this.pc_other.value});
       if(artCode == "") {
-        artCode = extract_radio(this.elements.has_art);
-      }
-      var wardBedNumber = this.ward_bed_number.value;
-      if(wardBedNumber == "") {
-        wardBedNumber = extract_radio(this.elements.status);
+        artCode =
+        extract_radio(this.elements.has_art);
       }
 
-      var specimen_type = extract_checkbox(this.elements.specimen_type);
+      var ward_bed_number =
+      this.ward_bed_number.value;
+
+      if(ward_bed_number == "") {
+        ward_bed_number =
+        extract_radio(this.elements.status);
+      }
+
+      var specimen_type =
+      extract_checkbox(this.elements.specimen_type);
+
       specimen_type.push({"other":this.st_other.value});
 
-      var reasonForTest = this.presumption.value;
+      var reason_for_test =
+      this.presumption.value;
 
-      var TbTreatmentHistory = {};
-      TbTreatmentHistory['tb_treatment_history'] = extract_radio(this.elements.tb_treatment_history);
-      TbTreatmentHistory["contact"] = this.contact.value;
-      TbTreatmentHistory["tb_his_other"] = this.tb_his_other.value;
+      var tb_treatment_history = {};
 
-      var region = this.region.value;
-      var subRegion = this.sub_region.value;
+      tb_treatment_history['tb_treatment_history'] =
+      extract_radio(this.elements.tb_treatment_history);
+
+      tb_treatment_history["contact"] =
+      this.contact.value;
+
+      tb_treatment_history["tb_his_other"] =
+      this.tb_his_other.value;
+
+      var region_id = this.region.value;
+      var community_id = this.sub_region.value;
 
       var req_name = this.req_name.value;
       var req_email = this.req_email.value;
@@ -57,9 +76,36 @@ $(document).ready(function() {
       var req_other = this.req_other.value;
       var req_date = this.req_date.value;
 
-      var req_information = {"req_name":req_name, "req_email":req_email, "req_phonenumber":req_phonenumber, "req_other":req_other, "req_date":req_date};
+      var requester =
+      {
+        "name":req_name,
+        "email":req_email,
+        "phonenumber":req_phonenumber,
+        "other":req_other,
+        "date":req_date
+      };
 
-      var information = {"id":localStorage.getItem("userId"), "name":name, "age":age, "gender":sex, "address":address, "telephone":telephone, "telephone_2":telephone2, "symptoms":symptoms, "patient_category":patientCategory, "specimen_type":specimen_type, "reason_for_test":reasonForTest, "tb_treatment_history":TbTreatmentHistory, "requester":req_information, "art_code":artCode, "date": sessionStorage.getItem("_todays_date"), "ward_bed_number":wardBedNumber, "region_id":region, "sub_region_id":subRegion};
+      var pathway = "information";
+
+      var information = {
+        "pathway" : pathway,
+        "region_id" : region_id,
+        "community_id" : community_id,
+        "name" : name,
+        "age" : age,
+        "gender" : gender,
+        "address" : address",
+        "telephone1" : telephone1,
+        "telephone2" : telephone2,
+        "art_code" : art_code,
+        "reason_for_test" : reason_for_test,
+        "ward_bed_number" : ward_bed_number,
+        "patient_category" : patient_category,
+        "specimen_type" : specimen_type,
+        "tb_treatment_history" : tb_treatment_history,
+        "symptoms" : symptoms,
+        "requester" : requester
+      };
       // information = JSON.stringify(information);
       console.log(information);
 

@@ -8,13 +8,32 @@ document.forms['follow_up_form'].onsubmit = function() {
 
   var anim = bodymovin.loadAnimation(animData);
   anim.setSpeed(3.4);
-  var amoxicilinPrescribed = this.amoxicilin.checked ? true : false;
-  var xray = this.xray.checked ? true : false;
-  var otherAntibiotic = this.otherAntibiotic.value;
-  var followUpDate = this.follow_up_date.value;
-  var comments = this.comments.value;
 
-  var information = {"workerId":localStorage.getItem("userId"), "id":sessionStorage.getItem("userId"), "amoxicilin_prescribed":amoxicilinPrescribed, "xray":xray, "other_antibiotic":otherAntibiotic, "follow_up_date":followUpDate, "comments":comments};
+  var amoxicillin =
+  this.amoxicilin.checked ? true : false;
+
+  var xray =
+  this.xray.checked ? true : false;
+
+  var other_antibiotic =
+  this.otherAntibiotic.value;
+
+  var follow_up_scheduled_date =
+  this.follow_up_date.value;
+
+  var comments =
+  this.comments.value;
+
+  var pathway = "follow_up";
+
+  var information = {
+    "pathway" : pathway,
+    "xray" : xray,
+    "amoxicillin" : amoxicillin,
+    "other_antibiotic" : other_antibiotic,
+    "follow_up_scheduled_date" : follow_up_scheduled_date,
+    "comments" : comments
+  };
 
   var success = function() {
     var msg;

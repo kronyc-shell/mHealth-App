@@ -142,7 +142,11 @@
 			var username = this.username.value;
 			var password = this.password.value;
 
-			var information = {"username":username, "password":password};
+			var information = {
+				"type":authenticate,
+				"username":username,
+				"password":password
+			};
 
 			var success = function(sr) {
 				if(sr.id !== null && sr.id !== 'undefined') {

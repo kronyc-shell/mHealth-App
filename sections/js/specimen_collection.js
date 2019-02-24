@@ -130,7 +130,17 @@ document.forms['specimen_form'].onsubmit = function() {
   var period = extract_radio(this.elements.period);
   var aspect = extract_radio(this.elements.aspect);
   console.log("userId: " + sessionStorage.getItem("userId"));
-  var information = {"id":sessionStorage.getItem("userId"), "userId":localStorage.getItem("userId"), "date":date, "period":period, "aspect":aspect};
+
+  var pathway = "specimen";
+  var user_id = localStorage.getItem("userId");
+
+  var information = {
+    "pathway" : pathway,
+    "userId":localStorage.getItem("userId"),
+    "date":date,
+    "period":period,
+    "aspect":aspect
+  };
   // information = JSON.stringify(information);
   console.log(information);
 

@@ -9,15 +9,41 @@ document.forms['outcome_form'].onsubmit = function() {
   var anim = bodymovin.loadAnimation(animData);
   anim.setSpeed(3.4);
 
-  var outcome_recorded = extract_radio(this.elements.treatment);
-  var tb_rx_number = this.referred_tb_rx_number_write.value;
-  var other = this.other.value;
-  var comments = this.comments.value;
-  var closePatient = this.elements.close_patient.checked ? true : false;
-  var patient_id = sessionStorage.getItem("userId");
-  var requester = {"name":this.req_name.value, "phonenumber":this.req_phonenumber.value, "email":this.req_email.value, "other":this.req_other.value, "date":this.req_date.value};
+  var outcome_recorded =
+  extract_radio(this.elements.treatment);
 
-  var information = {"workerId":localStorage.getItem("userId"), "id":patient_id, "outcome_recorded":outcome_recorded, "other":other, "comments":comments, "close_patient":closePatient, "requester":requester, "tb_rx_number":tb_rx_number};
+  var tb_rx_number =
+  this.referred_tb_rx_number_write.value;
+
+  var other =
+  this.other.value;
+
+  var comments =
+  this.comments.value;
+
+  var close_patient =
+  this.elements.close_patient.checked ? true : false;
+
+  var requester = {
+    "name":this.req_name.value,
+    "phonenumber":this.req_phonenumber.value,
+    "email":this.req_email.value,
+    "other":this.req_other.value,
+    "date":this.req_date.value
+  };
+
+  var pathway =
+  "outcome_recorded";
+
+  var information = {
+    "pathway" : pathway,
+    "outcome_recorded" : outcome_recorded,
+    "other" : other,
+    "comments" : comments,
+    "close_patient" : close_patient,
+    "requester" : requester,
+    "tb_rx_number" : tb_rx_number
+  };
 
   var success = function() {
     var msg;

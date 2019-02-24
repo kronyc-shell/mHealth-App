@@ -11,28 +11,65 @@ $(document).ready(function() {
 document.forms['smear_results_form'].onsubmit = function() {
   console.log("controller - lab");
   var xpert_form = document.forms['machine_results'];
-  var auto = xpert_form.automatic_input.checked ? xpert_form.automatic_input.value : null;
+
+  var source =
+   xpert_form.automatic_input.checked ?
+   xpert_form.automatic_input.value
+   : "manual";
+
   // if(xpert_form.automatic_input.checked)
   if(xpert_form.unique_code.hasAttribute("required") && xpert_form.unique_code.value.length < 1) {
     xpert_form.unique_code.select();
     xpert_form.unique_code.placeholder = "Cannot be empty!";
     return false;
   }
-  var received_by = this.received_by.value.toUpperCase();
+
+  var received_by =
+  this.received_by.value.toUpperCase();
   // console.log("Received: ", received_by);
-  var date_specimen_received = this.date_specimen_received.value;
-  var lsn = this.lsn.value.toUpperCase();
+
+  var date_specimen_received =
+  this.date_specimen_received.value;
+
+  var lab_serial_number =
+  this.lsn.value.toUpperCase();
+
   // console.log("LSN: ", lsn);
-  var date1 = this.date1.value;
-  var smr_results = {"result_1":extract_radio(this.elements.result_1), "result_2":extract_radio(this.elements.result_2)};
-  var xpert_results = auto == "automatic" ? null : {"mtb_result":extract_radio(xpert_form.elements.mtb_results), "rif_results":extract_radio(xpert_form.elements.rif_results)};
+  var date = this.date1.value;
+
+  var smr_result_1 =
+  extract_radio(this.elements.result_1);
+
+  var smr_result_2 =
+  extract_radio(this.elements.result_2);
+
+  var mtb_result =
+  extract_radio(xpert_form.elements.mtb_results);
+
+  var rif_results =
+  extract_radio(xpert_form.elements.rif_results);
 
   var unique_code = xpert_form.unique_code.value.toUpperCase();
   // console.log("uniquue code: ", unique_code);
-  var xpertDate = xpert_form.mtb_date.value;
-  var type = "insert";
+  var xpert_date = xpert_form.mtb_date.value;
 
-  var information = {"worker_id":localStorage.getItem("userId"), "id":sessionStorage.getItem("userId"),"source":"manual_user", "smr_results":smr_results, "xpert_results":xpert_results, "auto":auto, "unique_code":unique_code.toLowerCase(), "received_by":received_by, "date_specimen_received":date_specimen_received, "lab_serial_number":lsn, "smr_date":date1, "xpert_date":xpertDate};
+  var pathway = "lab";
+
+  var information = {
+    "pathway" : pathway,
+    "date" : date,
+    "date_specimen_received" : date_specimen_received,
+    "received_by" : received_by,
+    "lab_serial_number" : lab_serial_number,
+    "smr_date" : smr_date,
+    "smr_result_1" : smr_result_1,
+    "smr_result_2" : smr_result_2,
+    "unique_code" : unique_code,
+    "mtb_result" : mtb_result,
+    "rif_result" : rif_result,
+    "xpert_date" : xpert_date,
+    "source" : source
+  };
   // information = JSON.stringify(information);
   // console.log(information);
 

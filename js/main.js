@@ -110,12 +110,15 @@ function translate(page) {
 
 
 var transmission = {
+  default_afkanerd_id : "d3f4ul7-4fk4n3rd-1d",
   _connection : "",
   _userId : "",
 
-  url : "http://142.93.248.15/tbproject_v2/app/",
-  // url : "http://localhost/tbproject_v2/app/",
+  url : "http://tbappbamenda.com/tbproject_v2/app/",
+  // url : "http://tbappdashboard.localhost/tbproject_v2/app/",
+  // url : "http://tbappbamenda.com:8080"
 
+  //TODO: figure out why this part
   set connection(connection) {
     this._connection = connection;
   },
@@ -132,17 +135,19 @@ var transmission = {
           if(this.readyState == 4 && this.status == 200) {
             console.log("server said: " + this.responseText);
             var sr = JSON.parse(this.responseText);
-            success(sr);
+            // success(sr);
           }
         };
-        ajax.open("POST", this.url, true);
-        ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        ajax.send("data=" + encodeURIComponent(JSON.stringify({"model":"auth","information":{information}})));
+        ajax.open("POST", this.url + `/user/${transmission.default_afkanerd_id}/user/`, true);
+        ajax.setRequestHeader("Content-Type", "application/json");
+        ajax.send(JSON.stringify(information));
       break;
     }
   },
 
   insert : function(model, information, success) {
+    var user_id = localStorage.getItem("userId");
+
     switch(model) {
       case "information":
       var ajax = new XMLHttpRequest;
@@ -150,76 +155,42 @@ var transmission = {
         if(this.readyState == 4 && this.status == 200) {
           console.log("server said: " + this.responseText);
           var sr = JSON.parse(this.responseText);
-          success(sr);
+          // success(sr);
         }
       };
-      ajax.open("POST", this.url, true);
-      ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      ajax.send("data=" + encodeURIComponent(JSON.stringify({"model":"information","information":{information}})));
+      ajax.open("POST", this.url + `/user/${user_id}/patient/`, true);
+      ajax.setRequestHeader("Content-Type", "application/json");
+      ajax.send(JSON.stringify(information));
       break;
     }
   },
 
   update : function(model, information, success) {
-    switch(model) {
-      case "specimen_collection":
-      var ajax = new XMLHttpRequest;
-      ajax.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-          // console.log("server said: " + this.responseText);
-          var sr = JSON.stringify(this.responseText);
-          success(sr);
-        } else {
-          console.log(this.readyState, " | ", this.status);
-        }
-      };
-      ajax.open("POST", this.url, true);
-      ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      ajax.send("data=" + encodeURIComponent(JSON.stringify({"model":model,"information":{information}})));
-      break;
+    var user_id = localStorage.getItem("userId");
+    var patient_id = sessionStorage.getItem("userId");
 
-      case "lab":
-      var ajax = new XMLHttpRequest;
-      ajax.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-          console.log("server said: " + this.responseText);
-          var sr = JSON.parse(this.responseText);
-          success(sr);
-        }
-      };
-      ajax.open("POST", this.url, true);
-      ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      ajax.send("data=" + encodeURIComponent(JSON.stringify({"model":model,"information":{information}})));
-      break;
-
-      case "follow_up":
-      var ajax = new XMLHttpRequest;
-      ajax.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-          console.log("server said: " + this.responseText);
-          var sr = JSON.parse(this.responseText);
-          success(sr);
-        }
-      };
-      ajax.open("POST", this.url, true);
-      ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      ajax.send("data=" + encodeURIComponent(JSON.stringify({"model":model,"information":{information}})));
-      break;
-
-      case "outcome_recorded":
-      var ajax = new XMLHttpRequest;
-      ajax.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-          console.log("server said: " + this.responseText);
-          var sr = JSON.parse(this.responseText);
-          success(sr);
-        }
-      };
-      ajax.open("POST", this.url, true);
-      ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      ajax.send("data=" + encodeURIComponent(JSON.stringify({"model":model,"information":{information}})));
-      break;
-    }
+    var ajax = new XMLHttpRequest;
+    ajax.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 200) {
+        // console.log("server said: " + this.responseText);
+        var sr = JSON.stringify(this.responseText);
+        // success(sr);
+      }
+    };
+    ajax.open(
+      "POST",
+      this.url + `/user/${user_id}/patient/${patient_id}`,
+      true
+    );
+    ajax.setRequestHeader(
+      "Content-Type",
+      "application/x-www-form-urlencoded"
+    );
+    ajax.send(
+      JSON.stringify(
+        information
+      )
+    );
   },
 
   fetch : function(model, success, failed){
