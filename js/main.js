@@ -47,8 +47,10 @@ function translate(page) {
         console.log(i);
       }
       document.getElementById("label_child").innerHTML = "Enfant (CHI)";
-      document.getElementById("43").innerHTML += " - " + localStorage.getItem("userName");
-      document.getElementById("44").innerHTML += " - " + localStorage.getItem("phonenumber");
+      document.getElementById("43").innerHTML +=
+      " - " + JSON.parse(localStorage.getItem("user")).phonenumber;
+      document.getElementById("44").innerHTML +=
+      " - " + JSON.parse(localStorage.getItem("user")).phonenumber;
       break;
 
       case "dashboard":
@@ -96,13 +98,17 @@ function translate(page) {
     case "en":
     switch(page) {
       case "new_patient":
-      document.getElementById("43").innerHTML += " - " + localStorage.getItem("userName");
-      document.getElementById("44").innerHTML += " - " + localStorage.getItem("phonenumber");
+      document.getElementById("43").innerHTML +=
+      " - " + JSON.parse(localStorage.getItem("user")).username;
+      document.getElementById("44").innerHTML +=
+      " - " + JSON.parse(localStorage.getItem("user")).phonenumber;
       break;
 
       case "outcome_recorded":
-      document.getElementById("11").innerHTML += " - " + localStorage.getItem("userName");
-      document.getElementById("12").innerHTML += " - " + localStorage.getItem("phonenumber");
+      document.getElementById("11").innerHTML +=
+      " - " + JSON.parse(localStorage.getItem("user")).username;
+      document.getElementById("12").innerHTML +=
+      " - " + JSON.parse(localStorage.getItem("user")).phonenumber;
       break;
     }
   }
@@ -149,7 +155,7 @@ var transmission = {
   },
 
   insert : function(model, information, success) {
-    var user_id = localStorage.getItem("userId");
+    var user_id = JSON.parse(localStorage.getItem("user")).id;
 
     switch(model) {
       case "information":
@@ -157,8 +163,10 @@ var transmission = {
       ajax.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
           console.log("server said: " + this.responseText);
-          var sr = JSON.parse(this.responseText);
-          // success(sr);
+          var serverResponse = JSON.parse(this.responseText);
+          if(serverResponse.code == 200)
+          success(serverResponse.data);
+          else {} //Failed here
         }
       };
       ajax.open("POST", this.url + `/user/${user_id}/patient/`, true);
@@ -197,52 +205,35 @@ var transmission = {
   },
 
   fetch : function(model, success, failed){
-    // for(var i in localStorage.getItem("user")) console.log(i[0]);
     var user_id = JSON.parse(
       localStorage.getItem("user")).id;
-    // console.log("user_id: ", user_id);
+    var ajax = new XMLHttpRequest;
+    ajax.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 200) {
+        console.log("server said: " + this.responseText);
+        var serverResponse = JSON.parse(this.responseText);
+        if(serverResponse.code == 200) {
+          success(serverResponse.data);
+        }
+      }
+    };
 
     switch(model) {
       case "patients":
-      var ajax = new XMLHttpRequest;
-      ajax.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-          console.log("server said: " + this.responseText);
-          var serverResponse = JSON.parse(this.responseText);
-          if(serverResponse.code == 200) {
-            success(serverResponse.data);
-          }
-          // if(sr.length !== null) { //FUCKING TEST THIS MEN
-          //   // success(sr);
-          // } else {
-          //   failed();
-          // }
-        }
-      };
       ajax.open("GET", this.url + `/user/${user_id}/patients`, true);
-      // ajax.setRequestHeader("Content-Type", "application/json");
-      ajax.send();
       break;
 
 
       case "communities":
-      var ajax = new XMLHttpRequest;
-      ajax.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-          console.log("server said: " + this.responseText);
-          var sr = JSON.parse(this.responseText);
-          if(sr.length !== null) { //FUCKING TEST THIS MEN
-            success(sr);
-          } else {
-            failed();
-          }
-        }
-      };
-      ajax.open("GET", this.url + "?data="+ encodeURIComponent(JSON.stringify({"model":"communities"})), true);
-      // ajax.setRequestHeader("Content-Type", "application/json");
-      ajax.send();
+      ajax.open("GET", this.url + `/user/${user_id}/communities`, true);
+      break;
+
+      case "regions":
+      ajax.open("GET", this.url + `/user/${user_id}/regions`, true);
       break;
     }
+    ajax.setRequestHeader("Content-Type", "application/json");
+    ajax.send();
   },
 
   _fetch : function(model, id, success) {

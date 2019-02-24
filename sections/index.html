@@ -145,6 +145,7 @@
             var phonenumber;
             var age;
             var pc = new PatientCard;
+            var count = 0;
 
             for(var i in patients) {
               patientId = patients[i].id;
@@ -152,7 +153,7 @@
               name = patients[i].name;
               gender = patients[i].gender;
               duration = patients[i].duration;
-              phonenumber = patients[i].telephone;
+              phonenumber = patients[i].telephone1;
 
               pc.id = patientId;
               pc.name = name;
@@ -161,6 +162,8 @@
               pc.phonenumber = phonenumber;
               pc.age = age;
               dashboard.addPatient(pc);
+              ++count;
+              if(count > 20) break;
             }
           }, 10);
           // console.log("passed here");

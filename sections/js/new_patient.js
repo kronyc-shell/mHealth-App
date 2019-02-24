@@ -5,7 +5,9 @@ $(document).ready(function() {
   if(localStorage.getItem("connection") == "offline") {
     // console.log("Working offline");
     // controller = offlineController;
-  } else if(sessionStorage.getItem("userId") == null) {
+  } else if(1
+    //sessionStorage.getItem("patient") == null
+  ) {
     // console.log("Working online");
     // controller = onlineController;
 
@@ -21,7 +23,7 @@ $(document).ready(function() {
 
       var name = this.name.value;
       var age = this.age.value;
-      var sex = extract_radio(this.elements.gender);
+      var gender = extract_radio(this.elements.gender);
       var address = this.address.value;
       var telephone1 = this.telephone.value;
       var telephone2 = this.telephone_2.value;
@@ -35,8 +37,8 @@ $(document).ready(function() {
       extract_checkbox(this.elements.patient_category);
 
       patient_category.push({"other":this.pc_other.value});
-      if(artCode == "") {
-        artCode =
+      if(art_code == "") {
+        art_code =
         extract_radio(this.elements.has_art);
       }
 
@@ -94,7 +96,7 @@ $(document).ready(function() {
         "name" : name,
         "age" : age,
         "gender" : gender,
-        "address" : address",
+        "address" : address,
         "telephone1" : telephone1,
         "telephone2" : telephone2,
         "art_code" : art_code,
@@ -109,17 +111,16 @@ $(document).ready(function() {
       // information = JSON.stringify(information);
       console.log(information);
 
-      var success = function(sr) {
-        sessionStorage.setItem("userId", sr.id);
-        sessionStorage.setItem("userName", sr.userName);
+      var success = function(patient) {
+        sessionStorage.setItem("patient", JSON.stringify(patient));
         var msg;
         switch(localStorage.getItem("lang")) {
           case "fr":
-          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">ID DU PATIENT: " +sr.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Aller au panneau de contrôle</a href='index.html'><br><br><a class=\"btn btn-info\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Naviguer le patient</a href='index.html'></div>";
+          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">ID DU PATIENT: " +patient.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Aller au panneau de contrôle</a href='index.html'><br><br><a class=\"btn btn-info\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Naviguer le patient</a href='index.html'></div>";
           break;
 
           case "en":
-          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Well Done!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">PATIENT'S ID: " +sr.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Return to Dashboard</a href='index.html'><br><br><a class=\"btn btn-info\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Navigate Patients</a href='index.html'></div>";
+          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Well Done!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">PATIENT'S ID: " +patient.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Return to Dashboard</a href='index.html'><br><br><a class=\"btn btn-info\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Navigate Patients</a href='index.html'></div>";
           break;
         }
         document.getElementById("animationWindow").innerHTML = msg;
@@ -149,48 +150,49 @@ $(document).ready(function() {
       }
     }
   } else {
+    console.log("Got to this option");
     // alert("Not null")
     // alert(sessionStorage.getItem("userId"));
-    var success = function(sr) {
-      var form = document.forms["request_form"];
-
-      form.id.value = sessionStorage.getItem("userId");
-      form.id.setAttribute("disabled", "disabled");
-
-      form.name.value = sr.name;
-      form.name.setAttribute("disabled", "disabled");
-
-      form.age.value = sr.age;
-      form.age.setAttribute("disabled", "disabled");
-
-      form.gender.value = sr.gender;
-      form.gender.setAttribute("disabled", "disabled");
-
-      form.address.value = sr.address;
-      form.address.setAttribute("disabled", "disabled");
-
-      form.telephone.value = sr.telephone;
-      form.telephone.setAttribute("disabled", "disabled");
-
-      form.telephone_2.value = sr.telephone_2;
-      form.telephone_2.setAttribute("disabled", "disabled");
-
-      form.art.value = sr.artCode;
-      form.art.setAttribute("disabled", "disabled");
-
-      form.status.value = sr.wardBedNumber;
-      form.status.setAttribute("disabled", "disabled");
-
-      form.symptoms.value = sr.symptoms;
-      form.symptoms.setAttribute("disabled", "disabled");
-
-      // form.patient_category.value = sr.patientCategory;
-      // form.specimen_type.value = sr.specimenType;
-      form.reason_for_test.value = sr.reasonForTest;
-      form.reason_for_test.setAttribute("disabled", "disabled");
-
-    }
-    transmission._fetch("information", sessionStorage.getItem("userId"), success);
+    // var success = function(sr) {
+    //   var form = document.forms["request_form"];
+    //
+    //   form.id.value = sessionStorage.getItem("userId");
+    //   form.id.setAttribute("disabled", "disabled");
+    //
+    //   form.name.value = sr.name;
+    //   form.name.setAttribute("disabled", "disabled");
+    //
+    //   form.age.value = sr.age;
+    //   form.age.setAttribute("disabled", "disabled");
+    //
+    //   form.gender.value = sr.gender;
+    //   form.gender.setAttribute("disabled", "disabled");
+    //
+    //   form.address.value = sr.address;
+    //   form.address.setAttribute("disabled", "disabled");
+    //
+    //   form.telephone.value = sr.telephone;
+    //   form.telephone.setAttribute("disabled", "disabled");
+    //
+    //   form.telephone_2.value = sr.telephone_2;
+    //   form.telephone_2.setAttribute("disabled", "disabled");
+    //
+    //   form.art.value = sr.artCode;
+    //   form.art.setAttribute("disabled", "disabled");
+    //
+    //   form.status.value = sr.wardBedNumber;
+    //   form.status.setAttribute("disabled", "disabled");
+    //
+    //   form.symptoms.value = sr.symptoms;
+    //   form.symptoms.setAttribute("disabled", "disabled");
+    //
+    //   // form.patient_category.value = sr.patientCategory;
+    //   // form.specimen_type.value = sr.specimenType;
+    //   form.reason_for_test.value = sr.reasonForTest;
+    //   form.reason_for_test.setAttribute("disabled", "disabled");
+    //
+    // }
+    // transmission._fetch("information", sessionStorage.getItem("userId"), success);
   }
 
 });
