@@ -13,7 +13,7 @@
   </head>
 
   <script>
-    if(localStorage.getItem("userId") === null)
+    if(localStorage.getItem("user") === null)
       window.location.replace("../index.html");
     sessionStorage.setItem("_todays_date", new Date().toJSON().slice(0,10).replace(/-/g,'-'));
     // alert("Language: " + localStorage.getItem("lang"));
@@ -108,7 +108,7 @@
 
       function logout() {
         sessionStorage.removeItem("userId");
-        localStorage.removeItem("userId");
+        localStorage.removeItem("user");
         localStorage.removeItem("lang");
         localStorage.removeItem("userAccess");
         localStorage.removeItem("phonenumber");
@@ -131,8 +131,8 @@
         var dashboard = new Dashboard(lang);
         dashboard.default();
 
-        var success = function(sr) {
-          if(sr.length < 1) {
+        var success = function(patients) {
+          if(patients.length < 1) {
             failed();
             return;
           }
@@ -145,18 +145,14 @@
             var phonenumber;
             var age;
             var pc = new PatientCard;
-            var size = sr.length;
-            for(var i=size-1;i>=0;i--) {
-              // if(i > 20) {
-              //   console.log("Greater than 20");
-              //   break;
-              // };
-              patientId = sr[i].id;
-              age = sr[i].age;
-              name = sr[i].name;
-              gender = sr[i].gender;
-              duration = sr[i].duration;
-              phonenumber = sr[i].telephone;
+
+            for(var i in patients) {
+              patientId = patients[i].id;
+              age = patients[i].age;
+              name = patients[i].name;
+              gender = patients[i].gender;
+              duration = patients[i].duration;
+              phonenumber = patients[i].telephone;
 
               pc.id = patientId;
               pc.name = name;

@@ -143,37 +143,21 @@
 			var password = this.password.value;
 
 			var information = {
-				"type":authenticate,
+				"type":"auth",
 				"username":username,
 				"password":password
 			};
 
-			var success = function(sr) {
-				if(sr.id !== null && sr.id !== 'undefined') {
-					var id = sr.id;
-					var username = sr.username;
-					var phonenumber = sr.phonenumber;
-					var region_id = sr.regionId;
-					var sub_region_id = sr.subRegionId;
-					var role = sr.role;
-					// var access = sr.role;
-
-					localStorage.setItem("connection", "online");
-					localStorage.setItem("userId", id);
-					localStorage.setItem("userName", username);
-					localStorage.setItem("phonenumber", phonenumber);
-					localStorage.setItem("region_id", region_id);
-					localStorage.setItem("sub_region_id", sub_region_id);
-					localStorage.setItem("role", role);
-					// localStorage.setItem("lang", )
-					// localStorage.setItem("userAccess", access.join());
-					window.location.replace("sections/index.html");
-				} else {
-					document.getElementById("failureMessage").removeAttribute("hidden");
-					this.password.value = "";
-				}
+			var success = function(user) {
+				// console.log(user);
+				localStorage.setItem("user", JSON.stringify(user));
+				window.location.replace("sections/index.html");
 			}
-			transmission.auth("user", information, success);
+
+			var failed = function() {
+				document.getElementById("failureMessage").removeAttribute("hidden");
+			}
+			transmission.auth("user", information, success, failed);
 		});
 	</script>
 

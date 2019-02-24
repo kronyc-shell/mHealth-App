@@ -114,9 +114,8 @@ var transmission = {
   _connection : "",
   _userId : "",
 
-  url : "http://tbappbamenda.com/tbproject_v2/app/",
-  // url : "http://tbappdashboard.localhost/tbproject_v2/app/",
-  // url : "http://tbappbamenda.com:8080"
+  // url : "http://tbappbamenda.com:8080",
+  url : "http://tbapp.localhost:8080",
 
   //TODO: figure out why this part
   set connection(connection) {
@@ -127,14 +126,18 @@ var transmission = {
     this._userId = userId;
   },
 
-  auth : function(model, information, success) {
+  auth : function(model, information, success, failed) {
     switch(model) {
       case "user":
         var ajax = new XMLHttpRequest;
         ajax.onreadystatechange = function() {
           if(this.readyState == 4 && this.status == 200) {
             console.log("server said: " + this.responseText);
-            var sr = JSON.parse(this.responseText);
+            var serverResponse = JSON.parse(this.responseText);
+            if(serverResponse.code == 200)
+            success(serverResponse.data);
+            else
+            failed();
             // success(sr);
           }
         };
@@ -194,21 +197,29 @@ var transmission = {
   },
 
   fetch : function(model, success, failed){
+    // for(var i in localStorage.getItem("user")) console.log(i[0]);
+    var user_id = JSON.parse(
+      localStorage.getItem("user")).id;
+    // console.log("user_id: ", user_id);
+
     switch(model) {
       case "patients":
       var ajax = new XMLHttpRequest;
       ajax.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
           console.log("server said: " + this.responseText);
-          var sr = JSON.parse(this.responseText);
-          if(sr.length !== null) { //FUCKING TEST THIS MEN
-            success(sr);
-          } else {
-            failed();
+          var serverResponse = JSON.parse(this.responseText);
+          if(serverResponse.code == 200) {
+            success(serverResponse.data);
           }
+          // if(sr.length !== null) { //FUCKING TEST THIS MEN
+          //   // success(sr);
+          // } else {
+          //   failed();
+          // }
         }
       };
-      ajax.open("GET", this.url + "?data="+ encodeURIComponent(JSON.stringify({"model":"information", "type":"dashboard", "id":localStorage.getItem("userId"), "access":localStorage.getItem("userAccess")})), true);
+      ajax.open("GET", this.url + `/user/${user_id}/patients`, true);
       // ajax.setRequestHeader("Content-Type", "application/json");
       ajax.send();
       break;
