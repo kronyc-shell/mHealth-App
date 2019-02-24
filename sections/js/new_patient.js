@@ -5,13 +5,13 @@ $(document).ready(function() {
   if(localStorage.getItem("connection") == "offline") {
     // console.log("Working offline");
     // controller = offlineController;
-  } else if(1
-    //sessionStorage.getItem("patient") == null
+  } else if(
+    sessionStorage.getItem("patient") == null
   ) {
     // console.log("Working online");
     // controller = onlineController;
 
-    sessionStorage.getItem("userId") == null && translate('new_patient');
+    sessionStorage.getItem("patient") == null && translate('new_patient');
 
     // FORM SUBMISSIION
     document.forms['new_patient_form'].onsubmit = function() {
