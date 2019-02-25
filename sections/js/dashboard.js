@@ -10,10 +10,10 @@ function PatientCard() {
 
   this.translate = function(text, lang) {
     if(text === null) return;
-    var fr = {"yesterday":"hier", "today":"aujourd'hui", "years":"ans", "days":"journées", "male":"mâle", "female":"femelle"};
+    var fr = {"Yesterday":"Hier", "Today":"Aujourd'hui", "Years":"Ans", "Days":"il y a _ jours", "male":"Mâle", "Female":"Femelle"};
     switch(lang) {
       case "fr":
-        if(text.search("days") != -1) return fr["days"];
+        if(text.search("Days") != -1) return fr["Days"].replace("_", text.substring(0, text.search(' ')));
         else return fr[text];
       break;
 
@@ -289,9 +289,25 @@ function PatientCard() {
     div.className = "card-body text-center";
     div.appendChild(document.createTextNode(this.patient.name));
     div.appendChild(document.createElement("br"));
-    div.appendChild(document.createTextNode(this.translate(this.patient.gender, lang) + " | " + this.patient.id));
+    div.appendChild(
+      document.createTextNode(
+        this.translate(this.patient.gender, lang)
+        + " | "
+        + this.patient.id
+      )
+    );
     div.appendChild(document.createElement("br"));
-    div.appendChild(document.createTextNode(this.translate(this.duration, lang) + " | " + this.patient.telephone1 + " | " + this.patient.age + " "+ this.translate("years", lang)));
+    div.appendChild(
+      document.createTextNode(
+        this.translate(getTimeDuration(new Date(this.patient.date)), lang)
+        + " | "
+        + this.patient.telephone1
+        + " | "
+        + this.patient.age
+        + " "
+        + this.translate("Years", lang)
+      )
+    );
     var cardBody = div;
 
     card.appendChild(cardBody);
@@ -347,3 +363,24 @@ function change_working_state(state) {
 }
 window.addEventListener('online', change_working_state("online"));
 window.addEventListener('offline', change_working_state("offline"));
+
+function getTimeDuration(secondDate) {
+  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+  var firstDate = new Date;
+  var diffDays = Math.round(
+    Math.abs(
+      (firstDate.getTime() - secondDate.getTime())/(oneDay)
+    )
+  ) - 1;
+  // console.log((firstDate.getTime() - secondDate.getTime())/(oneDay))
+  if(diffDays == 0) {
+    return "Today";
+  }
+  else if(diffDays == 1) {
+    return "Yesterday";
+  }
+  else if(diffDays > 1) {
+    return diffDays + " Days ago";
+  }
+  return diffDays;
+}
