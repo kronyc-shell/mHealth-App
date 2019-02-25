@@ -200,7 +200,7 @@ var transmission = {
     );
   },
 
-  fetch : function(model, success, failed, path){
+  fetch : function(model, success, failed, path, information){
     var user_id = JSON.parse(
       localStorage.getItem("user")).id;
     var ajax = new XMLHttpRequest;
@@ -211,6 +211,9 @@ var transmission = {
         if(serverResponse.code == 200) {
           success(serverResponse.data);
         }
+        else if(serverResponse.code == 404) {
+          failed();
+        }
       }
     };
 
@@ -218,16 +221,23 @@ var transmission = {
       case "patient":
       var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
       if(typeof(path) == 'undefined') {
-        ajax.open("GET", this.url + `/user/${user_id}/patient/${patient_id}`, true); console.log("Path not defined!");
+        ajax.open("GET", this.url + `/user/${user_id}/patient/${patient_id}`, true);
       }
       else {
-        ajax.open("GET", this.url + `/user/${user_id}/patient/${patient_id}/${path}`, true); console.log("Path is defined");
+        ajax.open("GET", this.url + `/user/${user_id}/patient/${patient_id}/path/${path}`, true);
       }
 
       break;
 
       case "patients":
-      ajax.open("GET", this.url + `/user/${user_id}/patients`, true);
+      if(typeof(information) != "undefined") {
+        console.log("RUNNING PATIENT SEARCH FROM HERE", information);
+        ajax.open("GET", this.url + `/user/${user_id}/patients/search/${information}`, true);
+      }
+      else {
+        ajax.open("GET", this.url + `/user/${user_id}/patients`, true);
+        console.log("Searching for patients")
+      }
       break;
 
 

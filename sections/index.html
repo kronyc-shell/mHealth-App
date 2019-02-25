@@ -138,12 +138,6 @@
           }
           setTimeout(function(){
             document.getElementById("animationWindow").innerHTML = "";
-            var patientId;
-            var name;
-            var gender;
-            var duration;
-            var phonenumber;
-            var age;
             var pc = new PatientCard;
             var count = 0;
 
@@ -184,22 +178,15 @@
           anim.setSpeed(2.6);
 
           var query = this.search_query.value;
-          var information = {"query":query, "id":localStorage.getItem("userId")};
-          var success = function(sr) {
+          var success = function(patients) {
             document.getElementById("animationWindow").innerHTML = "";
             var ch = document.getElementById("main_card_header");
             ch.removeAttribute("hidden");
             ch.innerHTML = localStorage.getItem("lang") == "en" ?  "Search Results - " + query : "Résultats de la recherche - " + query;
 
             var pc = new PatientCard;
-            for(var i in sr) {
-              patientId = sr[i].id;
-              pc.id = patientId;
-              pc.name = sr[i].name;
-              pc.gender = sr[i].gender;
-              pc.duration = sr[i].duration;
-              pc.phonenumber = sr[i].telephone;
-              pc.age = sr[i].age;
+            for(var i in patients) {
+              pc.patient = patients[i];
               dashboard.addPatient(pc);
             }
           };
@@ -212,7 +199,8 @@
             localStorage.getItem("lang") == "en" ? dashboard.log("Nothing found!", "<br><a style='font-size: 12px' href='' onclick='window.location.reload(1)'>Click here to refresh</a>") : dashboard.log("Rien n'a été trouvé!", "<br><a style='font-size: 12px' href='' onclick='window.location.reload(1)'>Cliquez ici pour actualiser</a>");
           };
 
-          transmission._search("patients", information, success, failure);
+          var path;
+          transmission.fetch("patients", success, failure, path, query);
         });
 
       }); //Don't delete
