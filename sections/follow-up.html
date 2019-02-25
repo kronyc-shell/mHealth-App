@@ -46,12 +46,14 @@
                 document.getElementById("patient_name").placeholder = JSON.parse(sessionStorage.getItem("patient")).id + " | " + JSON.parse(sessionStorage.getItem("patient")).name;
               </script>
             </div>
-            <div class="jumbotron">
-              <h5 id="7">Lab Results</h5>
-              <u><small>SMR results</small></u>
-              <p><small id="result1">Result 1: </small> <br> <small id="result2">Result 2: </small></p>
-              <u><small>Xpert results</small></u>
-              <p><small id="result_1">MTB: </small> <br> <small id="result_2">RIF: </small></p>
+            <div id="lab_results_record" hidden>
+              <div class="jumbotron">
+                <h5 id="7">Lab Results</h5>
+                <u><small>SMR results</small></u>
+                <p><small id="result1">Result 1: </small> <br> <small id="result2">Result 2: </small></p>
+                <u><small>Xpert results</small></u>
+                <p><small id="result_1">MTB: </small> <br> <small id="result_2">RIF: </small></p>
+              </div>
             </div><hr>
             <div class="card">
               <script>
@@ -129,30 +131,35 @@
     </script>
     <script>
     var success = function(sr) {
-      var smr_result1 = document.getElementById("result1");
-      var smr_result2 = document.getElementById("result2");
+      if(typeof(sr) != "undefined") {
+        document.getElementById("lab_results_record").removeAttribute("hidden");
+        var smr_result1 = document.getElementById("result1");
+        var smr_result2 = document.getElementById("result2");
 
-      var xpert_result1 = document.getElementById("result_1");
-      var xpert_result2 = document.getElementById("result_2");
+        var xpert_result1 = document.getElementById("result_1");
+        var xpert_result2 = document.getElementById("result_2");
 
-      smr_result1.innerHTML += sr.smr_results.result_1;
-      smr_result2.innerHTML += sr.smr_results.result_2;
+        smr_result1.innerHTML += sr.smr_result_1;
+        smr_result2.innerHTML += sr.smr_result_2;
 
-      xpert_result1.innerHTML += sr.xpert_results.mtb_result;
-      xpert_result2.innerHTML += sr.xpert_results.rif_results;
+        xpert_result1.innerHTML += sr.mtb_result;
+        xpert_result2.innerHTML += sr.rif_result;
+      }
     }
 
     var success2 = function(sr) {
       var form = document.forms['follow_up_form'];
       form.xray.checked = sr.xray;
       form.amoxicilin.checked = sr.amoxicillin;
-      form.otherAntibiotic.value = sr.otherAntibiotic;
-      form.follow_up_date.value = sr.follow_up_date;
+      form.otherAntibiotic.value = sr.other_antibiotic;
+      form.follow_up_date.valueAsDate = new Date(sr.follow_up_scheduled_date);
       form.comments.value = sr.comments;
     }
 
-    transmission._fetch("lab", sessionStorage.getItem("userId"), success);
-    transmission._fetch("follow_up", sessionStorage.getItem("useId"), success2);
+    var failed = function() {}
+
+    transmission.fetch("patient", success, failed, "lab");
+    transmission.fetch("patient", success2, failed, "follow_up");
 
     </script>
   </body>

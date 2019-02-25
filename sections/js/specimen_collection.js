@@ -149,13 +149,20 @@ document.forms['specimen_form'].onsubmit = function() {
   };
   var information2 = {
     "pathway" : pathway,
+    "patient_id" : patient_id,
     "date_2":date2,
     "period_2":period2,
     "aspect_2":aspect2
   };
   // information = JSON.stringify(information);
-  console.log(information1);
+  console.log(sessionStorage.getItem("specimen"));
 
-  transmission.insert("specimen_collection", information1, success1);
+  if(sessionStorage.getItem("specimen") != "true")
+    transmission.insert("specimen_collection", information1, success1);
+  else
+    transmission.insert("specimen_collection", information2, success1);
+
+  sessionStorage.removeItem("specimen");
+
   return false;
 };

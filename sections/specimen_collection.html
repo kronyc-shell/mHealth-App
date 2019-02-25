@@ -128,26 +128,38 @@
         var specimenHistory = new SpecimenHistory(lang);
         specimenHistory.default();
 
-        var success = function(sr) {
-          var duration, period, aspect;
+        var success = function(specimens) {
+          if(typeof(specimens) != 'undefined') {
+            sessionStorage.setItem("specimen", "true");
+            var period1 = specimens.period_1;
+            var aspect1 = specimens.aspect_1;
+            var duration = specimens.date_1;
 
-          for(var i in sr) {
-            if(i == "state") continue;
+            var specimenCard = new SpecimenCard;
+            specimenCard.duration = duration;
+            specimenCard.period = period1;
+            specimenCard.aspect = aspect1;
+            specimenHistory.addSpecimen(specimenCard);
 
-            duration = sr[i].duration;
-            period = sr[i].period;
-            aspect = sr[i].aspect;
+            if(specimens.period_2 != 'n/a') {
+              var period2 = specimens.period_2;
+              var aspect2 = specimens.aspect_2;
+              var duration2 = specimens.date_2;
 
-            var sc = new SpecimenCard;
-            sc.duration = duration;
-            sc.period = period;
-            sc.aspect = aspect;
-            specimenHistory.addSpecimen(sc);
+              var specimenCard2 = new SpecimenCard;
+              specimenCard2.duration = duration2;
+              specimenCard2.period = period2;
+              specimenCard2.aspect = aspect2;
+              specimenHistory.addSpecimen(specimenCard2);
+            }
           }
         };
+
+        var failed = function(sr) {}
+
         var id = sessionStorage.getItem("userId");
         console.log("user id: " + id);
-        transmission._fetch("specimen_collection", id, success);
+        transmission.fetch("patient", success, failed, "specimen");
 
         translate("specimen_collection");
         var patient = JSON.parse(sessionStorage.getItem("patient"));

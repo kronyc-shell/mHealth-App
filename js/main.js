@@ -200,7 +200,7 @@ var transmission = {
     );
   },
 
-  fetch : function(model, success, failed){
+  fetch : function(model, success, failed, path){
     var user_id = JSON.parse(
       localStorage.getItem("user")).id;
     var ajax = new XMLHttpRequest;
@@ -217,7 +217,13 @@ var transmission = {
     switch(model) {
       case "patient":
       var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
-      ajax.open("GET", this.url + `/user/${user_id}/patient/${patient_id}`, true);
+      if(typeof(path) == 'undefined') {
+        ajax.open("GET", this.url + `/user/${user_id}/patient/${patient_id}`, true); console.log("Path not defined!");
+      }
+      else {
+        ajax.open("GET", this.url + `/user/${user_id}/patient/${patient_id}/${path}`, true); console.log("Path is defined");
+      }
+
       break;
 
       case "patients":

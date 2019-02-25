@@ -41,7 +41,7 @@
                 document.getElementById("patient_name").placeholder = patient.id + " | " + patient.name;
               </script>
             </div>
-            <div id="lab_results_record">
+            <div id="lab_results_record" hidden>
               <div class="jumbotron">
                 <h5 id="25">Lab Results</h5>
                 <u><small>SMR results</small></u>
@@ -272,22 +272,25 @@
         $('body').bootstrapMaterialDesign();
 
         var success = function(sr) {
-          var smr_result1 = document.getElementById("result1");
-          var smr_result2 = document.getElementById("result2");
+          if(typeof(sr) != "undefined") {
+            document.getElementById("lab_results_record").removeAttribute("hidden");
+            var smr_result1 = document.getElementById("result1");
+            var smr_result2 = document.getElementById("result2");
 
-          var xpert_result1 = document.getElementById("result_1");
-          var xpert_result2 = document.getElementById("result_2");
+            var xpert_result1 = document.getElementById("result_1");
+            var xpert_result2 = document.getElementById("result_2");
 
-          smr_result1.innerHTML += sr.smr_results.result_1;
-          smr_result2.innerHTML += sr.smr_results.result_2;
+            smr_result1.innerHTML += sr.smr_result_1;
+            smr_result2.innerHTML += sr.smr_result_2;
 
-          xpert_result1.innerHTML += sr.xpert_results.mtb_result;
-          xpert_result2.innerHTML += sr.xpert_results.rif_results;
+            xpert_result1.innerHTML += sr.mtb_result;
+            xpert_result2.innerHTML += sr.rif_result;
+          }
         }
 
         var success2 = function(sr) {
-          if(sr.date !== null || typeof sr.date !== 'undefined') {
-            document.getElementById("follow_up_record").removeAttribute("hidden"); //add an if function here
+          if(typeof(sr) != "undefined") {
+            document.getElementById("follow_up_record").removeAttribute("hidden");
 
             var xray = document.getElementById("xray");
             var amoxicilin = document.getElementById("amoxicilin");
@@ -295,11 +298,16 @@
             var follow_up_date = document.getElementById("follow_up_date");
             var comments = document.getElementById("comments");
 
-            xray.innerHTML += sr.xray == true ? "done" : "not done";
-            amoxicilin.innerHTML += sr.amoxicillin ? "given" : "not given";
-            otherAntibiotic.innerHTML += sr.otherAntibiotic == "" ? "n/a" : sr.otherAntibiotic;
-            follow_up_date.innerHTML += sr.follow_up_date == "" ? "n/a" : sr.follow_up_date;
-            comments.innerHTML += sr.comments == "" ? "n/a" : sr.comments;
+            xray.innerHTML +=
+            sr.xray == true ? "Done" : "Not Done";
+            amoxicilin.innerHTML +=
+            sr.amoxicillin ? "Given" : "Not Given";
+            otherAntibiotic.innerHTML +=
+            sr.other_antibiotic == "" ? "N/A" : sr.other_antibiotic;
+            follow_up_date.innerHTML +=
+            sr.follow_up_date == "" ? "N/A" : new Date(sr.follow_up_scheduled_date).toDateString();
+            comments.innerHTML +=
+            sr.comments == "" ? "N/A" : sr.comments;
           }
         }
 
@@ -317,9 +325,11 @@
           form.comments.value = sr.comments;
         }
 
-        transmission._fetch("lab", sessionStorage.getItem("userId"), success);
-        transmission._fetch("follow_up", sessionStorage.getItem("userId"), success2);
-        transmission._fetch("outcome_recorded", sessionStorage.getItem("userId"), success3);
+        var failed = function() {}
+
+        transmission.fetch("patient", success, failed, "lab");
+        transmission.fetch("patient", success2, failed, "follow_up");
+        transmission.fetch("patient", success3, failed, "outcome_recorded");
       });
     </script>
 
