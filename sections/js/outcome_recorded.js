@@ -35,8 +35,12 @@ document.forms['outcome_form'].onsubmit = function() {
   var pathway =
   "outcome_recorded";
 
+  var patient_id =
+  JSON.parse(sessionStorage.getItem("patient")).id;
+
   var information = {
     "pathway" : pathway,
+    "patient_id" : patient_id,
     "outcome_recorded" : outcome_recorded,
     "other" : other,
     "comments" : comments,
@@ -62,5 +66,5 @@ document.forms['outcome_form'].onsubmit = function() {
     // }, 3000);
   };
 
-  transmission.update("outcome_recorded", information, success);
+  transmission.insert("outcome_recorded", information, success);
 }

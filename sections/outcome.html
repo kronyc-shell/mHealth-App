@@ -37,7 +37,8 @@
               <label for="patient_name" id="27">Patient's name and ID</label>
               <input type="text" id="patient_name" disabled class="form-control">
               <script>
-                document.getElementById("patient_name").placeholder = sessionStorage.getItem("userName") + " | " + sessionStorage.getItem("userId");
+                var patient = JSON.parse(sessionStorage.getItem("patient"));
+                document.getElementById("patient_name").placeholder = patient.id + " | " + patient.name;
               </script>
             </div>
             <div id="lab_results_record">
@@ -58,6 +59,8 @@
             <form id="outcome_form">
               <div class="card" >
                 <div class="card-body" id="outcome_recorded">
+                  <h5 class="card-title" style="font-weight: 100">Outcome Recorded Actions Taken</h5>
+
                   <div class="custom-control custom-radio">
                     <input type="radio" id="started" value="started_tb_treatment" name="treatment" class="custom-control-input">
                     <label class="custom-control-label" for="started" id="0">Started TB Treatment</label>
@@ -124,11 +127,11 @@
                   </script>
 
                   <div class="form-group">
-                    <label for="other" id="5">Other</label>
+                    <label for="other" id="5" style="font-weight: 100">Other</label>
                     <input type="text" class="form-control" id="other" value="">
                   </div>
                   <div class="form-group">
-                    <label for="comments" id="6">Comments</label>
+                    <label for="comments" id="6" style="font-weight: 100">Comments</label>
                     <input type="text" class="form-control" id="comments" value="">
                   </div>
                   <!-- <div class="form-group">
@@ -142,12 +145,12 @@
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="7">Please read!</h5>
+                          <h5 class="modal-title text-danger" id="7">Please read!</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="modal-body" id="8">
+                        <div class="modal-body" id="8" style="font-weight: 100">
                           This affects patients visibility on the app.
                           Closing would remove patient from list and won't be accessible for any updates
                           Please be CAREFUL when selecting this option
@@ -157,7 +160,7 @@
                   </div>
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="close_patient">
-                    <label class="custom-control-label form-check-label" for="close_patient" data-toggle="modal" data-target="#closePatient" id="9">Close Patient File</label>
+                    <label class="custom-control-label form-check-label" for="close_patient" data-toggle="modal" data-target="#closePatient" id="9" style="font-weight: 400">Close Patient File</label>
                   </div>
                   <script>
                     document.getElementById("close_patient").onclick = function() {

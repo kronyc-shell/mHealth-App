@@ -43,7 +43,7 @@
               <label for="patient_name" id="10">Patient's name and ID</label>
               <input type="text" id="patient_name" disabled class="form-control">
               <script>
-                document.getElementById("patient_name").placeholder = sessionStorage.getItem("userName") + " | " + sessionStorage.getItem("userId");
+                document.getElementById("patient_name").placeholder = JSON.parse(sessionStorage.getItem("patient")).id + " | " + JSON.parse(sessionStorage.getItem("patient")).name;
               </script>
             </div>
             <div class="jumbotron">
@@ -59,31 +59,27 @@
               </script>
               <div class="card-body" id="follow_up_action">
                 <form id="follow_up_form">
-                  <!-- <h5 class="card-title">Follow-up action taken</h5> -->
+                  <h5 class="card-title" style="font-weight: 100">Follow-up action taken</h5>
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="xray">
                     <label class="custom-control-label form-check-label" for="xray" id="0">X-RAY</label>
-                  </div><br>
+                  </div>
                   <div class="custom-control custom-checkbox">
                     <input value="" type="checkbox" class="custom-control-input" id="amoxicilin">
-                    <label class="custom-control-label form-check-label" for="amoxicilin" id="1">Amoxicillin prescribed</label>
+                    <label class="custom-control-label form-check-label" for="amoxicilin" id="1">Amoxicillin Prescribed</label>
                   </div><br>
                   <div class="form-group">
-                    <label for="otherAntibiotic" id="2">Other Antibiotic</label>
+                    <label for="otherAntibiotic" id="2" style="font-weight: 100">Other Antibiotic</label>
                     <input type="text" class="form-control" id="otherAntibiotic">
-                  </div><br>
-                  <!-- <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="follow_up">
-                    <label class="custom-control-label form-check-label" for="follow_up">Follow-up visit scheduled</label>
-                  </div> -->
+                  </div>
                   <div class="form-group" id="fl_up" >
-                    <label for="follow_up_date" id="3">Follow-up Scheduled Date</label>
+                    <label for="follow_up_date" id="3" style="font-weight: 100">Follow-up Scheduled Date</label>
                     <input type="date" class="form-control" id="follow_up_date">
                     <script>document.getElementById("follow_up_date").valueAsDate=new Date();</script>
-                  </div><br>
+                  </div>
                   <div class="form-group">
-                    <label for="comments" id="4">Comments</label>
-                    <input type="text" id="comments" class="form-control">
+                    <label for="comments" id="4" style="font-weight: 100">Comments</label>
+                    <textarea type="text" id="comments" class="form-control"></textarea>
                   </div>
 
                   <br>

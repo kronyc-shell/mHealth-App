@@ -25,9 +25,11 @@ document.forms['follow_up_form'].onsubmit = function() {
   this.comments.value;
 
   var pathway = "follow_up";
+  var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
 
   var information = {
     "pathway" : pathway,
+    "patient_id" : patient_id,
     "xray" : xray,
     "amoxicillin" : amoxicillin,
     "other_antibiotic" : other_antibiotic,
@@ -52,5 +54,5 @@ document.forms['follow_up_form'].onsubmit = function() {
     // }, 3000);
   };
 
-  transmission.update("follow_up", information, success);
+  transmission.insert("follow_up", information, success);
 }

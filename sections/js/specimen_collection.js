@@ -82,12 +82,12 @@ document.getElementById("5").onclick = function() {
   document.forms['specimen_form'].onsubmit();
 };
 
-// DONE BTN
-document.getElementById("6").onclick = function() {
-  globalNavigate = "yes";
-  console.log("clicked navigate....");
-  document.forms['specimen_form'].onsubmit();
-};
+// // DONE BTN
+// document.getElementById("6").onclick = function() {
+//   globalNavigate = "yes";
+//   console.log("clicked navigate....");
+//   document.forms['specimen_form'].onsubmit();
+// };
 
 document.forms['specimen_form'].onsubmit = function() {
   console.log("controller - specimen collection");
@@ -126,24 +126,36 @@ document.forms['specimen_form'].onsubmit = function() {
   };
 
 
-  var date = this.date.value;
-  var period = extract_radio(this.elements.period);
-  var aspect = extract_radio(this.elements.aspect);
+  var date1 = this.date.value;
+  var period1 = extract_radio(this.elements.period);
+  var aspect1 = extract_radio(this.elements.aspect);
+
+  var date2 = this.date.value;
+  var period2 = extract_radio(this.elements.period);
+  var aspect2 = extract_radio(this.elements.aspect);
+
   console.log("userId: " + sessionStorage.getItem("userId"));
 
   var pathway = "specimen";
   var user_id = localStorage.getItem("userId");
+  var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
 
-  var information = {
+  var information1 = {
     "pathway" : pathway,
-    "userId":localStorage.getItem("userId"),
-    "date":date,
-    "period":period,
-    "aspect":aspect
+    "patient_id" : patient_id,
+    "date_1":date1,
+    "period_1":period1,
+    "aspect_1":aspect1
+  };
+  var information2 = {
+    "pathway" : pathway,
+    "date_2":date2,
+    "period_2":period2,
+    "aspect_2":aspect2
   };
   // information = JSON.stringify(information);
-  console.log(information);
+  console.log(information1);
 
-  transmission.update("specimen_collection", information, success1);
+  transmission.insert("specimen_collection", information1, success1);
   return false;
 };
