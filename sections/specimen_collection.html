@@ -19,10 +19,10 @@
   <body>
     <div class="row">
       <div class="col">
-        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="8">Goto Dashboard</button>
+        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="7">Goto Dashboard</button>
       </div>
       <div class="col">
-        <button onclick="patientNavigation(localStorage.getItem('lang'))" id="10" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+        <button onclick="patientNavigation(localStorage.getItem('lang'))" id="8" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
       </div>
     </div>
     <div class="container">
@@ -33,7 +33,7 @@
           <div id="animationWindow"></div>
           <div id="main_display">
             <div id="no_specimen" class="jumbotron" style="background-color: #31b5f6">
-              <h1 style="font-size: 20px; color: white; font-weight: 100; text-align: center" id="7">No Specimen Collected!</h1>
+              <h1 style="font-size: 20px; color: white; font-weight: 100; text-align: center" id="6">No Specimen Collected!</h1>
             </div>
 
             <div id="contents">
@@ -42,6 +42,10 @@
             <br>
             <div class="card">
               <div class="card-header" id="name"></div>
+              <script>
+              var patient = JSON.parse(sessionStorage.getItem("patient"));
+              document.getElementById("name").innerHTML = patient.name+ " | " + patient.id;
+              </script>
               <div class="card-body" id="specimen_collection">
                 <form id="specimen_form">
                   <div class="form-group">
@@ -113,7 +117,7 @@
       var text = [
         "Spot", "Matin",
         "Mucopurulent", "Sanguinolant", "Salivaire",
-        "Plus spécimen", "Terminé", "Aucun spécimen collecté!",
+        "Plus spécimen", "Aucun spécimen collecté!",
         "Aller au panneau de contrôle", "Prélèvement de l’échantillon",
         "Naviguer le patient"
       ];
@@ -163,8 +167,7 @@
         transmission.fetch("patient", success, failed, "specimen");
 
         translate("specimen_collection");
-        var patient = JSON.parse(sessionStorage.getItem("patient"));
-        document.getElementById("name").innerHTML = patient.name+ " | " + patient.id;
+        // var patient = JSON.parse(sessionStorage.getItem("patient"));
       });
     </script>
     <script src="js/specimen_collection.js"></script>

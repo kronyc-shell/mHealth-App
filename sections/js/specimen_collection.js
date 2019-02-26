@@ -33,12 +33,12 @@ function SpecimenCard() {
       switch(lang) {
         case "fr":
           var t = "";
-          if(text.search("today") != -1) {
-            t = text.replace("today", "aujourd'hui");
-          } else if(text.search("days ago") != -1) {
-            t = text.replace("days ago", "journées");
-          } else if(text.search("yesterday") != -1) {
-            t = text.replace("yesterday", "hier");
+          if(text.search("Today") != -1) {
+            t = text.replace("Today", "Aujourd'hui");
+          } else if(text.search("Days ago") != -1) {
+            t = text.replace("Days ago", "Journées");
+          } else if(text.search("Yesterday") != -1) {
+            t = text.replace("Yesterday", "Hier");
           } else if(text.search("Bloody") != -1) {
             t = text.replace("Bloody", "Sanguinolant");
           } else if(text.search("Salivary") != -1) {
@@ -63,7 +63,7 @@ function SpecimenCard() {
 
     div = document.createElement("div");
     div.className = "card-body text-center";
-    div.appendChild(document.createTextNode(getText(this.duration, lang) + " | " + getText(this.period, lang) + " | " + getText(this.aspect, lang)));
+    div.appendChild(document.createTextNode(getText(getTimeDuration(new Date(this.duration)), lang) + " | " + getText(this.period, lang) + " | " + getText(this.aspect, lang)));
     div.appendChild(document.createElement("br"));
     var cardBody = div;
 
@@ -166,3 +166,23 @@ document.forms['specimen_form'].onsubmit = function() {
 
   return false;
 };
+function getTimeDuration(secondDate) {
+  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+  var firstDate = new Date;
+  var diffDays = Math.round(
+    Math.abs(
+      (firstDate.getTime() - secondDate.getTime())/(oneDay)
+    )
+  );
+  // console.log((firstDate.getTime() - secondDate.getTime())/(oneDay))
+  if(diffDays == 0) {
+    return "Today";
+  }
+  else if(diffDays == 1) {
+    return "Yesterday";
+  }
+  else if(diffDays > 1) {
+    return diffDays + " Days ago";
+  }
+  return diffDays;
+}
