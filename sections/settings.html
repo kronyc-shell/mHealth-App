@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../css/all.css">
+
+    <link rel="stylesheet" href="../../css/bootstrap-material-design.css">
+    <link rel="stylesheet" href="../../css/main.css">
+
+    <title>Login</title>
+  </head>
+
+  <body>
+
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="40">Goto Dashboard</button>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <br>
+      <div class="row">
+        <div class="col-12">
+          <h2 style="font-weight: 100; font-size: 16px; text-align: center" id="0">Configure your account</h2><hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <small id="1">Get notifications for:</small>
+        </div>
+        <div class="col-12">
+          <div class="container">
+            <form id="notification_settings">
+              <div id="checkboxes">
+                <div class="custom-control custom-checkbox">
+                  <input name="patient_category" class="custom-control-input" type="checkbox" value="hos" id="hos">
+                  <label class="custom-control-label" for="hos" id="2">
+                    Positive Results
+                  </label>
+                </div>
+
+                <div class="custom-control custom-checkbox">
+                  <input name="patient_category" class="custom-control-input" type="checkbox" value="chi" id="chi">
+                  <label class="custom-control-label" for="chi" id="3">
+                    Negative Results
+                  </label>
+                </div>
+
+                <div class="custom-control custom-checkbox">
+                  <input name="patient_category" class="custom-control-input" type="checkbox" value="art" id="art">
+                  <label class="custom-control-label" for="art" id="3">
+                    Errors
+                  </label>
+                </div>
+
+                <div class="custom-control custom-checkbox">
+                  <input name="patient_category" onclick="disable_other_notification_options()" class="custom-control-input" type="checkbox" value="plh" id="plh">
+                  <label class="custom-control-label" for="plh" id="4">
+                    All
+                  </label>
+                </div>
+              </div>
+            </form>
+          </div>
+          <hr>
+        </div>
+        <div class="col-12">
+          <small id="1">Update account:</small>
+        </div>
+        <div class="col-12">
+          <form id="update_account">
+            <div class="form-group">
+              <label for="username" style="font-size: 14px">Username</label>
+              <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="form-group">
+              <label for="password" style="font-size: 14px">Password</label>
+              <input type="password" class="form-control" id="password" required>
+            </div>
+            <div class="form-group">
+              <label for="phonenumber" style="font-size: 14px">Phone Number</label>
+              <input type="text" class="form-control" id="phonenumber" required>
+            </div>
+            <div class="form-group">
+              <label for="email" style="font-size: 14px">Email</label>
+              <input type="text" class="form-control" id="email">
+            </div>
+            <div class="form-group">
+              <label for="service_provider" style="font-size: 14px">Service Provider</label>
+              <select class="custom-select" id="service_provider" required>
+                <option value="mtn">MTN</option>
+                <option value="orange">Orange</option>
+                <option value="nextel">Nextell</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    function disable_other_notification_options() {
+      // console.log("Disable other notification options");
+      // var notification_forms = document.forms['notification_settings'];
+      // var update_account = document.forms['update_account'];
+      // if(notification_forms.inputs.all.checked == true) {
+      //   console.warn("All has been selected, disabling the others");
+      // } else {
+      //   console.warn("All has been unchecked, enabling the others");
+      // }
+    }
+    </script>
+  </body>
+</html>
