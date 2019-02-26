@@ -130,7 +130,8 @@
 
         var success = function(specimens) {
           if(typeof(specimens) != 'undefined') {
-            sessionStorage.setItem("specimen", "true");
+            console.warn("Here even though I should not be!");
+            sessionStorage.setItem("specimen", "set");
             var period1 = specimens.period_1;
             var aspect1 = specimens.aspect_1;
             var duration = specimens.date_1;
