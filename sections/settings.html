@@ -33,37 +33,36 @@
         </div>
         <div class="col-12">
           <div class="container">
-            <form id="notification_settings">
+            <form id="user_settings">
               <div id="checkboxes">
                 <div class="custom-control custom-checkbox">
-                  <input name="patient_category" class="custom-control-input" type="checkbox" value="hos" id="hos">
-                  <label class="custom-control-label" for="hos" id="2">
+                  <input name="notifications" class="custom-control-input" type="checkbox" id="positive_results">
+                  <label class="custom-control-label" for="positive_results">
                     Positive Results
                   </label>
                 </div>
 
                 <div class="custom-control custom-checkbox">
-                  <input name="patient_category" class="custom-control-input" type="checkbox" value="chi" id="chi">
-                  <label class="custom-control-label" for="chi" id="3">
+                  <input name="notifications" class="custom-control-input" type="checkbox" id="negative_results">
+                  <label class="custom-control-label" for="negative_results" >
                     Negative Results
                   </label>
                 </div>
 
                 <div class="custom-control custom-checkbox">
-                  <input name="patient_category" class="custom-control-input" type="checkbox" value="art" id="art">
-                  <label class="custom-control-label" for="art" id="3">
+                  <input name="notifications" class="custom-control-input" type="checkbox" id="error">
+                  <label class="custom-control-label" for="error">
                     Errors
                   </label>
                 </div>
 
                 <div class="custom-control custom-checkbox">
-                  <input name="patient_category" onclick="disable_other_notification_options()" class="custom-control-input" type="checkbox" value="plh" id="plh">
-                  <label class="custom-control-label" for="plh" id="4">
+                  <input name="notifications" onclick="disable_other_notification_options()" class="custom-control-input" type="checkbox" id="all">
+                  <label class="custom-control-label" for="all" >
                     All
                   </label>
                 </div>
               </div>
-            </form>
           </div>
           <hr style="width: 5%">
         </div>
@@ -71,7 +70,7 @@
           <small id="1">Update account:</small>
         </div>
         <div class="col-12">
-          <form id="update_account">
+          <!-- <form id="update_account"> -->
             <div class="form-group">
               <label for="username" style="font-size: 14px">Username</label>
               <input type="text" class="form-control" id="username" required>
@@ -96,18 +95,44 @@
                 <option value="nextel">Nextell</option>
               </select>
             </div>
-          </div>
+          <!-- </form> -->
         </div>
       </div><br>
 
-      <div class="row">
-        <div class="col-12 text-center">
-          <button class="btn btn-main" id="setting_update_btn">Update</button>
+
+        <div class="row">
+          <div class="col-12 text-center">
+            <button tyep="submit" class="btn btn-main" id="setting_update_btn">Update</button>
+          </div>
         </div>
       </div>
-    </div>
-
+    </form>
+    <script src="../js/main.js"></script>
+    <script src="js/settings.js"></script>
     <script>
+    var user = JSON.parse(localStorage.getItem("user"));
+    var user_settings = document.forms['user_settings'];
+    for(var i in user_settings.elements.notifications) {
+      if(user_settings.elements.notifications[i].id == "positive_results") {
+        // user_settings.elements.notifications[i].value = user.notifications.positive_results;
+      }
+      else if(user_settings.elements.notifications[i].id == "negative_results") {
+        // user_settings.elements.notifications[i].value = user.notifications.negative_results;
+      }
+      else if(user_settings.elements.notifications[i].id == "error") {
+        // user_settings.elements.notifications[i].value = user.notifications.error;
+      }
+      else if(user_settings.elements.notifications[i].id == "all") {
+        // user_settings.elements.notifications[i].value = user.notifications.all;
+      }
+    }
+
+    user_settings.username.value = user.username;
+    user_settings.password.value = user.password;
+    user_settings.phonenumber.value = user.phonenumber;
+    user_settings.email.value = user.email;
+    user_settings.service_provider = user.service_provider;
+
     function disable_other_notification_options() {
       // console.log("Disable other notification options");
       // var notification_forms = document.forms['notification_settings'];

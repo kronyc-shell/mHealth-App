@@ -172,23 +172,40 @@ var transmission = {
     ajax.send(JSON.stringify(information));
   },
 
-  update : function(model, information, success) {
-    var user_id = localStorage.getItem("userId");
-    var patient_id = sessionStorage.getItem("userId");
+  update : function(model, information, success, failed) {
 
     var ajax = new XMLHttpRequest;
     ajax.onreadystatechange = function() {
       if(this.readyState == 4 && this.status == 200) {
-        // console.log("server said: " + this.responseText);
-        var sr = JSON.stringify(this.responseText);
-        success(sr);
+        console.log("server said: " + this.responseText);
+        var serverResponse = JSON.stringify(this.responseText);
+        if(serverResponse.code == 200) {
+          success(serverResponse.data);
+        }
+        else failed();
       }
     };
-    ajax.open(
-      "PUT",
-      this.url + `/user/${user_id}/patient/${patient_id}`,
-      true
-    );
+
+    switch(model) {
+      case "patient":
+        var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
+        ajax.open(
+          "PUT",
+          this.url + `/user/${user_id}/patient/${patient_id}`,
+          true
+        );
+      break;
+
+      case "user":
+      var user_id = JSON.parse(localStorage.getItem("user")).id;
+      
+      ajax.open(
+        "PUT",
+        this.url + `/user/${user_id}/user/${user_id}`,
+        true
+      );
+      break;
+    }
     ajax.setRequestHeader(
       "Content-Type",
       "application/json"
