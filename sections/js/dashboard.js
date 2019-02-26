@@ -371,7 +371,7 @@ function getTimeDuration(secondDate) {
     Math.abs(
       (firstDate.getTime() - secondDate.getTime())/(oneDay)
     )
-  ) - 1;
+  );
   // console.log((firstDate.getTime() - secondDate.getTime())/(oneDay))
   if(diffDays == 0) {
     return "Today";
