@@ -7,16 +7,18 @@
     <link rel="stylesheet" href="../../css/all.css">
 
     <link rel="stylesheet" href="../../css/bootstrap-material-design.css">
-    <link rel="stylesheet" href="../../css/main.css">
+    <!-- <link rel="stylesheet" href="../../css/main.css"> -->
 
     <title>Login</title>
   </head>
 
   <body>
 
-    <div class="row">
-      <div class="col">
-        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="40">Goto Dashboard</button>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-main btn-block btn-sm " style="background-color: #2a53ff; color: white" name="button" onclick="window.location.replace('index.html')" id="40">Goto Dashboard</button>
+        </div>
       </div>
     </div>
 
@@ -36,28 +38,28 @@
             <form id="user_settings">
               <div id="checkboxes">
                 <div class="custom-control custom-checkbox">
-                  <input name="notifications" class="custom-control-input" type="checkbox" id="positive_results">
+                  <input name="notifications" class="custom-control-input" type="checkbox" id="positive_results" value="positive_results">
                   <label class="custom-control-label" for="positive_results">
                     Positive Results
                   </label>
                 </div>
 
                 <div class="custom-control custom-checkbox">
-                  <input name="notifications" class="custom-control-input" type="checkbox" id="negative_results">
+                  <input name="notifications" class="custom-control-input" type="checkbox" id="negative_results" value="negative_results">
                   <label class="custom-control-label" for="negative_results" >
                     Negative Results
                   </label>
                 </div>
 
                 <div class="custom-control custom-checkbox">
-                  <input name="notifications" class="custom-control-input" type="checkbox" id="error">
+                  <input name="notifications" class="custom-control-input" type="checkbox" id="error" value="errors">
                   <label class="custom-control-label" for="error">
                     Errors
                   </label>
                 </div>
 
                 <div class="custom-control custom-checkbox">
-                  <input name="notifications" onclick="disable_other_notification_options()" class="custom-control-input" type="checkbox" id="all">
+                  <input name="notifications" onclick="disable_other_notification_options()" class="custom-control-input" type="checkbox" id="all" value="all">
                   <label class="custom-control-label" for="all" >
                     All
                   </label>
@@ -89,7 +91,8 @@
             </div>
             <div class="form-group">
               <label for="service_provider" style="font-size: 14px">Service Provider</label>
-              <select class="custom-select" id="service_provider" required>
+              <select class="custom-select" id="service_provider">
+                <option></option>
                 <option value="mtn">MTN</option>
                 <option value="orange">Orange</option>
                 <option value="nextel">Nextell</option>
@@ -102,7 +105,7 @@
 
         <div class="row">
           <div class="col-12 text-center">
-            <button tyep="submit" class="btn btn-main" id="setting_update_btn">Update</button>
+            <button type="submit" style="background-color: #2a53ff; color: white" class="btn btn-main" id="setting_update_btn">Update</button>
           </div>
         </div>
       </div>
@@ -113,17 +116,17 @@
     var user = JSON.parse(localStorage.getItem("user"));
     var user_settings = document.forms['user_settings'];
     for(var i in user_settings.elements.notifications) {
-      if(user_settings.elements.notifications[i].id == "positive_results") {
-        // user_settings.elements.notifications[i].value = user.notifications.positive_results;
+      if(user_settings.elements.notifications[i].id == "positive_results" && user.notifications[i] == "positive_results") {
+        user_settings.elements.notifications[i].checked = true;
       }
-      else if(user_settings.elements.notifications[i].id == "negative_results") {
-        // user_settings.elements.notifications[i].value = user.notifications.negative_results;
+      else if(user_settings.elements.notifications[i].id == "negative_results" && user.notifications[i] == "negative_results") {
+        user_settings.elements.notifications[i].checked  = true;
       }
-      else if(user_settings.elements.notifications[i].id == "error") {
-        // user_settings.elements.notifications[i].value = user.notifications.error;
+      else if(user_settings.elements.notifications[i].id == "error" && user.notifications[i] == "errors") {
+        user_settings.elements.notifications[i].checked = true;
       }
-      else if(user_settings.elements.notifications[i].id == "all") {
-        // user_settings.elements.notifications[i].value = user.notifications.all;
+      else if(user_settings.elements.notifications[i].id == "all" && user.notifications[i] == "all") {
+        user_settings.elements.notifications[i].checked = true;
       }
     }
 
@@ -131,7 +134,7 @@
     user_settings.password.value = user.password;
     user_settings.phonenumber.value = user.phonenumber;
     user_settings.email.value = user.email;
-    user_settings.service_provider = user.service_provider;
+    user_settings.service_provider.value = user.service_provider;
 
     function disable_other_notification_options() {
       // console.log("Disable other notification options");

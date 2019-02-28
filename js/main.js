@@ -121,8 +121,8 @@ var transmission = {
   _userId : "",
 
   // url : "http://tbappbamenda.com:8080",
-  // url : "http://localhost:8080",
-  url : "http://142.93.248.15:8080",
+  url : "http://localhost:8080",
+  // url : "http://142.93.248.15:8080",
 
   //TODO: figure out why this part
   set connection(connection) {
@@ -179,9 +179,9 @@ var transmission = {
     ajax.onreadystatechange = function() {
       if(this.readyState == 4 && this.status == 200) {
         console.log("server said: " + this.responseText);
-        var serverResponse = JSON.stringify(this.responseText);
+        var serverResponse = JSON.parse(this.responseText);
         if(serverResponse.code == 200) {
-          success(serverResponse.data);
+          success();
         }
         else failed();
       }
@@ -199,6 +199,7 @@ var transmission = {
 
       case "user":
       var user_id = JSON.parse(localStorage.getItem("user")).id;
+      console.warn("Updating user", user_id);
 
       ajax.open(
         "PUT",

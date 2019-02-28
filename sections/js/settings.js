@@ -1,5 +1,5 @@
 document.forms['user_settings'].onsubmit = function() {
-  // console.log("user settings submitted");
+  console.warn("user settings submitted");
   var notifications = extract_checkbox(this.elements.notifications);
   var username = this.username.value;
   var phonenumber = this.phonenumber.value;
@@ -14,12 +14,22 @@ document.forms['user_settings'].onsubmit = function() {
     "service_provider" : service_provider
   }
 
-  var success = function(serverResponse) {
-    
+  var success = function() {
+    console.warn("Running successful);")
+    var user = JSON.parse(localStorage.getItem("user"));
+    user.email = information.email;
+    user.username = information.username;
+    user.service_provider = information.service_provider;
+    user.notifications = JSON.parse(information.notifications);
+    localStorage.setItem("user", JSON.stringify(user));
+    window.location.reload(1);
   }
-  var failed = function() {}
+  var failed = function() {
+    console.warn("Failed updating user settings");
+  }
 
   transmission.update("user", information, success, failed);
+  return false;
 }
 
 
