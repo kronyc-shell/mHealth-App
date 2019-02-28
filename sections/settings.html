@@ -137,14 +137,11 @@
     user_settings.service_provider.value = user.service_provider;
 
     function disable_other_notification_options() {
-      // console.log("Disable other notification options");
-      // var notification_forms = document.forms['notification_settings'];
-      // var update_account = document.forms['update_account'];
-      // if(notification_forms.inputs.all.checked == true) {
-      //   console.warn("All has been selected, disabling the others");
-      // } else {
-      //   console.warn("All has been unchecked, enabling the others");
-      // }
+      if(document.getElementById("all").checked) {
+        document.getElementById("positive_results").checked = false;
+        document.getElementById("negative_results").checked = false;
+        document.getElementById("error").checked = false;
+      }
     }
     </script>
   </body>
