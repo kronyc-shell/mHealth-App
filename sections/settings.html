@@ -115,19 +115,20 @@
     <script>
     var user = JSON.parse(localStorage.getItem("user"));
     var user_settings = document.forms['user_settings'];
-    for(var i in user_settings.elements.notifications) {
-      if(user_settings.elements.notifications[i].id == "positive_results" && user.notifications[i] == "positive_results") {
-        user_settings.elements.notifications[i].checked = true;
-      }
-      else if(user_settings.elements.notifications[i].id == "negative_results" && user.notifications[i] == "negative_results") {
-        user_settings.elements.notifications[i].checked  = true;
-      }
-      else if(user_settings.elements.notifications[i].id == "error" && user.notifications[i] == "errors") {
-        user_settings.elements.notifications[i].checked = true;
-      }
-      else if(user_settings.elements.notifications[i].id == "all" && user.notifications[i] == "all") {
-        user_settings.elements.notifications[i].checked = true;
-      }
+    var notifications = user.notifications;
+    for(var i in notifications) {
+      if(notifications[i] == "positive_results")
+      document.getElementById("positive_results").checked = true;
+
+      else if(notifications[i] == "negative_results")
+      document.getElementById("negative_results").checked = true;
+
+      else if(notifications[i] == "errors")
+      document.getElementById("error").checked = true;
+
+      else if(notifications[i] == "all")
+      document.getElementById("all").checked = true;
+
     }
 
     user_settings.username.value = user.username;
