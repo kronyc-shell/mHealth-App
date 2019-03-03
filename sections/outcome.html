@@ -17,12 +17,39 @@
 
 
   <body>
-    <div class="row">
-      <div class="col">
-        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="24">Goto Dashboard</button>
+    <div class="container-fluid">
+      <div class="row" id="">
+        <div class="col-sm-12">
+          <!-- Modal -->
+          <div class="modal fade" id="no_specimen_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                  <!--TODO: include some translations here for french -->
+                  <h5 class="modal-title" id="exampleModalLabel">Very Important Alert!</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h5>No Follow up Results recorded</h5>
+                </div>
+                <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                  <button onclick="patientNavigation(localStorage.getItem('lang'))" id="30" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col">
-        <button onclick="patientNavigation(localStorage.getItem('lang'))" id="28" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="24">Goto Dashboard</button>
+        </div>
+        <div class="col">
+          <button onclick="patientNavigation(localStorage.getItem('lang'))" id="28" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+        </div>
       </div>
     </div>
     <div class="container">
@@ -313,16 +340,18 @@
 
 
         var success3 = function(sr) {
-          var form = document.forms['outcome_form'];
+          if(typeof(sr) != "undefined") {
+            var form = document.forms['outcome_form'];
 
-          form.elements.treatment.value = sr.outcome_recorded;
-          if(sr.outcome_recorded ==  "started_tb_treatment" || sr.outcome_recorded == "referred_for_treatment")
-          {
-            document.getElementById("referred_tb_rx_number_write").value = sr.tb_rx_number;
-            document.getElementById("referred_write").removeAttribute("hidden");
+            form.elements.treatment.value = sr.outcome_recorded;
+            if(sr.outcome_recorded ==  "started_tb_treatment" || sr.outcome_recorded == "referred_for_treatment")
+            {
+              document.getElementById("referred_tb_rx_number_write").value = sr.tb_rx_number;
+              document.getElementById("referred_write").removeAttribute("hidden");
+            }
+            form.other.value = sr.other;
+            form.comments.value = sr.comments;
           }
-          form.other.value = sr.other;
-          form.comments.value = sr.comments;
         }
 
         var failed = function() {}

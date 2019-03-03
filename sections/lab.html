@@ -35,25 +35,25 @@
       </div>
     </div>
     <div class="container">
-      <br>
       <div class="row" id="">
         <div class="col-sm-12">
           <!-- Modal -->
           <div class="modal fade" id="no_specimen_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <div class="modal-header bg-danger text-white">
+                  <!--TODO: include some translations here for french -->
+                  <h5 class="modal-title" id="exampleModalLabel">Very Important Alert!</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  No specimen has been collected
+                  <h5>No Specimen has been collected</h5>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" >Save changes</button>
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                  <button onclick="patientNavigation(localStorage.getItem('lang'))" id="30" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
                 </div>
               </div>
             </div>

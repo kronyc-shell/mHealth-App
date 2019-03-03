@@ -1,5 +1,15 @@
 $(document).ready(function() {
   translate("follow_up");
+
+  var patient = JSON.parse(sessionStorage.getItem("patient"));
+  if(patient.pathway == "requester" || patient.pathway == "specimen") {
+    $('#no_specimen_modal').modal({
+
+    },'show');
+
+    document.getElementById("22").setAttribute("hidden", "hidden");
+
+  }
 });
 
 
