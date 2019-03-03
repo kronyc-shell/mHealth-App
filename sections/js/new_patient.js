@@ -2,15 +2,9 @@ $(document).ready(function() {
   $('body').bootstrapMaterialDesign();
   console.log("checking connection state");
 
-  if(localStorage.getItem("connection") == "offline") {
-    // console.log("Working offline");
-    // controller = offlineController;
-  } else if(
+  if(
     sessionStorage.getItem("patient") == null
   ) {
-    // console.log("Working online");
-    // controller = onlineController;
-
     sessionStorage.getItem("patient") == null && translate('new_patient');
 
     // FORM SUBMISSIION

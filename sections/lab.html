@@ -23,17 +23,44 @@
 
 
   <body>
-    <div class="row">
-      <div class="col">
-        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="28">Goto Dashboard</button>
-      </div>
-      <div class="col">
-        <button onclick="patientNavigation(localStorage.getItem('lang'))" id="30" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="28">Goto Dashboard</button>
+        </div>
+        <div class="col">
+          <button onclick="patientNavigation(localStorage.getItem('lang'))" id="30" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+        </div>
       </div>
     </div>
     <div class="container">
       <br>
-      <div class="row">
+      <div class="row" id="">
+        <div class="col-sm-12">
+          <!-- Modal -->
+          <div class="modal fade" id="no_specimen_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  No specimen has been collected
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" >Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" id="lab_content_body">
         <div class="col-sm-12">
           <h2 style="font-weight: 100; font-size: 25px; text-align: center" id="27">LAB</h2><br>
           <div id="animationWindow"></div>
@@ -265,61 +292,66 @@
       var _form_xpert = document.forms['machine_results'];
 
       var success = function(sr) {
-        console.log("controller - fetching lab - SUCCESSFUL");
-        sessionStorage.setItem("lab_fetch", "true");
-        // console.log(sr);
-        _form.date_specimen_received.valueAsDate = new Date(sr.date_specimen_received);
-        _form.received_by.value = sr.received_by;
-        _form.lsn.value = sr.lab_serial_number;
-        // console.log
-        _form.date1.valueAsDate = new Date(sr.smr_date);
-        if(typeof(sr.smr_results) != "undefined") {
-          _form.elements.result_1.value = sr.smr_result_1;
-          for(var x in _form.elements.result_1)
-            if(_form.elements.result_1[x].value == sr.smr_result_1)
-              _form.elements.result_1[x].click();
-          _form.elements.result_2.value = sr.smr_result_2;
-        }
+        if(typeof(sr) != "undefined") {
+          console.log("controller - fetching lab - SUCCESSFUL");
+          sessionStorage.setItem("lab_fetch", "true");
+          // console.log(sr);
+          _form.date_specimen_received.valueAsDate = new Date(sr.date_specimen_received);
+          _form.received_by.value = sr.received_by;
+          _form.lsn.value = sr.lab_serial_number;
+          // console.log
+          _form.date1.valueAsDate = new Date(sr.smr_date);
+          if(typeof(sr.smr_results) != "undefined") {
+            _form.elements.result_1.value = sr.smr_result_1;
+            for(var x in _form.elements.result_1)
+              if(_form.elements.result_1[x].value == sr.smr_result_1)
+                _form.elements.result_1[x].click();
+            _form.elements.result_2.value = sr.smr_result_2;
+          }
 
-        if(sr.xpert_date !== null) {
-          if(typeof(sr.mtb_result) != 'undefined') {
-            // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
-            for(var i=0;i<_form_xpert.elements.mtb_results.length; ++i) {
-              // console.log(_form_xpert.elements.mtb_results[i].value);
-              if(typeof(sr.mtb_result) != 'undefined') {
-                if(_form_xpert.elements.mtb_results[i].value == sr.mtb_result) {
-                  // console.log("Found match");
-                  _form_xpert.elements.mtb_results[i].click();
+          if(sr.xpert_date !== null) {
+            if(typeof(sr.mtb_result) != 'undefined') {
+              // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
+              for(var i=0;i<_form_xpert.elements.mtb_results.length; ++i) {
+                // console.log(_form_xpert.elements.mtb_results[i].value);
+                if(typeof(sr.mtb_result) != 'undefined') {
+                  if(_form_xpert.elements.mtb_results[i].value == sr.mtb_result) {
+                    // console.log("Found match");
+                    _form_xpert.elements.mtb_results[i].click();
+                    break;
+                  } else {
+                  //   console.log( _form_xpert.elements.mtb_results[i].value == sr.mtb_result);
+                  //   console.log( _form_xpert.elements.mtb_results[i].value,sr.xpert_results.mtb_result);
+                  }
+                }
+              }
+            }
+            if(typeof(sr.rif_results) != 'undefined') {
+              // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
+              for(var i=0;i<_form_xpert.elements.rif_results.length; ++i) {
+                if(_form_xpert.elements.rif_results[i].value == sr.xpert_results.rif_results) {
+                  _form_xpert.elements.rif_results[i].click();
                   break;
-                } else {
-                //   console.log( _form_xpert.elements.mtb_results[i].value == sr.mtb_result);
-                //   console.log( _form_xpert.elements.mtb_results[i].value,sr.xpert_results.mtb_result);
                 }
               }
             }
           }
-          if(typeof(sr.rif_results) != 'undefined') {
-            // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
-            for(var i=0;i<_form_xpert.elements.rif_results.length; ++i) {
-              if(_form_xpert.elements.rif_results[i].value == sr.xpert_results.rif_results) {
-                _form_xpert.elements.rif_results[i].click();
-                break;
-              }
-            }
-          }
+
+          _form_xpert.unique_code.value = sr.unique_code;
+          _form_xpert.mtb_date.valueAsDate = new Date(sr.xpert_date);
+
+          if(sr.source == "automatic")
+            _form_xpert.automatic_input.click();
+          // _form_xpert.automatic_input.checked = sr.auto == "automatic" ? true : false;
         }
-
-        _form_xpert.unique_code.value = sr.unique_code;
-        _form_xpert.mtb_date.valueAsDate = new Date(sr.xpert_date);
-
-        if(sr.source == "automatic")
-          _form_xpert.automatic_input.click();
-        // _form_xpert.automatic_input.checked = sr.auto == "automatic" ? true : false;
 
       }
       var failed = function() {}
 
       transmission.fetch("patient", success, failed , "lab");
+
+
+      var patient = JSON.parse(sessionStorage.getItem("patient"));
     </script>
 
   </body>

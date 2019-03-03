@@ -13,8 +13,9 @@
   </head>
 
   <script>
-    if(localStorage.getItem("user") === null)
+    if(localStorage.getItem("user") == "undefined") {
       window.location.replace("../index.html");
+    }
     sessionStorage.setItem("_todays_date", new Date().toJSON().slice(0,10).replace(/-/g,'-'));
     // alert("Language: " + localStorage.getItem("lang"));
   </script>

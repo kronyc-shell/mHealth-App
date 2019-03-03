@@ -17,12 +17,14 @@
 
 
   <body>
-    <div class="row">
-      <div class="col">
-        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="7">Goto Dashboard</button>
-      </div>
-      <div class="col">
-        <button onclick="patientNavigation(localStorage.getItem('lang'))" id="8" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="7">Goto Dashboard</button>
+        </div>
+        <div class="col">
+          <button onclick="patientNavigation(localStorage.getItem('lang'))" id="8" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+        </div>
       </div>
     </div>
     <div class="container">
@@ -95,6 +97,9 @@
                       <div class="form-group text-center">
                         <button class="btn btn-main" type="button" id="5">More Specimen</button>
                       </div>
+                    </div>
+                    <div class="col">
+                      <button onclick="patientNavigation(localStorage.getItem('lang'))" id="8" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
                     </div>
                   </div>
 

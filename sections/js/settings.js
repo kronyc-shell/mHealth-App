@@ -5,11 +5,13 @@ document.forms['user_settings'].onsubmit = function() {
   var phonenumber = this.phonenumber.value;
   var email = this.email.value;
   var service_provider = this.service_provider.value;
+  var password = this.password.value;
 
   var information = {
     "notifications" : JSON.stringify(notifications),
     "username" : username,
     "phonenumber" : phonenumber,
+    "password" : password,
     "email" : email,
     "service_provider" : service_provider
   }
@@ -19,6 +21,7 @@ document.forms['user_settings'].onsubmit = function() {
     var user = JSON.parse(localStorage.getItem("user"));
     user.email = information.email;
     user.username = information.username;
+    user.password = information.password;
     user.service_provider = information.service_provider;
     user.notifications = JSON.parse(information.notifications);
     localStorage.setItem("user", JSON.stringify(user));

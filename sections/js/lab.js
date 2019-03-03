@@ -1,6 +1,15 @@
 $(document).ready(function() {
   $('body').bootstrapMaterialDesign();
 
+  if(patient.pathway == "requester") {
+    $('#no_specimen_modal').modal({
+
+    },'show');
+
+    document.getElementById("26").setAttribute("hidden", "hidden");
+
+  }
+
   if(localStorage.getItem("connection") == "offline") {
 
   } else {
