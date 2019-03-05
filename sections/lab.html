@@ -301,7 +301,7 @@
           _form.lsn.value = sr.lab_serial_number;
           // console.log
           _form.date1.valueAsDate = new Date(sr.smr_date);
-          if(typeof(sr.smr_results) != "undefined") {
+          if(typeof(sr.smr_result_1) != "undefined") {
             _form.elements.result_1.value = sr.smr_result_1;
             for(var x in _form.elements.result_1)
               if(_form.elements.result_1[x].value == sr.smr_result_1)

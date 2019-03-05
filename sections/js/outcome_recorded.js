@@ -2,7 +2,7 @@ $(document).ready(function() {
   translate("outcome_recorded");
 
   var patient = JSON.parse(sessionStorage.getItem("patient"));
-  if(patient.pathway != "follow_up" || patient.pathway != "outcome_recorded") {
+  if(patient.pathway != "follow_up" && patient.pathway != "outcome_recorded") {
     $('#no_specimen_modal').modal({
 
     },'show');
@@ -61,6 +61,9 @@ document.forms['outcome_form'].onsubmit = function() {
 
   var success = function() {
     var msg;
+    var patient = JSON.parse(sessionStorage.getItem("patient"));
+    patient.pathway = "outcome_recorded";
+    sessionStorage.setItem("patient", JSON.stringify(patient));
     switch(localStorage.getItem("lang")) {
       case "fr":
       msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><br><a href='index.html' class=\"btn btn-main\">Aller au panneau de contrôle</a href='index.html'><br><br><a class=\"btn btn-main\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Naviguer le patient</a href='index.html'></div>";

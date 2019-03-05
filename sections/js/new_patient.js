@@ -18,6 +18,7 @@ $(document).ready(function() {
       var name = this.name.value;
       var age = this.age.value;
       var gender = extract_radio(this.elements.gender);
+      var date_of_test_request = this.date_of_test_request.value;
       var address = this.address.value;
       var telephone1 = this.telephone.value;
       var telephone2 = this.telephone_2.value;
@@ -90,6 +91,7 @@ $(document).ready(function() {
         "name" : name,
         "age" : age,
         "gender" : gender,
+        "date_of_test_request" : date_of_test_request,
         "address" : address,
         "telephone1" : telephone1,
         "telephone2" : telephone2,

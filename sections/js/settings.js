@@ -1,4 +1,10 @@
 document.forms['user_settings'].onsubmit = function() {
+  console.log(this);
+  document.getElementById("main_display").innerHTML = "";
+
+  var anim = bodymovin.loadAnimation(animData);
+  anim.setSpeed(3.4);
+
   console.warn("user settings submitted");
   var notifications = extract_checkbox(this.elements.notifications);
   var username = this.username.value;
@@ -32,7 +38,7 @@ document.forms['user_settings'].onsubmit = function() {
   }
 
   transmission.update("user", information, success, failed);
-  return false;
+  return true;
 }
 
 
@@ -43,5 +49,5 @@ function extract_checkbox(elements) {
       ret.push(elements[i].value);
     }
   }
-  return ret;
+  return false;
 }

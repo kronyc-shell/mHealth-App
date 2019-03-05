@@ -29,13 +29,15 @@
           <h2 style="font-weight: 100; font-size: 16px; text-align: center" id="0">Configure your account</h2><hr>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12">
-          <small id="1">Get notifications for (uncheck all for none):</small>
-        </div>
-        <div class="col-12">
-          <div class="container">
-            <form id="user_settings">
+      <div id="animationWindow"></div>
+
+      <form id="user_settings">
+        <div class="row" id="main_display">
+          <div class="col-12">
+            <small id="1">Get notifications for (uncheck all for none):</small>
+          </div>
+          <div class="col-12">
+            <div class="container">
               <div id="checkboxes">
                 <div class="custom-control custom-checkbox">
                   <input name="notifications" class="custom-control-input" type="checkbox" id="positive_results" value="positive_results">
@@ -65,51 +67,51 @@
                   </label>
                 </div>
               </div>
+            </div>
+            <hr style="width: 5%">
           </div>
-          <hr style="width: 5%">
-        </div>
-        <div class="col-12">
-          <small id="1">Update account:</small>
-        </div>
-        <div class="col-12">
-          <!-- <form id="update_account"> -->
-            <div class="form-group">
-              <label for="username" style="font-size: 14px">Username</label>
-              <input type="text" class="form-control" id="username" required>
-            </div>
-            <div class="form-group">
-              <label for="password" style="font-size: 14px">Password</label>
-              <input type="password" class="form-control" id="password" required>
-            </div>
-            <div class="form-group">
-              <label for="phonenumber" style="font-size: 14px">Phone Number</label>
-              <input type="text" class="form-control" id="phonenumber" required>
-            </div>
-            <div class="form-group">
-              <label for="email" style="font-size: 14px">Email</label>
-              <input type="text" class="form-control" id="email">
-            </div>
-            <div class="form-group">
-              <label for="service_provider" style="font-size: 14px">Service Provider</label>
-              <select class="custom-select" id="service_provider">
-                <option></option>
-                <option value="mtn">MTN</option>
-                <option value="orange">Orange</option>
-                <option value="nextel">Nextell</option>
-              </select>
-            </div>
-          <!-- </form> -->
-        </div>
-      </div><br>
-
-
-        <div class="row">
+          <div class="col-12">
+            <small id="1">Update account:</small>
+          </div>
+          <div class="col-12">
+            <!-- <form id="update_account"> -->
+              <div class="form-group">
+                <label for="username" style="font-size: 14px">Username</label>
+                <input type="text" class="form-control" id="username" required>
+              </div>
+              <div class="form-group">
+                <label for="password" style="font-size: 14px">Password</label>
+                <input type="password" class="form-control" id="password" required>
+              </div>
+              <div class="form-group">
+                <label for="phonenumber" style="font-size: 14px">Phone Number</label>
+                <input type="text" class="form-control" id="phonenumber" required>
+              </div>
+              <div class="form-group">
+                <label for="email" style="font-size: 14px">Email</label>
+                <input type="text" class="form-control" id="email">
+              </div>
+              <div class="form-group">
+                <label for="service_provider" style="font-size: 14px">Service Provider</label>
+                <select class="custom-select" id="service_provider">
+                  <option></option>
+                  <option value="mtn">MTN</option>
+                  <option value="orange">Orange</option>
+                  <option value="nextel">Nextell</option>
+                </select>
+              </div>
+            <!-- </form> -->
+          </div>
           <div class="col-12 text-center">
-            <button type="submit" style="background-color: #2a53ff; color: white" class="btn btn-main" id="setting_update_btn">Update</button>
-          </div>
-        </div>
+        <button type="submit" style="background-color: #2a53ff; color: white" class="btn btn-main" id="setting_update_btn">Update</button>
       </div>
-    </form>
+        </div>
+      </form><br>
+    </div>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/popper.js" ></script>
+    <script src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/bodymovin.min.js"></script>
     <script src="../js/main.js"></script>
     <script src="js/settings.js"></script>
     <script>

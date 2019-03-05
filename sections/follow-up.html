@@ -21,12 +21,14 @@
 
 
   <body>
-    <div class="row">
-      <div class="col">
-        <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="9">Goto Dashboard</button>
-      </div>
-      <div class="col">
-        <button onclick="patientNavigation(localStorage.getItem('lang'))" id="11" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-main btn-block btn-sm" name="button" onclick="window.location.replace('index.html')" id="9">Goto Dashboard</button>
+        </div>
+        <div class="col">
+          <button onclick="patientNavigation(localStorage.getItem('lang'))" id="11" type="button" class="btn btn-main-2 btn-block btn-sm" name="button">Navigate Patient</button>
+        </div>
       </div>
     </div>
 
@@ -172,12 +174,15 @@
     }
 
     var success2 = function(sr) {
-      var form = document.forms['follow_up_form'];
-      form.xray.checked = sr.xray;
-      form.amoxicilin.checked = sr.amoxicillin;
-      form.otherAntibiotic.value = sr.other_antibiotic;
-      form.follow_up_date.valueAsDate = new Date(sr.follow_up_scheduled_date);
-      form.comments.value = sr.comments;
+      if(typeof(sr) != "undefined") {
+        var form = document.forms['follow_up_form'];
+        form.xray.checked = sr.xray;
+        form.amoxicilin.checked = sr.amoxicillin;
+        form.otherAntibiotic.value = sr.other_antibiotic;
+        if( sr.follow_up_scheduled_date == null) form.follow_up_date.value = '';
+        else form.follow_up_date.valueAsDate = form.follow_up_date.valueAsDate;
+        form.comments.value = sr.comments;
+      }
     }
 
     var failed = function() {}

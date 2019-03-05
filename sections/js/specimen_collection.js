@@ -82,13 +82,6 @@ document.getElementById("5").onclick = function() {
   document.forms['specimen_form'].onsubmit();
 };
 
-// // DONE BTN
-// document.getElementById("6").onclick = function() {
-//   globalNavigate = "yes";
-//   console.log("clicked navigate....");
-//   document.forms['specimen_form'].onsubmit();
-// };
-
 document.forms['specimen_form'].onsubmit = function() {
   console.log("controller - specimen collection");
   document.getElementById("main_display").innerHTML = "";
@@ -99,6 +92,9 @@ document.forms['specimen_form'].onsubmit = function() {
   var success1 = function(sr) {
     // console.log("Success nav: " + navigate);
     var msg = "";
+    var patient = JSON.parse(sessionStorage.getItem("patient"));
+    patient.pathway = "specimen";
+    sessionStorage.setItem("patient", JSON.stringify(patient));
     switch(localStorage.getItem("lang")) {
       case "fr":
       msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><br><a href='index.html' class=\"btn btn-main\">Aller au panneau de contrôle</a href='index.html'><br><br><a class=\"btn btn-main\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Naviguer le patient</a href='index.html'></div>";

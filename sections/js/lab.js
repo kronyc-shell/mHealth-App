@@ -64,6 +64,7 @@ document.forms['smear_results_form'].onsubmit = function() {
 
   var pathway = "lab";
   var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
+  var community_id = JSON.parse(sessionStorage.getItem("patient")).community_id;
 
   var information = {
     "pathway" : pathway,
@@ -78,13 +79,17 @@ document.forms['smear_results_form'].onsubmit = function() {
     "mtb_result" : mtb_result,
     "rif_result" : rif_result,
     "xpert_date" : xpert_date,
-    "source" : source
+    "source" : source,
+    "community_id" : community_id
   };
   // information = JSON.stringify(information);
   // console.log(information);
 
   var success = function() {
     var msg;
+    var patient = JSON.parse(sessionStorage.getItem("patient"));
+    patient.pathway = "lab";
+    sessionStorage.setItem("patient", JSON.stringify(patient));
     switch(localStorage.getItem("lang")) {
       case "fr":
       msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><br><a href='index.html' class=\"btn btn-main\">Aller au panneau de contrôle</a href='index.html'><br><br><a class=\"btn btn-main\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Naviguer le patient</a href='index.html'></div>";
