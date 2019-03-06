@@ -179,7 +179,7 @@ $(document).ready(function() {
       form.status.value = patient.ward_bed_number;
       form.status.setAttribute("disabled", "disabled");
 
-      form.symptoms.value = patient.symptoms;
+      form.symptoms.value = JSON.parse(patient.symptoms);
       form.symptoms.setAttribute("disabled", "disabled");
 
       form.reason_for_test.value = patient.reason_for_test;

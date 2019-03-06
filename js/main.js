@@ -84,6 +84,13 @@ function translate(page) {
       }
       break;
 
+      case "settings":
+      for(var i in text) {
+        document.getElementById(i).innerHTML = text[i];
+        console.log(i);
+      }
+      break;
+
       case "outcome_recorded":
       for(var i in text) {
         document.getElementById(i).innerHTML = text[i];
