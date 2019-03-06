@@ -48,7 +48,7 @@
 
             <a class="list-group-item" onclick="localStorage.setItem('connection', 'offline'); window.location.reload(1)" id="5" hidden>Switch offline</a>
             <hr>
-            <a class="list-group-item" id="6" href="settings.html">+ Settings</a>
+            <a class="list-group-item" id="8" onclick="window.location.replace('settings.html')">Account settings</a>
           </ul>
         </div>
         <div class="container-fluid">
@@ -104,7 +104,16 @@
     <script>
       var anim = bodymovin.loadAnimation(animData);
       anim.setSpeed(2.6);
-      var text = ["Rechercher des dossiers de patients (nom ou numéro de téléphone)", "Panneau de contrôle", "Déconnecter", "Recharger", "Utiliser en ligne", "Utiliser hors ligne", "Nouveau patient", "Pas d'enregistrements"];
+      var text = [
+        "Rechercher des dossiers de patients (nom ou numéro de téléphone)", "Panneau de contrôle",
+        "Déconnecter",
+        "Recharger",
+        "Utiliser en ligne",
+        "Utiliser hors ligne",
+        "Nouveau patient",
+        "Pas d'enregistrements",
+        "Paramètres du compte"
+      ];
     </script>
 
     <script>
@@ -145,11 +154,18 @@
             var pc = new PatientCard;
             var count = 0;
 
-            for(var i in patients) {
+            // for(var i in patients) {
+            //   pc.patient = patients[i];
+            //   dashboard.addPatient(pc);
+            //   ++count;
+            //   if(count > 20) break;
+            // }
+
+            var start = patients.length > 20 ? (patients.length % 20) : 0;
+
+            for(var i=start;i<patients.length;++i) {
               pc.patient = patients[i];
               dashboard.addPatient(pc);
-              ++count;
-              if(count > 20) break;
             }
           }, 10);
           // console.log("passed here");

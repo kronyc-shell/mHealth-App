@@ -5,7 +5,7 @@ document.forms['user_settings'].onsubmit = function() {
   var anim = bodymovin.loadAnimation(animData);
   anim.setSpeed(3.4);
 
-  console.warn("user settings submitted");
+  // console.warn("user settings submitted");
   var notifications = extract_checkbox(this.elements.notifications);
   var username = this.username.value;
   var phonenumber = this.phonenumber.value;
@@ -29,7 +29,7 @@ document.forms['user_settings'].onsubmit = function() {
     user.username = information.username;
     user.password = information.password;
     user.service_provider = information.service_provider;
-    user.notifications = JSON.parse(information.notifications);
+    user.notifications = information.notifications;
     localStorage.setItem("user", JSON.stringify(user));
     window.location.reload(1);
   }
@@ -49,5 +49,5 @@ function extract_checkbox(elements) {
       ret.push(elements[i].value);
     }
   }
-  return false;
+  return ret;
 }

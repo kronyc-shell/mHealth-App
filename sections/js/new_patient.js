@@ -161,6 +161,9 @@ $(document).ready(function() {
       form.gender.value = patient.gender;
       form.gender.setAttribute("disabled", "disabled");
 
+      form.date_of_test_request.valueAsDate = new Date(patient.date_of_test_request);
+      form.date_of_test_request.setAttribute("disabled", "disabled");
+
       form.address.value = patient.address;
       form.address.setAttribute("disabled", "disabled");
 
