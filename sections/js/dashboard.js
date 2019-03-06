@@ -10,7 +10,7 @@ function PatientCard() {
 
   this.translate = function(text, lang) {
     if(text === null) return;
-    var fr = {"Yesterday":"Hier", "Today":"Aujourd'hui", "Years":"Ans", "Days":"il y a _ jours", "male":"Mâle", "Female":"Femelle"};
+    var fr = {"Yesterday":"Hier", "Today":"Aujourd'hui", "Years":"Ans", "Days":"il y a _ jours", "male":"Mâle", "female":"Femelle"};
     switch(lang) {
       case "fr":
         if(text.search("Days") != -1) return fr["Days"].replace("_", text.substring(0, text.search(' ')));
