@@ -62,6 +62,8 @@ document.forms['smear_results_form'].onsubmit = function() {
   // console.log("uniquue code: ", unique_code);
   var xpert_date = xpert_form.mtb_date.value;
 
+  var automatic = xpert_form.automatic_input.value == "true" ? false : true;
+
   var pathway = "lab";
   var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
   var community_id = JSON.parse(sessionStorage.getItem("patient")).community_id;
@@ -80,9 +82,10 @@ document.forms['smear_results_form'].onsubmit = function() {
     "rif_result" : rif_result,
     "xpert_date" : xpert_date,
     "source" : source,
-    "community_id" : community_id
+    "community_id" : community_id,
+    "automatic" : automatic
   };
-  // information = JSON.stringify(information);
+  information = JSON.stringify(information);
   // console.log(information);
 
   var success = function() {

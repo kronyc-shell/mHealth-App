@@ -46,7 +46,7 @@
               <div class="card-header" id="name"></div>
               <script>
               var patient = JSON.parse(sessionStorage.getItem("patient"));
-              document.getElementById("name").innerHTML = patient.name+ " | " + patient.id;
+              document.getElementById("name").innerHTML = patient.name.toUpperCase() + " | " + patient.id;
               </script>
               <div class="card-body" id="specimen_collection">
                 <form id="specimen_form">
@@ -122,7 +122,7 @@
       var text = [
         "Spot", "Matin",
         "Mucopurulent", "Sanguinolant", "Salivaire",
-        "Plus spécimen", "Aucun spécimen collecté!",
+        "Plus d'échantillons", "Aucun spécimen collecté!",
         "Aller au panneau de contrôle", "Prélèvement de l’échantillon",
         "Naviguer le patient",
         "Naviguer le patient"

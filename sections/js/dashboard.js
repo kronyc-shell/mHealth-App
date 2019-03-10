@@ -287,11 +287,11 @@ function PatientCard() {
 
     div = document.createElement("div");
     div.className = "card-body text-center";
-    div.appendChild(document.createTextNode(this.patient.name));
+    div.appendChild(document.createTextNode(this.patient.name.toUpperCase()));
     div.appendChild(document.createElement("br"));
     div.appendChild(
       document.createTextNode(
-        this.translate(this.patient.gender, lang)
+        this.translate(this.patient.gender, lang).toUpperCase()
         + " | "
         + this.patient.id
       )
@@ -299,7 +299,7 @@ function PatientCard() {
     div.appendChild(document.createElement("br"));
     div.appendChild(
       document.createTextNode(
-        this.translate(getTimeDuration(new Date(this.patient.date)), lang)
+        this.translate(getTimeDuration(new Date(this.patient.date_of_test_request)), lang)
         + " | "
         + this.patient.telephone1
         + " | "
@@ -364,23 +364,21 @@ function change_working_state(state) {
 window.addEventListener('online', change_working_state("online"));
 window.addEventListener('offline', change_working_state("offline"));
 
-function getTimeDuration(secondDate) {
-  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-  var firstDate = new Date;
-  var diffDays = Math.round(
-    Math.abs(
-      (firstDate.getTime() - secondDate.getTime())/(oneDay)
-    )
-  );
-  // console.log((firstDate.getTime() - secondDate.getTime())/(oneDay))
-  if(diffDays == 0) {
-    return "Today";
-  }
-  else if(diffDays == 1) {
-    return "Yesterday";
-  }
-  else if(diffDays > 1) {
-    return diffDays + " Days ago";
-  }
-  return diffDays;
-}
+// function getTimeDuration(secondDate) {
+//   var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+//   var firstDate = new Date;
+//   var diffDays = Math.trunc((firstDate.getTime() - secondDate.getTime())/(oneDay));
+//   // diffDays = Math.trunc(diffDays);
+//   // var duration = (diffDays)
+//   console.log(`Duration: - ${diffDays}`)
+//   if(diffDays == 0) {
+//     return "Today";
+//   }
+//   else if(diffDays == 1) {
+//     return "Yesterday";
+//   }
+//   else if(diffDays > 1) {
+//     return diffDays + " Days ago";
+//   }
+//   return diffDays;
+// }

@@ -162,23 +162,23 @@ document.forms['specimen_form'].onsubmit = function() {
 
   return false;
 };
-function getTimeDuration(secondDate) {
-  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-  var firstDate = new Date;
-  var diffDays = Math.round(
-    Math.abs(
-      (firstDate.getTime() - secondDate.getTime())/(oneDay)
-    )
-  );
-  // console.log((firstDate.getTime() - secondDate.getTime())/(oneDay))
-  if(diffDays == 0) {
-    return "Today";
-  }
-  else if(diffDays == 1) {
-    return "Yesterday";
-  }
-  else if(diffDays > 1) {
-    return diffDays + " Days ago";
-  }
-  return diffDays;
-}
+
+
+// function getTimeDuration(secondDate) {
+//   var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+//   var firstDate = new Date;
+//   var diffDays = Math.trunc((firstDate.getTime() - secondDate.getTime())/(oneDay));
+//   // diffDays = Math.trunc(diffDays);
+//   // var duration = (diffDays)
+//   console.log(`Duration: - ${diffDays}`)
+//   if(diffDays == 0) {
+//     return "Today";
+//   }
+//   else if(diffDays == 1) {
+//     return "Yesterday";
+//   }
+//   else if(diffDays > 1) {
+//     return diffDays + " Days ago";
+//   }
+//   return diffDays;
+// }

@@ -96,8 +96,9 @@ function translate(page) {
         document.getElementById(i).innerHTML = text[i];
         console.log(i);
       }
-      document.getElementById("11").innerHTML += " - " + localStorage.getItem("userName");
-      document.getElementById("12").innerHTML += " - " + localStorage.getItem("phonenumber");
+      var user = JSON.parse(localStorage.getItem("user"))
+      document.getElementById("11").innerHTML += " - " + user.name;
+      document.getElementById("12").innerHTML += " - " + user.phonenumber;
       break;
     }
     break;
@@ -128,8 +129,8 @@ var transmission = {
   _userId : "",
 
   // url : "http://tbappbamenda.com:8080",
-  // url : "http://localhost:8080",
-  url : "http://142.93.248.15:8080",
+  url : "http://localhost:8080",
+  // url : "http://142.93.248.15:8080",
 
   //TODO: figure out why this part
   set connection(connection) {
@@ -261,7 +262,7 @@ var transmission = {
         ajax.open("GET", this.url + `/user/${user_id}/patients/search/${information}`, true);
       }
       else {
-        ajax.open("GET", this.url + `/user/${user_id}/patients`, true);
+        ajax.open("GET", this.url + `/user/${user_id}/patients/limit/20`, true);
         console.log("Searching for patients")
       }
       break;
@@ -743,3 +744,22 @@ function patientNavigation(lang) {
 
   $(modal).modal("show");
 };
+
+function getTimeDuration(secondDate) {
+  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+  var firstDate = new Date;
+  var diffDays = Math.trunc((firstDate.getTime() - secondDate.getTime())/(oneDay));
+  // diffDays = Math.trunc(diffDays);
+  // var duration = (diffDays)
+  console.log(`Duration: - ${diffDays}`)
+  if(diffDays == 0) {
+    return "Today";
+  }
+  else if(diffDays == 1) {
+    return "Yesterday";
+  }
+  else if(diffDays > 1) {
+    return diffDays + " Days ago";
+  }
+  return diffDays;
+}
