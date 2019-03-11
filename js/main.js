@@ -128,9 +128,9 @@ var transmission = {
   _connection : "",
   _userId : "",
 
-  // url : "http://tbappbamenda.com:8080",
+  url : "http://tbappbamenda.com:8080",
   // url : "http://localhost:8080",
-  url : "http://142.93.248.15:8080",
+  // url : "http://142.93.248.15:8080",
 
   //TODO: figure out why this part
   set connection(connection) {
