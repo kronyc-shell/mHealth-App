@@ -85,7 +85,7 @@ document.forms['smear_results_form'].onsubmit = function() {
     "community_id" : community_id,
     "automatic" : automatic
   };
-  information = JSON.stringify(information);
+  // information = JSON.stringify(information);
   // console.log(information);
 
   var success = function() {
