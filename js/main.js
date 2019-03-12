@@ -128,8 +128,8 @@ var transmission = {
   _connection : "",
   _userId : "",
 
-  url : "http://tbappbamenda.com:8080",
-  // url : "http://localhost:8080",
+  // url : "http://tbappbamenda.com:8080",
+  url : "http://localhost:8080",
   // url : "http://142.93.248.15:8080",
 
   //TODO: figure out why this part
@@ -275,127 +275,17 @@ var transmission = {
       case "regions":
       ajax.open("GET", this.url + `/user/${user_id}/regions`, true);
       break;
+
+      case "region":
+      if(typeof(path) == "undefined") {
+        ajax.open("GET", this.url + `/user/${user_id}/region/${information}`, true);
+      }
+      else {
+        ajax.open("GET", this.url + `/user/${user_id}/region/${information}/path/${path}`, true);
+      }
+      break;
     }
     ajax.setRequestHeader("Content-Type", "application/json");
-    ajax.send();
-  },
-
-  _fetch : function(model, id, success) {
-    switch(model) {
-      case "information":
-        var ajax = new XMLHttpRequest;
-        ajax.onreadystatechange = function() {
-          if(this.readyState == 4 && this.status == 200) {
-            console.log("server said: " + this.responseText);
-            var sr = JSON.parse(this.responseText);
-            if(sr.length !== null) { //FUCKING TEST THIS MEN
-              success(sr);
-            }
-          }
-        };
-        ajax.open("GET", this.url + "?data="+ encodeURIComponent(JSON.stringify({"model":model, "id":sessionStorage.getItem("userId")})), true);
-        // ajax.setRequestHeader("Content-Type", "application/json");
-        ajax.send();
-      break;
-
-      case "specimen_collection":
-        var ajax = new XMLHttpRequest;
-        ajax.onreadystatechange = function() {
-          if(this.readyState == 4 && this.status == 200) {
-            console.log("server said: " + this.responseText);
-            var sr = JSON.parse(this.responseText);
-            if(sr.length !== null) { //FUCKING TEST THIS MEN
-              success(sr);
-            }
-          }
-        };
-        ajax.open("GET", this.url + "?data="+ encodeURIComponent(JSON.stringify({"model":model, "id":sessionStorage.getItem("userId")})), true);
-        // ajax.setRequestHeader("Content-Type", "application/json");
-        ajax.send();
-      break;
-
-      case "lab":
-        var ajax = new XMLHttpRequest;
-        ajax.onreadystatechange = function() {
-          if(this.readyState == 4 && this.status == 200) {
-            console.log("server said: " + this.responseText);
-            var sr = JSON.parse(this.responseText);
-            if(sr.date_specimen_received !== null) { //FUCKING TEST THIS MEN
-              success(sr);
-            }
-          }
-        };
-        ajax.open("GET", this.url + "?data="+ encodeURIComponent(JSON.stringify({"model":model, "id":sessionStorage.getItem("userId")})), true);
-        // ajax.setRequestHeader("Content-Type", "application/json");
-        ajax.send();
-      break;
-
-
-      case "follow_up":
-        var ajax = new XMLHttpRequest;
-        ajax.onreadystatechange = function() {
-          if(this.readyState == 4 && this.status == 200) {
-            console.log("server said: " + this.responseText);
-            var sr = JSON.parse(this.responseText);
-            if(sr.length !== null) { //FUCKING TEST THIS MEN
-              success(sr);
-            }
-          }
-        };
-        ajax.open("GET", this.url + "?data="+ encodeURIComponent(JSON.stringify({"model":model, "id":sessionStorage.getItem("userId")})), true);
-        // ajax.setRequestHeader("Content-Type", "application/json");
-        ajax.send();
-      break;
-
-      case "outcome_recorded":
-        var ajax = new XMLHttpRequest;
-        ajax.onreadystatechange = function() {
-          if(this.readyState == 4 && this.status == 200) {
-            console.log("server said: " + this.responseText);
-            var sr = JSON.parse(this.responseText);
-            if(sr.length !== null) { //FUCKING TEST THIS MEN
-              success(sr);
-            }
-          }
-        };
-        ajax.open("GET", this.url + "?data="+ encodeURIComponent(JSON.stringify({"model":model, "id":sessionStorage.getItem("userId")})), true);
-        // ajax.setRequestHeader("Content-Type", "application/json");
-        ajax.send();
-      break;
-
-      case "sub_regions":
-        var ajax = new XMLHttpRequest;
-        ajax.onreadystatechange = function() {
-          if(this.readyState == 4 && this.status == 200) {
-            console.log("server said: " + this.responseText);
-            var sr = JSON.parse(this.responseText);
-            if(sr.length !== null) { //FUCKING TEST THIS MEN
-              success(sr);
-            }
-          }
-        };
-        ajax.open("GET", this.url + "?data="+ encodeURIComponent(JSON.stringify({"model":model, "id":id})), true);
-        // ajax.setRequestHeader("Content-Type", "application/json");
-        ajax.send();
-      break;
-    }
-  },
-
-  _search : function(model, information, success, failure) {
-    var ajax = new XMLHttpRequest;
-    ajax.onreadystatechange = function() {
-      if(this.readyState == 4 && this.status == 200) {
-        console.log("server said: " + this.responseText);
-        var sr = JSON.parse(this.responseText);
-        if(sr.length > 0) {
-          success(sr);
-        } else {
-          failure();
-        }
-      }
-    };
-    ajax.open("GET", this.url + "?data="+ encodeURIComponent(JSON.stringify({"model":"information", "type":"search", "query":information})), true);
-    // ajax.setRequestHeader("Content-Type", "application/json");
     ajax.send();
   }
 };

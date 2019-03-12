@@ -22,9 +22,10 @@ document.forms['smear_results_form'].onsubmit = function() {
   var xpert_form = document.forms['machine_results'];
 
   var source =
-   xpert_form.automatic_input.checked ?
+   xpert_form.automatic_input.checked == true ?
    xpert_form.automatic_input.value
    : "manual";
+   // console.log(`source ${source}`)
 
   // if(xpert_form.automatic_input.checked)
   if(xpert_form.unique_code.hasAttribute("required") && xpert_form.unique_code.value.length < 1) {
@@ -62,7 +63,7 @@ document.forms['smear_results_form'].onsubmit = function() {
   // console.log("uniquue code: ", unique_code);
   var xpert_date = xpert_form.mtb_date.value;
 
-  var automatic = xpert_form.automatic_input.value == "true" ? false : true;
+  var automatic = xpert_form.automatic_input.value == "automatic" ? true : false;
 
   var pathway = "lab";
   var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
