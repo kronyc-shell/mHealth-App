@@ -262,7 +262,8 @@ var transmission = {
         ajax.open("GET", this.url + `/user/${user_id}/patients/search/${information}`, true);
       }
       else {
-        ajax.open("GET", this.url + `/user/${user_id}/patients/limit/20`, true);
+        var communities = JSON.parse(localStorage.getItem("user")).community_id;
+        ajax.open("GET", this.url + `/user/${user_id}/patients/communities/${communities}/limit/20`, true);
         console.log("Searching for patients")
       }
       break;

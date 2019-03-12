@@ -206,13 +206,17 @@
                       <input onclick="trigger_toggle()" type="radio" value="detected" id="detected" name="mtb_results" class="custom-control-input">
                       <label class="custom-control-label" for="detected" id="16">Detected</label>
                     </div>
+                    <div class="custom-control custom-radio custom-control-inline" id="results">
+                      <input onclick="trigger_toggle()" type="radio" value="trace" id="trace" name="mtb_results" class="custom-control-input">
+                      <label class="custom-control-label" for="trace" id="34">Trace</label>
+                    </div>
                     <div class="custom-control custom-radio custom-control-inline">
                       <input onclick="trigger_toggle()" type="radio" value="not_detected" id="not_detected" name="mtb_results" class="custom-control-input">
                       <label class="custom-control-label" for="not_detected" id="17">Not detected</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                      <input onclick="trigger_toggle()" type="radio" value="error_invalid" id="indeterminate" name="mtb_results" class="custom-control-input">
-                      <label class="custom-control-label" for="indeterminate" id="18">Error/Invalid</label>
+                      <input onclick="trigger_toggle()" type="radio" value="error_invalid" id="error_invalid" name="mtb_results" class="custom-control-input">
+                      <label class="custom-control-label" for="error_invalid" id="18">Error/Invalid</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                       <input checked onclick="trigger_toggle()" type="radio" value="not_done" id="not_done" name="mtb_results" class="custom-control-input">
@@ -224,6 +228,10 @@
                     <div class="custom-control custom-radio custom-control-inline" id="results">
                       <input type="radio" checked value="detected" id="detected_1" name="rif_results" class="custom-control-input">
                       <label class="custom-control-label" for="detected_1" id="21">Detected</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline" id="results">
+                      <input type="radio" checked  id="indeterminate" name="rif_results" class="custom-control-input" value="indeterminate">
+                      <label class="custom-control-label" for="indeterminate" id="35">Indeterminate</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                       <input type="radio" value="not_detected" id="not_detected_1" name="rif_results" class="custom-control-input">
@@ -283,7 +291,9 @@
       "Naviguer le patient",
       "Alerte très importante!",
       "Pas de résultants de Laboratoire enregistrés!",
-      "Naviguer le patient"
+      "Naviguer le patient",
+      "Trace",
+      "Indéterminé"
      ];
     </script>
     <script src="../js/main.js"></script>
@@ -329,10 +339,11 @@
                 }
               }
             }
-            if(typeof(sr.rif_results) != 'undefined') {
+            if(typeof(sr.rif_result) != 'undefined') {
+              console.log("GOT A RIF")
               // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
               for(var i=0;i<_form_xpert.elements.rif_results.length; ++i) {
-                if(_form_xpert.elements.rif_results[i].value == sr.xpert_results.rif_results) {
+                if(_form_xpert.elements.rif_results[i].value == sr.rif_result) {
                   _form_xpert.elements.rif_results[i].click();
                   break;
                 }
