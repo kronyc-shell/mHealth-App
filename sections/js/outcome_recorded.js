@@ -58,6 +58,7 @@ document.forms['outcome_form'].onsubmit = function() {
     "requester" : requester,
     "tb_rx_number" : tb_rx_number
   };
+  console.log(information);
 
   var success = function() {
     var msg;
@@ -80,4 +81,5 @@ document.forms['outcome_form'].onsubmit = function() {
   };
 
   transmission.insert("outcome_recorded", information, success);
+  return false;
 }

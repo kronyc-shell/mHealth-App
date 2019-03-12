@@ -68,4 +68,6 @@ document.forms['follow_up_form'].onsubmit = function() {
   };
 
   transmission.insert("follow_up", information, success);
+
+  return false;
 }

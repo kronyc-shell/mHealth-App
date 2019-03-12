@@ -115,6 +115,7 @@ document.forms['smear_results_form'].onsubmit = function() {
   anim.setSpeed(3.4);
 
   transmission.insert("lab", information, success);
+  return false;
 };
 
 function toggle_forms(input) {
