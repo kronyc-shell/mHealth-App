@@ -128,8 +128,8 @@ var transmission = {
   _connection : "",
   _userId : "",
 
-  url : "http://tbappbamenda.com:8080",
-  // url : "http://localhost:8080",
+  // url : "http://tbappbamenda.com:8080",
+  url : "http://localhost:8080",
   // url : "http://142.93.248.15:8080",
 
   //TODO: figure out why this part
@@ -262,8 +262,12 @@ var transmission = {
         ajax.open("GET", this.url + `/user/${user_id}/patients/search/${information}`, true);
       }
       else {
-        var communities = JSON.parse(localStorage.getItem("user")).community_id;
-        ajax.open("GET", this.url + `/user/${user_id}/patients/communities/${communities}/limit/20`, true);
+        // var communities = JSON.parse(localStorage.getItem("user")).community_id;
+        var query = JSON.stringify({
+          community_id : JSON.parse(localStorage.getItem("user")).community_id,
+
+        })
+        ajax.open("GET", this.url + `/user/${user_id}/patients/filter/${query}/limit/20`, true);
         console.log("Searching for patients")
       }
       break;

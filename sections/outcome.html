@@ -338,6 +338,7 @@
             sr.follow_up_date == "" ? "N/A" : new Date(sr.follow_up_scheduled_date).toDateString();
             comments.innerHTML +=
             sr.comments == "" ? "N/A" : sr.comments;
+
           }
         }
 
@@ -354,6 +355,8 @@
             }
             form.other.value = sr.other;
             form.comments.value = sr.comments;
+            if(sr.close_patient == true)
+            form.close_patient.checked = true;
           }
         }
 
