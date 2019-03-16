@@ -188,7 +188,7 @@
           var anim = bodymovin.loadAnimation(animData);
           anim.setSpeed(2.6);
 
-          var query = this.search_query.value;
+          var query = JSON.stringify({name : this.search_query.value});
           var success = function(patients) {
             document.getElementById("animationWindow").innerHTML = "";
             var ch = document.getElementById("main_card_header");
