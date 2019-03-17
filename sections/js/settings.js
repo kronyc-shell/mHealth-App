@@ -30,6 +30,7 @@ document.forms['user_settings'].onsubmit = function() {
     user.password = information.password;
     user.service_provider = information.service_provider;
     user.notifications = information.notifications;
+    user.phonenumber = information.phonenumber;
     localStorage.setItem("user", JSON.stringify(user));
     window.location.reload(1);
   }
