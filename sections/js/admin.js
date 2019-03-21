@@ -36,9 +36,12 @@ document.forms['create_user_form'].onsubmit = function() {
     "notifications" : ["positive_results"]
   }
 
+  sessionStorage.setItem("user_new_information", information);
+
   var success = function(user_id) {
     console.log("user created successfully");
     console.log("ID| ", user_id);
+    sessionStorage.removeItem("user_new_information");
     window.location.reload(1);
   }
 
@@ -46,6 +49,7 @@ document.forms['create_user_form'].onsubmit = function() {
     switch(error_code) {
       case "ER_DUP_ENTRY":
       sessionStorage.setItem("user_error_message", "show");
+      var form = document.forms['create_user_form'];
       window.location.reload(1);
       break;
     }

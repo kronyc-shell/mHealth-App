@@ -98,13 +98,13 @@
     </div>
 
     <script>
-      // this.username.value = "test_value";
-      // this.actual_name.value = "test_value";
-      // this.phonenumber.value = "test_value";
-      // this.service_provider.value = "MTN";
-      // this.email.value = "afkanerd@afkanerd.com";
-      // this.password.value = "test_value";
-      // this.re_password.value = "test_value";
+      this.username.value = "test_value";
+      this.actual_name.value = "test_value";
+      this.phonenumber.value = "test_value";
+      this.service_provider.value = "MTN";
+      this.email.value = "afkanerd@afkanerd.com";
+      this.password.value = "test_value";
+      this.re_password.value = "test_value";
     </script>
 
 
@@ -145,6 +145,14 @@
         if(sessionStorage.getItem("user_error_message") == "show") {
           document.getElementById("error_user_exist").removeAttribute("hidden");
           sessionStorage.removeItem("user_error_message");
+          var information = sessionStorage.getItem("user_new_information");
+          form.actual_name.value = information.name;
+          form.username.value = information.username;
+          form.region.value = information.region_id;
+          form.sub_region.value = information.sub_region;
+          form.email.value = information.email;
+          form.phonenumber.value = information.phonenumber;
+          sessionStorage.removeItem("user_new_information");
         }
       }
       var region = document.getElementById("region");
