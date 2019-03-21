@@ -1,10 +1,5 @@
 document.forms['user_settings'].onsubmit = function() {
   console.log(this);
-  document.getElementById("main_display").innerHTML = "";
-
-  var anim = bodymovin.loadAnimation(animData);
-  anim.setSpeed(3.4);
-
   // console.warn("user settings submitted");
   var notifications = extract_checkbox(this.elements.notifications);
   var username = this.username.value;
@@ -12,6 +7,18 @@ document.forms['user_settings'].onsubmit = function() {
   var email = this.email.value;
   var service_provider = this.service_provider.value;
   var password = this.password.value;
+  var re_password = this.re_password.value;
+
+  if(password != re_password) {
+    document.getElementById("error_passwords_do_not_match").removeAttribute("hidden");
+    window.location.replace("#0");
+    return false;
+  }
+
+  document.getElementById("main_display").innerHTML = "";
+
+  var anim = bodymovin.loadAnimation(animData);
+  anim.setSpeed(3.4);
 
   var information = {
     "notifications" : JSON.stringify(notifications),

@@ -91,6 +91,13 @@ function translate(page) {
       }
       break;
 
+      case "admin":
+      for(var i in text) {
+        document.getElementById(i).innerHTML = text[i];
+        console.log(i);
+      }
+      break;
+
       case "outcome_recorded":
       for(var i in text) {
         document.getElementById(i).innerHTML = text[i];
@@ -163,7 +170,7 @@ var transmission = {
     }
   },
 
-  insert : function(model, information, success) {
+  insert : function(model, information, success, failed) {
     var user_id = JSON.parse(localStorage.getItem("user")).id;
 
     var ajax = new XMLHttpRequest;
@@ -173,10 +180,12 @@ var transmission = {
         var serverResponse = JSON.parse(this.responseText);
         if(serverResponse.code == 200)
         success(serverResponse.data);
-        else {} //Failed here
+        else {
+          failed(serverResponse.data);
+        } //Failed here
       }
     };
-    ajax.open("POST", this.url + `/user/${user_id}/patient/`, true);
+    ajax.open("POST", this.url + `/user/${user_id}/${model}/`, true);
     ajax.setRequestHeader("Content-Type", "application/json");
     ajax.send(JSON.stringify(information));
   },
