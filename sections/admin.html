@@ -141,6 +141,12 @@
       // console.log("Requesting for regions");
       // console.log("Region ID: ", localStorage.getItem("region_id"));
       // console.log("Sub Region ID: ", localStorage.getItem("sub_region_id"));
+      window.onload = function() {
+        if(sessionStorage.getItem("user_error_message") == "show") {
+          document.getElementById("error_user_exist").removeAttribute("hidden");
+          sessionStorage.removeItem("user_error_message");
+        }
+      }
       var region = document.getElementById("region");
       var sub_region = document.getElementById("sub_region");
       var regions_success = function(sr) {

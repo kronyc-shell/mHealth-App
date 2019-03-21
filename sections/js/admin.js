@@ -15,6 +15,11 @@ document.forms['create_user_form'].onsubmit = function() {
     return false;
   }
 
+  document.getElementById("main_display").innerHTML = "";
+
+  var anim = bodymovin.loadAnimation(animData);
+  anim.setSpeed(3.4);
+
   //TODO: check if passwords do match
 
 
@@ -34,13 +39,14 @@ document.forms['create_user_form'].onsubmit = function() {
   var success = function(user_id) {
     console.log("user created successfully");
     console.log("ID| ", user_id);
+    window.location.reload(1);
   }
 
   var failed = function(error_code) {
     switch(error_code) {
       case "ER_DUP_ENTRY":
-      window.location.replace("#0")
-      document.getElementById("error_user_exist").removeAttribute("hidden")
+      sessionStorage.setItem("user_error_message", "show");
+      window.location.reload(1);
       break;
     }
   }
