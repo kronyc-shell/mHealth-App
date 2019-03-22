@@ -50,6 +50,12 @@
             <hr>
             <a class="list-group-item" id="8" onclick="window.location.replace('settings.html')">Account settings</a>
             <a class="list-group-item" id="9" onclick="window.location.replace('admin.html')">Administration</a>
+            <script>
+            var user = JSON.parse(localStorage.getItem("user"));
+            if(user.privilege == "worker") {
+              document.getElementById("9").setAttribute("hidden", "hidden");
+            }
+            </script>
           </ul>
         </div>
         <div class="container-fluid">
