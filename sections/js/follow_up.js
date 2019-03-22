@@ -67,7 +67,7 @@ document.forms['follow_up_form'].onsubmit = function() {
     // }, 3000);
   };
 
-  transmission.insert("follow_up", information, success);
+  transmission.insert("patient", information, success);
 
   return false;
 }

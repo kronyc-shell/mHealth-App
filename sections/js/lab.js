@@ -114,7 +114,7 @@ document.forms['smear_results_form'].onsubmit = function() {
   var anim = bodymovin.loadAnimation(animData);
   anim.setSpeed(3.4);
 
-  transmission.insert("lab", information, success);
+  transmission.insert("patient", information, success);
   return false;
 };
 

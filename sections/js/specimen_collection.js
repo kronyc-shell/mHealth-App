@@ -154,9 +154,9 @@ document.forms['specimen_form'].onsubmit = function() {
   console.log(sessionStorage.getItem("specimen"));
 
   if(sessionStorage.getItem("specimen") != "set")
-    transmission.insert("specimen_collection", information1, success1);
+    transmission.insert("patient", information1, success1);
   else
-    transmission.insert("specimen_collection", information2, success1);
+    transmission.insert("patient", information2, success1);
 
   sessionStorage.removeItem("specimen");
 

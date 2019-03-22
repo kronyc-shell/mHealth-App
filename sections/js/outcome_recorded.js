@@ -92,6 +92,6 @@ document.forms['outcome_form'].onsubmit = function() {
     // }, 3000);
   };
 
-  transmission.insert("outcome_recorded", information, success);
+  transmission.insert("patient", information, success);
   return false;
 }
