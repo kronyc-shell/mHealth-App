@@ -126,7 +126,7 @@ $(document).ready(function() {
 
       };
 
-      transmission.insert("information", information, success);
+      transmission.insert("patient", information, success);
       return false;
     };
 

@@ -181,7 +181,7 @@ var transmission = {
         if(serverResponse.code == 200)
         success(serverResponse.data);
         else {
-          failed(serverResponse.data);
+          if(typeof(failed) != "undefined") failed(serverResponse.data);
         } //Failed here
       }
     };
