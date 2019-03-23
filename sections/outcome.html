@@ -335,7 +335,7 @@
             otherAntibiotic.innerHTML +=
             sr.other_antibiotic == "" ? "N/A" : sr.other_antibiotic;
             follow_up_date.innerHTML +=
-            sr.follow_up_date == "" ? "N/A" : new Date(sr.follow_up_scheduled_date).toDateString();
+            sr.follow_up_date == "" || sr.follow_up_date == null ? "N/A" : new Date(sr.follow_up_scheduled_date).toDateString();
             comments.innerHTML +=
             sr.comments == "" ? "N/A" : sr.comments;
 

@@ -56,6 +56,9 @@ document.forms['smear_results_form'].onsubmit = function() {
   var mtb_result =
   extract_radio(xpert_form.elements.mtb_results);
 
+  var mtb_grade =
+  extract_radio(xpert_form.elements.grade);
+
   var rif_result =
   extract_radio(xpert_form.elements.rif_results);
 
@@ -80,14 +83,15 @@ document.forms['smear_results_form'].onsubmit = function() {
     "smr_result_2" : smr_result_2,
     "unique_code" : unique_code,
     "mtb_result" : mtb_result,
+    "mtb_grade" : mtb_grade,
     "rif_result" : rif_result,
     "xpert_date" : xpert_date,
     "source" : source,
     "community_id" : community_id,
     "automatic" : automatic
   };
-  // information = JSON.stringify(information);
-  // console.log(information);
+  information = JSON.stringify(information);
+  console.log(information);
 
   var success = function() {
     var msg;
@@ -114,7 +118,7 @@ document.forms['smear_results_form'].onsubmit = function() {
   var anim = bodymovin.loadAnimation(animData);
   anim.setSpeed(3.4);
 
-  transmission.insert("patient", information, success);
+  // transmission.insert("patient", information, success);
   return false;
 };
 
@@ -125,11 +129,13 @@ function toggle_forms(input) {
     values.not_done.checked = true;
     values.not_done_1.checked = true;
     document.getElementById('mtb_results_group').setAttribute('hidden', 'hidden');
+    document.getElementById('mtb_grades').setAttribute('hidden', 'hidden');
     document.getElementById('rif_results_group').setAttribute('hidden', 'hidden');
     console.log(values.length);
   } else {
     console.log("unchecked");
     document.getElementById('mtb_results_group').removeAttribute('hidden');
+    document.getElementById('mtb_grades').removeAttribute('hidden');
     document.getElementById('rif_results_group').removeAttribute('hidden');
     var values = document.forms['machine_results'];
     console.log(values.length);
@@ -152,18 +158,24 @@ function trigger_toggle() {
     if(results[x].id == "detected" && results[x].checked) {
       document.getElementById("not_done_label").setAttribute("hidden", "hidden");
       document.getElementById("not_detected_1").setAttribute("checked", "checked");
-      console.log("clicked detected");
+      document.getElementById("high").checked = true;
+      console.log("clicked DETECTED");
     } else {
       document.getElementById("not_done_label").removeAttribute("hidden");
+      document.getElementById("high").checked = true;
+      document.getElementById("high").checked = false;
     }
-    if(results[x].checked && (results[x].id == 'not_done' || results[x].id == 'not_detected' || results[x].id == 'indeterminate')) {
+
+    if(results[x].checked && (results[x].id == 'not_done' || results[x].id == 'not_detected' || results[x].id == 'indeterminate' || results[x].id == 'error_invalid')) {
       document.getElementById("rif_results_group").setAttribute("hidden", "hidden");
+      document.getElementById("mtb_grades").setAttribute("hidden", "hidden");
       document.getElementById("not_done_1").checked = true;
       break;
     }
     else if(results[x].checked) {
       console.log("removing hidden result group");
       document.getElementById("rif_results_group").removeAttribute("hidden");
+      document.getElementById("mtb_grades").removeAttribute("hidden");
       console.log("REsults = " + results[x].value);
       break;
     }

@@ -97,7 +97,7 @@
                     <legend style="font-size: 13px; color: #c3c3c3" class="col-form-label col-sm-2 pt-0" id="9">Has ART unique code</legend>
                     <div class="col-sm-10">
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input checked class="custom-control-input" type="radio" name="has_art" id="art_no" value="no">
+                        <input class="custom-control-input" type="radio" name="has_art" id="art_no" value="no">
                         <label style="font-size: 12px;" class="custom-control-label" for="art_no" id="10">
                           No
                         </label>
@@ -109,7 +109,7 @@
                         </label>
                       </div>
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="has_art" id="art_unknown" value="unknown">
+                        <input checked class="custom-control-input" type="radio" name="has_art" id="art_unknown" value="unknown">
                         <label style="font-size: 12px;" class="custom-control-label" for="art_unknown" id="55">
                           Unknown
                         </label>
@@ -272,6 +272,17 @@
                       On ART, symptomatic (PLH)
                     </label>
                   </div>
+
+                  <script>
+                  document.getElementById("art").onchange = function() {
+                    if(this.checked == true)
+                      document.getElementById("plh").checked = false;
+                  }
+                  document.getElementById("plh").onchange = function() {
+                    if(this.checked == true)
+                      document.getElementById("art").checked = false;
+                  }
+                  </script>
 
                   <div class="custom-control custom-checkbox">
                     <input name="patient_category" onclick="disable_pc(this)" class="custom-control-input" type="checkbox" value="opd" id="opd">
