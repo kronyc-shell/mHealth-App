@@ -74,7 +74,7 @@
                 <u><small>SMR results</small></u>
                 <p><small id="result1">Result 1: </small> <br> <small id="result2">Result 2: </small></p>
                 <u><small>Xpert results</small></u>
-                <p><small id="result_1">MTB: </small> <br> <small id="result_2">RIF: </small></p>
+                <p><small id="result_1">MTB: </small> <br><small id="mtb_grade">Grade: </small><br> <small id="result_2">RIF: </small></p>
               </div>
               <div id="follow_up_record" hidden>
                 <div class="jumbotron">
@@ -308,9 +308,11 @@
             var smr_result2 = document.getElementById("result2");
 
             var xpert_result1 = document.getElementById("result_1");
+            var mtb_grade = document.getElementById("mtb_grade");
             var xpert_result2 = document.getElementById("result_2");
 
             smr_result1.innerHTML += sr.smr_result_1;
+            mtb_grade.innerHTML += sr.mtb_grade == "" || sr.mtb_grade == null ? "n/a" : sr.mtb_grade;
             smr_result2.innerHTML += sr.smr_result_2;
 
             xpert_result1.innerHTML += sr.mtb_result;

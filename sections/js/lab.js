@@ -90,8 +90,8 @@ document.forms['smear_results_form'].onsubmit = function() {
     "community_id" : community_id,
     "automatic" : automatic
   };
-  information = JSON.stringify(information);
-  console.log(information);
+  // information = JSON.stringify(information);
+  // console.log(information);
 
   var success = function() {
     var msg;
@@ -118,7 +118,7 @@ document.forms['smear_results_form'].onsubmit = function() {
   var anim = bodymovin.loadAnimation(animData);
   anim.setSpeed(3.4);
 
-  // transmission.insert("patient", information, success);
+  transmission.insert("patient", information, success);
   return false;
 };
 
