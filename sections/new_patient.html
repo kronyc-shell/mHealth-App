@@ -282,6 +282,7 @@
                     if(this.checked == true)
                       document.getElementById("art").checked = false;
                   }
+
                   </script>
 
                   <div class="custom-control custom-checkbox">
@@ -290,6 +291,16 @@
                       Out Patient
                     </label>
                   </div>
+                  <script>
+                  document.getElementById("hos").onchange = function() {
+                    if(this.checked == true)
+                      document.getElementById("opd").checked = false;
+                  }
+                  document.getElementById("opd").onchange = function() {
+                    if(this.checked == true)
+                      document.getElementById("hos").checked = false;
+                  }
+                  </script>
 
                   <div class="custom-control custom-checkbox">
                     <input name="patient_category" onclick="disable_pc(this)" class="custom-control-input" type="checkbox" value="other_other" id="other_other">

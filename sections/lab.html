@@ -256,7 +256,7 @@
                       <input type="radio" value="not_detected" id="not_detected_1" name="rif_results" class="custom-control-input">
                       <label class="custom-control-label" for="not_detected_1" id="22">Not detected</label>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
+                    <div hidden class="custom-control custom-radio custom-control-inline">
                       <input type="radio" value="error_invalid" id="indeterminate_1" name="rif_results" class="custom-control-input">
                       <label class="custom-control-label" for="indeterminate_1" id="23">Error/Invalid</label>
                     </div>
@@ -315,8 +315,8 @@
       "Indéterminé",
       "Haute",
       "Moyen",
-      "Faible",
-      "Très lent",
+      "Bas",
+      "Très bas",
       "Degrè"
      ];
     </script>
@@ -324,69 +324,10 @@
     <script src="js/lab.js"></script>
 
     <script>
-      trigger_toggle();
       var _form = document.forms['smear_results_form'];
       var _form_xpert = document.forms['machine_results'];
 
-      var success = function(sr) {
-        if(typeof(sr) != "undefined") {
-          console.log("controller - fetching lab - SUCCESSFUL");
-          sessionStorage.setItem("lab_fetch", "true");
-          // console.log(sr);
-          _form.date_specimen_received.valueAsDate = new Date(sr.date_specimen_received);
-          _form.received_by.value = sr.received_by;
-          _form.lsn.value = sr.lab_serial_number;
-          // console.log
-          _form.date1.valueAsDate = new Date(sr.smr_date);
-          if(typeof(sr.smr_result_1) != "undefined") {
-            _form.elements.result_1.value = sr.smr_result_1;
-            for(var x in _form.elements.result_1)
-              if(_form.elements.result_1[x].value == sr.smr_result_1)
-                _form.elements.result_1[x].click();
-            _form.elements.result_2.value = sr.smr_result_2;
-          }
-
-          if(sr.xpert_date !== null) {
-            if(typeof(sr.mtb_result) != 'undefined') {
-              // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
-              for(var i=0;i<_form_xpert.elements.mtb_results.length; ++i) {
-                // console.log(_form_xpert.elements.mtb_results[i].value);
-                if(typeof(sr.mtb_result) != 'undefined') {
-                  if(_form_xpert.elements.mtb_results[i].value == sr.mtb_result) {
-                    // console.log("Found match");
-                    _form_xpert.elements.mtb_results[i].click();
-                    break;
-                  } else {
-                  //   console.log( _form_xpert.elements.mtb_results[i].value == sr.mtb_result);
-                  //   console.log( _form_xpert.elements.mtb_results[i].value,sr.xpert_results.mtb_result);
-                  }
-                }
-              }
-            }
-            if(typeof(sr.rif_result) != 'undefined') {
-              console.log("GOT A RIF")
-              // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
-              for(var i=0;i<_form_xpert.elements.rif_results.length; ++i) {
-                if(_form_xpert.elements.rif_results[i].value == sr.rif_result) {
-                  _form_xpert.elements.rif_results[i].click();
-                  break;
-                }
-              }
-            }
-          }
-
-          _form_xpert.unique_code.value = sr.unique_code;
-          _form_xpert.mtb_date.valueAsDate = new Date(sr.xpert_date);
-
-          if(sr.source == "automatic")
-            _form_xpert.automatic_input.click();
-          // _form_xpert.automatic_input.checked = sr.auto == "automatic" ? true : false;
-        }
-
-      }
-      var failed = function() {}
-
-      transmission.fetch("patient", success, failed , "lab");
+      
 
 
       var patient = JSON.parse(sessionStorage.getItem("patient"));

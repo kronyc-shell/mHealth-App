@@ -142,7 +142,7 @@ $(document).ready(function() {
         document.getElementById("age").select();
       }
       else if(this.checked && document.getElementById("age").value < 16) {
-        document.getElementById("label_child").innerHTML = "Enfant (CHI)";
+        document.getElementById("label_child").innerHTML = localStorage.getItem("lang") == "en" ? "Child (CHI)" : "Enfant (CHI)";
       }
     }
   } else {

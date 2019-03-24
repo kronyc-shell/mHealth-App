@@ -15,6 +15,68 @@ $(document).ready(function() {
   } else {
     translate('lab');
   }
+
+  trigger_toggle();
+  var success = function(sr) {
+    if(typeof(sr) != "undefined") {
+      console.log("controller - fetching lab - SUCCESSFUL");
+      sessionStorage.setItem("lab_fetch", "true");
+      // console.log(sr);
+      _form.date_specimen_received.valueAsDate = new Date(sr.date_specimen_received);
+      _form.received_by.value = sr.received_by;
+      _form.lsn.value = sr.lab_serial_number;
+      // console.log
+      _form.date1.valueAsDate = new Date(sr.smr_date);
+      if(typeof(sr.smr_result_1) != "undefined") {
+        _form.elements.result_1.value = sr.smr_result_1;
+        for(var x in _form.elements.result_1)
+          if(_form.elements.result_1[x].value == sr.smr_result_1)
+            _form.elements.result_1[x].click();
+        _form.elements.result_2.value = sr.smr_result_2;
+      }
+
+      if(sr.xpert_date !== null) {
+        if(typeof(sr.mtb_result) != 'undefined') {
+          // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
+          for(var i=0;i<_form_xpert.elements.mtb_results.length; ++i) {
+            // console.log(_form_xpert.elements.mtb_results[i].value);
+            if(typeof(sr.mtb_result) != 'undefined') {
+              if(_form_xpert.elements.mtb_results[i].value == sr.mtb_result) {
+                // console.log("Found match");
+                _form_xpert.elements.mtb_results[i].click();
+                break;
+              } else {
+              //   console.log( _form_xpert.elements.mtb_results[i].value == sr.mtb_result);
+              //   console.log( _form_xpert.elements.mtb_results[i].value,sr.xpert_results.mtb_result);
+              }
+            }
+          }
+        }
+        if(typeof(sr.rif_result) != 'undefined') {
+          console.log("GOT A RIF")
+          // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
+          for(var i=0;i<_form_xpert.elements.rif_results.length; ++i) {
+            if(_form_xpert.elements.rif_results[i].value == sr.rif_result) {
+              _form_xpert.elements.rif_results[i].click();
+              break;
+            }
+          }
+        }
+      }
+
+      _form_xpert.unique_code.value = sr.unique_code;
+      _form_xpert.mtb_date.valueAsDate = new Date(sr.xpert_date);
+
+      if(sr.source == "automatic")
+        _form_xpert.automatic_input.click();
+      // _form_xpert.automatic_input.checked = sr.auto == "automatic" ? true : false;
+    }
+
+  }
+  var failed = function() {}
+
+  transmission.fetch("patient", success, failed , "lab");
+
 });
 
 document.forms['smear_results_form'].onsubmit = function() {
@@ -158,27 +220,46 @@ function trigger_toggle() {
     if(results[x].id == "detected" && results[x].checked) {
       document.getElementById("not_done_label").setAttribute("hidden", "hidden");
       document.getElementById("not_detected_1").setAttribute("checked", "checked");
+      document.getElementById("rif_results_group").removeAttribute("hidden");
+      document.getElementById("mtb_grades").removeAttribute("hidden")
       document.getElementById("high").checked = true;
+      document.getElementById("detected_1").removeAttribute("disabled");
+      document.getElementById("not_done_1").removeAttribute("disabled");
+      document.getElementById("not_detected_1").removeAttribute("disabled");
       console.log("clicked DETECTED");
-    } else {
+    }
+    else if(results[x].checked && results[x].id == "trace") {
+      console.log("Trace clicked")
+      document.getElementById("high").checked = true;
+      document.getElementById("high").checked = false;
+      document.getElementById("detected_1").setAttribute("disabled", "disabled");
+      document.getElementById("not_done_1").setAttribute("disabled", "disabled");
+      document.getElementById("not_detected_1").setAttribute("disabled", "disabled");
+      document.getElementById("mtb_grades").setAttribute("hidden", "hidden");
+      document.getElementById("rif_results_group").removeAttribute("hidden");
+      document.getElementById("indeterminate").checked = true;
+
+    }
+    else {
       document.getElementById("not_done_label").removeAttribute("hidden");
       document.getElementById("high").checked = true;
       document.getElementById("high").checked = false;
     }
 
-    if(results[x].checked && (results[x].id == 'not_done' || results[x].id == 'not_detected' || results[x].id == 'indeterminate' || results[x].id == 'error_invalid')) {
+    if(results[x].checked && (results[x].id == 'not_done' || results[x].id == 'not_detected' || results[x].id == 'error_invalid')) {
       document.getElementById("rif_results_group").setAttribute("hidden", "hidden");
       document.getElementById("mtb_grades").setAttribute("hidden", "hidden");
       document.getElementById("not_done_1").checked = true;
       break;
     }
-    else if(results[x].checked) {
-      console.log("removing hidden result group");
-      document.getElementById("rif_results_group").removeAttribute("hidden");
-      document.getElementById("mtb_grades").removeAttribute("hidden");
-      console.log("REsults = " + results[x].value);
-      break;
-    }
+
+    // else if(results[x].checked && results[x].id == "detected") {
+    //   console.log("removing hidden result group");
+    //
+    //   document.getElementById("detected").checked == true ?  : document.getElementById("indeterminate").checked = true;
+    //   console.log("REsults = " + results[x].value);
+    //   break;
+    // }
   }
 }
 

@@ -48,7 +48,7 @@ function translate(page) {
       }
       document.getElementById("label_child").innerHTML = "Enfant (CHI)";
       document.getElementById("43").innerHTML +=
-      " - " + JSON.parse(localStorage.getItem("user")).phonenumber;
+      " - " + JSON.parse(localStorage.getItem("user")).username;
       document.getElementById("44").innerHTML +=
       " - " + JSON.parse(localStorage.getItem("user")).phonenumber;
       break;
@@ -104,7 +104,7 @@ function translate(page) {
         console.log(i);
       }
       var user = JSON.parse(localStorage.getItem("user"))
-      document.getElementById("11").innerHTML += " - " + user.name;
+      document.getElementById("11").innerHTML += " - " + user.username;
       document.getElementById("12").innerHTML += " - " + user.phonenumber;
       break;
     }
@@ -135,8 +135,8 @@ var transmission = {
   _connection : "",
   _userId : "",
 
-  url : "http://tbappbamenda.com:8080",
-  // url : "http://localhost:8080",
+  // url : "http://tbappbamenda.com:8080",
+  url : "http://localhost:8080",
   // url : "http://142.93.248.15:8080",
 
   //TODO: figure out why this part
@@ -666,4 +666,19 @@ function getTimeDuration(secondDate) {
     return diffDays + " Days ago";
   }
   return diffDays;
+}
+
+function quick_results_translate(input) {
+  var collection = {
+    "no_afb" : "Aucun BAAR Vu",
+    "scanty" : "Rare",
+    "not_done" : "Pas fait",
+    "detected" : "Détecté",
+    "not_detected" : "Non Détecté",
+    "error_invalid" : "Erreur / Invalide",
+    "done" : "Fait",
+    "given" : "Donné"
+  }
+  if(typeof collection[input] == "undefined") return input;
+  else return collection[input];
 }

@@ -311,12 +311,20 @@
             var mtb_grade = document.getElementById("mtb_grade");
             var xpert_result2 = document.getElementById("result_2");
 
-            smr_result1.innerHTML += sr.smr_result_1;
-            mtb_grade.innerHTML += sr.mtb_grade == "" || sr.mtb_grade == null ? "n/a" : sr.mtb_grade;
-            smr_result2.innerHTML += sr.smr_result_2;
-
-            xpert_result1.innerHTML += sr.mtb_result;
-            xpert_result2.innerHTML += sr.rif_result;
+            if(localStorage.getItem("lang") == "en") {
+              smr_result1.innerHTML += (sr.smr_result_1)
+              smr_result2.innerHTML += (sr.smr_result_2)
+              xpert_result1.innerHTML += sr.mtb_result;
+              mtb_grade.innerHTML += sr.mtb_grade == "" || sr.mtb_grade == null ? "n/a" : sr.mtb_grade;
+              xpert_result2.innerHTML += sr.rif_result;
+            }
+            else {
+              smr_result1.innerHTML += quick_results_translate(sr.smr_result_1)
+              smr_result2.innerHTML += quick_results_translate(sr.smr_result_2)
+              xpert_result1.innerHTML += quick_results_translate(sr.mtb_result);
+              mtb_grade.innerHTML += sr.mtb_grade == "" || sr.mtb_grade == null ? "n/a" : quick_results_translate(sr.mtb_grade);
+              xpert_result2.innerHTML += quick_results_translate(sr.rif_result);
+            }
           }
         }
 
@@ -330,16 +338,31 @@
             var follow_up_date = document.getElementById("follow_up_date");
             var comments = document.getElementById("comments");
 
-            xray.innerHTML +=
-            sr.xray == true ? "Done" : "Not Done";
-            amoxicilin.innerHTML +=
-            sr.amoxicillin ? "Given" : "Not Given";
-            otherAntibiotic.innerHTML +=
-            sr.other_antibiotic == "" ? "N/A" : sr.other_antibiotic;
-            follow_up_date.innerHTML +=
-            sr.follow_up_date == "" || sr.follow_up_date == null ? "N/A" : new Date(sr.follow_up_scheduled_date).toDateString();
-            comments.innerHTML +=
-            sr.comments == "" ? "N/A" : sr.comments;
+            if(localStorage.getItem("lang") == "en") {
+              xray.innerHTML +=
+              sr.xray == true ? "Done" : "Not Done";
+              amoxicilin.innerHTML +=
+              sr.amoxicillin ? "Given" : "Not Given";
+              otherAntibiotic.innerHTML +=
+              sr.other_antibiotic == "" ? "N/A" : sr.other_antibiotic;
+              follow_up_date.innerHTML +=
+              sr.follow_up_date == "" || sr.follow_up_date == null ? "N/A" : new Date(sr.follow_up_scheduled_date).toDateString();
+              comments.innerHTML +=
+              sr.comments == "" ? "N/A" : sr.comments;
+            }
+
+            else {
+              xray.innerHTML +=
+              sr.xray == true ? quick_results_translate("done") : quick_results_translate("not_done");
+              amoxicilin.innerHTML +=
+              sr.amoxicillin ? quick_results_translate("given") : quick_results_translate("not_done");
+              otherAntibiotic.innerHTML +=
+              sr.other_antibiotic == "" ? "N/A" : sr.other_antibiotic;
+              follow_up_date.innerHTML +=
+              sr.follow_up_date == "" || sr.follow_up_date == null ? "N/A" : new Date(sr.follow_up_scheduled_date).toDateString();
+              comments.innerHTML +=
+              sr.comments == "" ? "N/A" : sr.comments;
+            }
 
           }
         }
