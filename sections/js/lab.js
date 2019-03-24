@@ -135,8 +135,8 @@ document.forms['smear_results_form'].onsubmit = function() {
   var community_id = JSON.parse(sessionStorage.getItem("patient")).community_id;
 
   //for sms purposes
-  var patient_name = JSON.prase(sessionStorage.getItem("patient")).name;
-  var user_name = JSON.prase(localStorage.getItem("user")).name;
+  var patient_name = JSON.parse(sessionStorage.getItem("patient")).name;
+  var user_name = JSON.parse(localStorage.getItem("user")).name;
 
 
   var information = {
