@@ -149,20 +149,22 @@
     <script>
       var user = JSON.parse(localStorage.getItem("user"));
       var user_settings = document.forms['user_settings'];
-      var notifications = JSON.parse(user.notifications);
-      for(var i in notifications) {
-        if(notifications[i] == "positive_results")
-        document.getElementById("positive_results").checked = true;
+      if(typeof user.notifications != "undefined") {
+        var notifications = JSON.parse(user.notifications);
+        for(var i in notifications) {
+          if(notifications[i] == "positive_results")
+          document.getElementById("positive_results").checked = true;
 
-        else if(notifications[i] == "negative_results")
-        document.getElementById("negative_results").checked = true;
+          else if(notifications[i] == "negative_results")
+          document.getElementById("negative_results").checked = true;
 
-        else if(notifications[i] == "errors")
-        document.getElementById("error").checked = true;
+          else if(notifications[i] == "errors")
+          document.getElementById("error").checked = true;
 
-        else if(notifications[i] == "all")
-        document.getElementById("all").checked = true;
+          else if(notifications[i] == "all")
+          document.getElementById("all").checked = true;
 
+        }
       }
 
       user_settings.username.value = user.username;

@@ -20,7 +20,7 @@ document.forms['user_settings'].onsubmit = function() {
   var anim = bodymovin.loadAnimation(animData);
   anim.setSpeed(3.4);
 
-  var information = {
+  var data = {
     "notifications" : JSON.stringify(notifications),
     "username" : username,
     "phonenumber" : phonenumber,
@@ -32,12 +32,12 @@ document.forms['user_settings'].onsubmit = function() {
   var success = function() {
     console.warn("Running successful);")
     var user = JSON.parse(localStorage.getItem("user"));
-    user.email = information.email;
-    user.username = information.username;
-    user.password = information.password;
-    user.service_provider = information.service_provider;
-    user.notifications = information.notifications;
-    user.phonenumber = information.phonenumber;
+    user.email = data.email;
+    user.username = data.username;
+    user.password = data.password;
+    user.service_provider = data.service_provider;
+    user.notifications = data.notifications;
+    user.phonenumber = data.phonenumber;
     localStorage.setItem("user", JSON.stringify(user));
     window.location.reload(1);
   }
@@ -45,7 +45,18 @@ document.forms['user_settings'].onsubmit = function() {
     console.warn("Failed updating user settings");
   }
 
-  transmission.update("user", information, success, failed);
+  var user_id = JSON.parse(localStorage.getItem("user")).id;
+
+  var information = {
+    type : "put",
+    uri : `/users/${user_id}`,
+    body : data,
+    on_success : success,
+    on_failed : failed
+  }
+
+  transmission_new(information);
+  // transmission.update("user", information, success, failed);
   return true;
 }
 

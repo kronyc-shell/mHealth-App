@@ -348,7 +348,7 @@
               otherAntibiotic.innerHTML +=
               sr.other_antibiotic == "" ? "N/A" : sr.other_antibiotic;
               follow_up_date.innerHTML +=
-              sr.follow_up_date == "" || sr.follow_up_date == null ? "N/A" : new Date(sr.follow_up_scheduled_date).toDateString();
+              sr.follow_up_scheduled_date == "" || sr.follow_up_scheduled_date == null ? "N/A" : new Date(sr.follow_up_scheduled_date).toDateString();
               comments.innerHTML +=
               sr.comments == "" ? "N/A" : sr.comments;
             }
@@ -361,7 +361,7 @@
               otherAntibiotic.innerHTML +=
               sr.other_antibiotic == "" ? "N/A" : sr.other_antibiotic;
               follow_up_date.innerHTML +=
-              sr.follow_up_date == "" || sr.follow_up_date == null ? "N/A" : new Date(sr.follow_up_scheduled_date).toDateString();
+              sr.follow_up_scheduled_date == "" || sr.follow_up_scheduled_date == null ? "N/A" : new Date(sr.follow_up_scheduled_date).toDateString();
               comments.innerHTML +=
               sr.comments == "" ? "N/A" : sr.comments;
             }
@@ -373,7 +373,7 @@
         var success3 = function(sr) {
           sr = sr[0];
           if(typeof(sr) != "undefined") {
-            sessionStorage.setItem("fetch_outcome", true);
+            sessionStorage.setItem("fetch_outcome", "fetch");
             var form = document.forms['outcome_form'];
 
             form.elements.treatment.value = sr.outcome_recorded;

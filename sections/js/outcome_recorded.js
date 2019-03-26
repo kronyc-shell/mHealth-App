@@ -65,7 +65,7 @@ document.forms['outcome_form'].onsubmit = function() {
     var patient = JSON.parse(sessionStorage.getItem("patient"));
     patient.pathway = "outcome_recorded";
     sessionStorage.setItem("patient", JSON.stringify(patient));
-    if(information.close_patient == false) {
+    if(data.close_patient == false) {
       switch(localStorage.getItem("lang")) {
         case "fr":
         msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><br><a href='index.html' class=\"btn btn-main\">Aller au panneau de contrôle</a href='index.html'><br><br><a class=\"btn btn-main\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Naviguer le patient</a href='index.html'></div>";
@@ -100,8 +100,10 @@ document.forms['outcome_form'].onsubmit = function() {
     on_failed : failed
   }
 
-  if(JSON.parse(sessionStorage.getItem("fetch_outcome")) == true) information['type'] = "post";
+  if(sessionStorage.getItem("fetch_outcome") != "fetch") information['type'] = "post";
   else information['type'] = "put";
+
+  // console.log(information);
 
   transmission_new(information);
   return false;

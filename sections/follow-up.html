@@ -199,7 +199,7 @@
         form.amoxicilin.checked = sr.amoxicillin;
         form.otherAntibiotic.value = sr.other_antibiotic;
         if( sr.follow_up_scheduled_date == null) form.follow_up_date.value = '';
-        else form.follow_up_date.valueAsDate = form.follow_up_date.valueAsDate;
+        else form.follow_up_date.valueAsDate = new Date(sr.follow_up_scheduled_date);
         form.comments.value = sr.comments;
       }
     }

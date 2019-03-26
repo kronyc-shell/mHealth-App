@@ -23,7 +23,7 @@ document.forms['create_user_form'].onsubmit = function() {
   //TODO: check if passwords do match
 
 
-  var information = {
+  var data = {
     "name" : name,
     "username" : username,
     "password" : password,
@@ -36,7 +36,7 @@ document.forms['create_user_form'].onsubmit = function() {
     "notifications" : ["positive_results"]
   }
 
-  sessionStorage.setItem("user_new_information", information);
+  sessionStorage.setItem("user_new_information", JSON.stringify(data));
 
   var success = function(user_id) {
     console.log("user created successfully");
@@ -45,8 +45,8 @@ document.forms['create_user_form'].onsubmit = function() {
     window.location.reload(1);
   }
 
-  var failed = function(error_code) {
-    switch(error_code) {
+  var failed = function(data) {
+    switch(data.code) {
       case "ER_DUP_ENTRY":
       sessionStorage.setItem("user_error_message", "show");
       var form = document.forms['create_user_form'];
@@ -55,9 +55,19 @@ document.forms['create_user_form'].onsubmit = function() {
     }
   }
 
+  var information = {
+    type : "post",
+    uri : `/users/`,
+    body : data,
+    on_success : success,
+    on_failed : failed
+  }
+
   console.log(information);
 
-  transmission.insert("user", information, success, failed);
+  transmission_new(information);
+
+  // transmission.insert("user", information, success, failed);
 
   return false;
 }

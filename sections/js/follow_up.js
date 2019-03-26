@@ -75,9 +75,8 @@ document.forms['follow_up_form'].onsubmit = function() {
     on_failed : failed
   }
   information['type'] = sessionStorage.getItem("fetch_follow_up") != "fetched" || sessionStorage.getItem("fetch_follow_up") == null ? "post" : "put";
+  console.log(information);
   transmission_new(information);
-
-  // transmission.insert("patient", information, success);
 
   return false;
 }
