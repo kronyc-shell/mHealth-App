@@ -142,14 +142,9 @@
 			var username = this.username.value;
 			var password = this.password.value;
 
-			var information = {
-				"type":"auth",
-				"username":username,
-				"password":password
-			};
-
 			var success = function(user) {
 				// console.log(user);
+				user = user[0];
 				localStorage.setItem("user", JSON.stringify(user));
 				window.location.replace("sections/index.html");
 			}
@@ -157,7 +152,19 @@
 			var failed = function() {
 				document.getElementById("failureMessage").removeAttribute("hidden");
 			}
-			transmission.auth("user", information, success, failed);
+			// transmission.auth("user", information, success, failed);
+			var information = {
+				type : "post",
+				body : {
+					"username" : username,
+					"password" : password
+				},
+				uri : "/users/auth/",
+				on_success : success,
+				on_failed : failed
+			};
+
+			transmission_new(information);
 			return false;
 		});
 	</script>

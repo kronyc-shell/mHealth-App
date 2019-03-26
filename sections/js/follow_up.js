@@ -36,10 +36,10 @@ document.forms['follow_up_form'].onsubmit = function() {
 
   var pathway = "follow_up";
   var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
+  var user_id = JSON.parse(localStorage.getItem("user")).id;
 
-  var information = {
-    "pathway" : pathway,
-    "patient_id" : patient_id,
+  var data = {
+    "user_id" : user_id,
     "xray" : xray,
     "amoxicillin" : amoxicillin,
     "other_antibiotic" : other_antibiotic,
@@ -67,7 +67,17 @@ document.forms['follow_up_form'].onsubmit = function() {
     // }, 3000);
   };
 
-  transmission.insert("patient", information, success);
+  var information = {
+    type : "post",
+    uri : `/patients/${patient_id}/follow_up`,
+    body : data,
+    on_success : success,
+    on_failed : failed
+  }
+  information['type'] = sessionStorage.getItem("fetch_follow_up") != "fetched" || sessionStorage.getItem("fetch_follow_up") == null ? "post" : "put";
+  transmission_new(information);
+
+  // transmission.insert("patient", information, success);
 
   return false;
 }

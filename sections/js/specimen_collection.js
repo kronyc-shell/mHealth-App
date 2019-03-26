@@ -120,6 +120,7 @@ document.forms['specimen_form'].onsubmit = function() {
       window.location.reload(1);
     }
   };
+  var failed = function() {}
 
 
   var date1 = this.date.value;
@@ -130,55 +131,46 @@ document.forms['specimen_form'].onsubmit = function() {
   var period2 = extract_radio(this.elements.period);
   var aspect2 = extract_radio(this.elements.aspect);
 
-  console.log("userId: " + sessionStorage.getItem("userId"));
-
   var pathway = "specimen";
-  var user_id = localStorage.getItem("userId");
+  var user_id = JSON.parse(localStorage.getItem("user")).id
   var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
 
   var information1 = {
-    "pathway" : pathway,
-    "patient_id" : patient_id,
+    "user_id" : user_id,
     "date_1":date1,
     "period_1":period1,
     "aspect_1":aspect1
   };
   var information2 = {
-    "pathway" : pathway,
-    "patient_id" : patient_id,
     "date_2":date2,
     "period_2":period2,
     "aspect_2":aspect2
   };
-  // information = JSON.stringify(information);
-  console.log(sessionStorage.getItem("specimen"));
 
-  if(sessionStorage.getItem("specimen") != "set")
-    transmission.insert("patient", information1, success1);
-  else
-    transmission.insert("patient", information2, success1);
+  var information = {
+    uri : `/patients/${patient_id}/specimen`
+  }
+
+  if(sessionStorage.getItem("specimen") != "set") {
+    console.log("No specimens recorded");
+    // transmission.insert("patient", information1, success1);
+    information['type'] = "post";
+    information['body'] = information1;
+    information['on_success'] = success1;
+    information['on_failed'] = failed;
+    transmission_new(information);
+  }
+  else {
+    console.log("Specimens updating")
+    // transmission.insert("patient" information2, success1);
+    information['type'] = "put";
+    information['body'] = information2;
+    information['on_success'] = success1;
+    information['on_failed'] = failed;
+    transmission_new(information);
+  }
 
   sessionStorage.removeItem("specimen");
 
   return false;
 };
-
-
-// function getTimeDuration(secondDate) {
-//   var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-//   var firstDate = new Date;
-//   var diffDays = Math.trunc((firstDate.getTime() - secondDate.getTime())/(oneDay));
-//   // diffDays = Math.trunc(diffDays);
-//   // var duration = (diffDays)
-//   console.log(`Duration: - ${diffDays}`)
-//   if(diffDays == 0) {
-//     return "Today";
-//   }
-//   else if(diffDays == 1) {
-//     return "Yesterday";
-//   }
-//   else if(diffDays > 1) {
-//     return diffDays + " Days ago";
-//   }
-//   return diffDays;
-// }

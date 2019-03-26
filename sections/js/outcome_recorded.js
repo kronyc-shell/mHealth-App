@@ -48,9 +48,10 @@ document.forms['outcome_form'].onsubmit = function() {
   var patient_id =
   JSON.parse(sessionStorage.getItem("patient")).id;
 
-  var information = {
-    "pathway" : pathway,
-    "patient_id" : patient_id,
+  var user_id = JSON.parse(localStorage.getItem("user")).id;
+
+  var data = {
+    "user_id" : user_id,
     "outcome_recorded" : outcome_recorded,
     "other" : other,
     "comments" : comments,
@@ -58,7 +59,6 @@ document.forms['outcome_form'].onsubmit = function() {
     "requester" : requester,
     "tb_rx_number" : tb_rx_number
   };
-  console.log(information);
 
   var success = function() {
     var msg;
@@ -91,7 +91,18 @@ document.forms['outcome_form'].onsubmit = function() {
     //   window.location.replace("index.html");
     // }, 3000);
   };
+  var failed = function() {}
 
-  transmission.insert("patient", information, success);
+  var information = {
+    uri : `/patients/${patient_id}/outcome_recorded`,
+    body : data,
+    on_success : success,
+    on_failed : failed
+  }
+
+  if(JSON.parse(sessionStorage.getItem("fetch_outcome")) == true) information['type'] = "post";
+  else information['type'] = "put";
+
+  transmission_new(information);
   return false;
 }

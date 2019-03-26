@@ -163,6 +163,7 @@
 
 
     var success = function(sr) {
+      sr = sr[0];
       if(typeof(sr) != "undefined") {
         document.getElementById("lab_results_record").removeAttribute("hidden");
         var smr_result1 = document.getElementById("result1");
@@ -190,7 +191,9 @@
     }
 
     var success2 = function(sr) {
+      sr = sr[0];
       if(typeof(sr) != "undefined") {
+        sessionStorage.setItem("fetch_follow_up", "fetched");
         var form = document.forms['follow_up_form'];
         form.xray.checked = sr.xray;
         form.amoxicilin.checked = sr.amoxicillin;
@@ -203,8 +206,25 @@
 
     var failed = function() {}
 
-    transmission.fetch("patient", success, failed, "lab");
-    transmission.fetch("patient", success2, failed, "follow_up");
+    var information1 = {
+      type : "get",
+      uri : `/patients/${JSON.parse(sessionStorage.getItem("patient")).id}/lab`,
+      on_success : success,
+      on_failed : failed
+    }
+
+    var information2 = {
+      type : "get",
+      uri : `/patients/${JSON.parse(sessionStorage.getItem("patient")).id}/follow_up`,
+      on_success : success2,
+      on_failed : failed
+    }
+
+    transmission_new(information1);
+    transmission_new(information2);
+
+    // transmission.fetch("patient", success, failed, "lab");
+    // transmission.fetch("patient", success2, failed, "follow_up");
 
     </script>
   </body>

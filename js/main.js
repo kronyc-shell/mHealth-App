@@ -135,8 +135,8 @@ var transmission = {
   _connection : "",
   _userId : "",
 
-  url : "http://tbappbamenda.com:8080",
-  // url : "http://localhost:8080",
+  // url : "http://tbappbamenda.com:8080",
+  url : "http://localhost:8080",
   // url : "http://142.93.248.15:8080",
 
   //TODO: figure out why this part
@@ -156,14 +156,14 @@ var transmission = {
           if(this.readyState == 4 && this.status == 200) {
             console.log("server said: " + this.responseText);
             var serverResponse = JSON.parse(this.responseText);
-            if(serverResponse.code == 200)
-            success(serverResponse.data);
+            if(serverResponse.code == 200 && serverResponse.sizeof_payload > 0)
+            success(serverResponse.data[0]);
             else
             failed();
             // success(sr);
           }
         };
-        ajax.open("POST", this.url + `/user/${transmission.default_afkanerd_id}/user/`, true);
+        ajax.open("POST", this.url + `/users/auth/`, true);
         ajax.setRequestHeader("Content-Type", "application/json");
         ajax.send(JSON.stringify(information));
       break;
@@ -185,7 +185,7 @@ var transmission = {
         } //Failed here
       }
     };
-    ajax.open("POST", this.url + `/user/${user_id}/${model}/`, true);
+    ajax.open("POST", this.url + `/patient/`, true);
     ajax.setRequestHeader("Content-Type", "application/json");
     ajax.send(JSON.stringify(information));
   },
@@ -236,9 +236,7 @@ var transmission = {
     );
   },
 
-  fetch : function(model, success, failed, path, information){
-    var user_id = JSON.parse(
-      localStorage.getItem("user")).id;
+  fetch : function(model, success, failed, path, information) {
     var ajax = new XMLHttpRequest;
     ajax.onreadystatechange = function() {
       if(this.readyState == 4 && this.status == 200) {
@@ -256,11 +254,11 @@ var transmission = {
     switch(model) {
       case "patient":
       var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
-      if(typeof(path) == 'undefined') {
-        ajax.open("GET", this.url + `/user/${user_id}/patient/${patient_id}`, true);
+      if(typeof(path) == 'undefined' || path == null) {
+        ajax.open("GET", this.url + `/patients/${patient_id}`, true);
       }
       else {
-        ajax.open("GET", this.url + `/user/${user_id}/patient/${patient_id}/path/${path}`, true);
+        ajax.open("GET", this.url + `/patients/${patient_id}/${path}`, true);
       }
 
       break;
@@ -271,12 +269,8 @@ var transmission = {
         ajax.open("GET", this.url + `/user/${user_id}/patients/search/${information}`, true);
       }
       else {
-        // var communities = JSON.parse(localStorage.getItem("user")).community_id;
-        var query = JSON.stringify({
-          community_id : JSON.parse(localStorage.getItem("user")).community_id,
-
-        })
-        ajax.open("GET", this.url + `/user/${user_id}/patients/filter/${query}/limit/20`, true);
+        var communities = JSON.parse(localStorage.getItem("user")).community_id;
+        ajax.open("GET", this.url + `/patients?community_id=${communities}&limit=20&sort=id:desc`, true);
         console.log("Searching for patients")
       }
       break;
@@ -303,6 +297,37 @@ var transmission = {
     ajax.send();
   }
 };
+
+function transmission_new(information) {
+  var ajax_call = function(type, uri, body, success, failed) {
+    var url = "http://localhost:8080";
+    var ajax = new XMLHttpRequest;
+    ajax.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 200) {
+        console.log("server said: " + this.responseText);
+        var serverResponse = JSON.parse(this.responseText);
+        if(serverResponse.code == 200)
+        success(serverResponse.data);
+        else {
+          if(typeof(failed) != "undefined") failed(serverResponse.data);
+        } //Failed here
+      }
+    };
+    ajax.open(type, `${url}${uri}`, true);
+    ajax.setRequestHeader("Content-Type", "application/json");
+    switch(type) {
+      case "post":
+      case "put":
+      ajax.send(JSON.stringify(body))
+      break;
+      case "get":
+      ajax.send();
+      break;
+    }
+  }
+  var body = information.body == "undefined" ? null : information.body;
+  ajax_call(information.type, information.uri, body, information.on_success, information.on_failed);
+}
 
 function updateConnectionStatus(state) {
   // alert("Connection type changed from " + type + " to " + connection.type);

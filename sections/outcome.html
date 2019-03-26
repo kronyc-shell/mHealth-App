@@ -302,6 +302,7 @@
         $('body').bootstrapMaterialDesign();
 
         var success = function(sr) {
+          sr = sr[0]
           if(typeof(sr) != "undefined") {
             document.getElementById("lab_results_record").removeAttribute("hidden");
             var smr_result1 = document.getElementById("result1");
@@ -329,6 +330,7 @@
         }
 
         var success2 = function(sr) {
+          sr = sr[0];
           if(typeof(sr) != "undefined") {
             document.getElementById("follow_up_record").removeAttribute("hidden");
 
@@ -369,7 +371,9 @@
 
 
         var success3 = function(sr) {
+          sr = sr[0];
           if(typeof(sr) != "undefined") {
+            sessionStorage.setItem("fetch_outcome", true);
             var form = document.forms['outcome_form'];
 
             form.elements.treatment.value = sr.outcome_recorded;
@@ -384,12 +388,34 @@
             form.close_patient.checked = true;
           }
         }
+        var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
 
         var failed = function() {}
 
-        transmission.fetch("patient", success, failed, "lab");
-        transmission.fetch("patient", success2, failed, "follow_up");
-        transmission.fetch("patient", success3, failed, "outcome_recorded");
+        var information = {
+          type : "get",
+          uri : `/patients/${patient_id}/lab`,
+          on_success : success,
+          on_failed : failed
+        }
+
+        var information2 = {
+          type : "get",
+          uri : `/patients/${patient_id}/follow_up`,
+          on_success : success2,
+          on_failed : failed
+        }
+
+        var information3 = {
+          type : "get",
+          uri : `/patients/${patient_id}/outcome_recorded`,
+          on_success : success3,
+          on_failed : failed
+        }
+
+        transmission_new(information);
+        transmission_new(information2);
+        transmission_new(information3);
       });
     </script>
 

@@ -18,9 +18,10 @@ $(document).ready(function() {
 
   trigger_toggle();
   var success = function(sr) {
+    sr = sr[0];
     if(typeof(sr) != "undefined") {
       console.log("controller - fetching lab - SUCCESSFUL");
-      sessionStorage.setItem("lab_fetch", "true");
+      sessionStorage.setItem("lab_fetch", "fetched");
       // console.log(sr);
       _form.date_specimen_received.valueAsDate = new Date(sr.date_specimen_received);
       _form.received_by.value = sr.received_by;
@@ -75,7 +76,13 @@ $(document).ready(function() {
   }
   var failed = function() {}
 
-  transmission.fetch("patient", success, failed , "lab");
+  var information = {
+    type : "get",
+    uri : `/patients/${JSON.parse(sessionStorage.getItem("patient")).id}/lab`,
+    on_success : success,
+    on_failed : failed
+  }
+  transmission_new(information)
 
 });
 
@@ -134,16 +141,8 @@ document.forms['smear_results_form'].onsubmit = function() {
   var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
   var community_id = JSON.parse(sessionStorage.getItem("patient")).community_id;
 
-  //for sms purposes
-  var patient_name = JSON.prase(sessionStorage.getItem("patient")).name;
-  var user_name = JSON.prase(localStorage.getItem("user")).name;
-
-
-  var information = {
-    "pathway" : pathway,
-    "patient_id" : patient_id,
-    "patient_name" : patient_name,
-    "user_name" : user_name,
+  var data = {
+    "user_id" : JSON.parse(localStorage.getItem("user")).id,
     "date_specimen_received" : date_specimen_received,
     "received_by" : received_by,
     "lab_serial_number" : lab_serial_number,
@@ -156,11 +155,8 @@ document.forms['smear_results_form'].onsubmit = function() {
     "rif_result" : rif_result,
     "xpert_date" : xpert_date,
     "source" : source,
-    "community_id" : community_id,
     "automatic" : automatic
   };
-  // information = JSON.stringify(information);
-  // console.log(information);
 
   var success = function() {
     var msg;
@@ -182,12 +178,24 @@ document.forms['smear_results_form'].onsubmit = function() {
     // }, 3000);
   };
 
+  var failed = function() {}
+
   document.getElementById("main_display").innerHTML = "";
 
   var anim = bodymovin.loadAnimation(animData);
   anim.setSpeed(3.4);
 
-  transmission.insert("patient", information, success);
+  // transmission.insert("patient", information, success);
+  var information = {
+    uri : `/patients/${patient_id}/lab`,
+    body : data,
+    on_success : success,
+    on_failed : failed
+  }
+  information['type'] = sessionStorage.getItem("lab_fetch") != "fetched" || sessionStorage.getItem("lab_fetch") == null ? "post" : "put";
+  console.log("labfetch: ", sessionStorage.getItem("lab_fetch"))
+  console.log(information);
+  transmission_new(information);
   return false;
 };
 
@@ -268,61 +276,4 @@ function trigger_toggle() {
     //   break;
     // }
   }
-}
-
-function fetch(_form, _form_xpert) {
-  console.log("Controller - fetching lab");
-  var lab = new Lab;
-  var success = function(_form, _form_xpert, information) {
-    console.log("controller - fetching lab - SUCCESSFUL");
-    sessionStorage.setItem("lab_fetch", "true");
-
-    _form.date_specimen_received.value = information.date_received;
-    _form.received_by.value = information.received_by;
-    _form.lsn.value = information.lab_serial_number;
-    // console.log
-    _form.date1.value = information.smr_date;
-    if(information.smr_results !== null) {
-      _form.elements.result_1.value = information.smr_results.result_1;
-      for(var x in _form.elements.result_1)
-        if(_form.elements.result_1[x].value == information.smr_results.result_1)
-          _form.elements.result_1[x].click();
-      _form.elements.result_2.value = information.smr_results.result_2;
-    }
-
-    if(information.xpert_results !== null) {
-      if(information.xpert_results.mtb_results !== 'undefined') {
-        // _form_xpert.elements.mtb_results = information.xpert_results.mtb_results == 'undefined' ?
-        for(var i=0;i<_form_xpert.elements.mtb_results.length; ++i) {
-          // console.log(_form_xpert.elements.mtb_results[i].value);
-          if(typeof information.xpert_results.mtb_result != 'undefined') {
-            if(_form_xpert.elements.mtb_results[i].value == information.xpert_results.mtb_result) {
-              console.log("Found match");
-              _form_xpert.elements.mtb_results[i].click();
-              break;
-            } else {
-              console.log( _form_xpert.elements.mtb_results[i].value == information.xpert_results.mtb_result);
-              console.log( _form_xpert.elements.mtb_results[i].value,information.xpert_results.mtb_result);
-            }
-          }
-        }
-      }
-      if(information.xpert_results.rif_results !== 'undefined') {
-        // _form_xpert.elements.mtb_results = information.xpert_results.mtb_results == 'undefined' ?
-        for(var i=0;i<_form_xpert.elements.rif_results.length; ++i) {
-          if(_form_xpert.elements.rif_results[i].value == information.xpert_results.rif_results) {
-            _form_xpert.elements.rif_results[i].click();
-            break;
-          }
-        }
-      }
-    }
-
-    if(information.auto == "automatic")
-      _form_xpert.automatic_input.click();
-    // _form_xpert.automatic_input.checked = information.auto == "automatic" ? true : false;
-    _form_xpert.unique_code.value = information.unique_code;
-    _form_xpert.mtb_date.value = information.xpert_date;
-  }
-  lab.fetch(_form,_form_xpert, success);
 }

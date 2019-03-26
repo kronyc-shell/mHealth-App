@@ -82,10 +82,8 @@ $(document).ready(function() {
         "date":req_date
       };
 
-      var pathway = "information";
-
-      var information = {
-        "pathway" : pathway,
+      var data = {
+        "user_id" : JSON.parse(localStorage.getItem("user")).id,
         "region_id" : region_id,
         "community_id" : community_id,
         "name" : name,
@@ -104,19 +102,24 @@ $(document).ready(function() {
         "symptoms" : symptoms,
         "requester" : requester
       };
-      // information = JSON.stringify(information);
-      console.log(information);
+
+      sessionStorage.setItem("data", JSON.stringify(data));
 
       var success = function(patient) {
-        sessionStorage.setItem("patient", JSON.stringify(patient));
+        var patientInfo = {}
+        patientInfo['id'] = patient.insertId;
+        patientInfo['pathway'] = "requester";
+        patientInfo['name'] = JSON.parse(sessionStorage.getItem("data")).name;
+        sessionStorage.removeItem("data");
+        sessionStorage.setItem("patient", JSON.stringify(patientInfo));
         var msg;
         switch(localStorage.getItem("lang")) {
           case "fr":
-          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">ID DU PATIENT: " +patient.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Aller au panneau de contrôle</a href='index.html'><br><br><a class=\"btn btn-info\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Naviguer le patient</a href='index.html'></div>";
+          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">ID DU PATIENT: " + patientInfo.id +"</h5><br><br><a href='index.html' class=\"btn btn-info\">Aller au panneau de contrôle</a href='index.html'><br><br><a class=\"btn btn-info\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Naviguer le patient</a href='index.html'></div>";
           break;
 
           case "en":
-          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Well Done!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">PATIENT'S ID: " +patient.id+"</h5><br><br><a href='index.html' class=\"btn btn-info\">Return to Dashboard</a href='index.html'><br><br><a class=\"btn btn-info\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Navigate Patients</a href='index.html'></div>";
+          msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Well Done!</h5><br><h5 style=\"background-color: grey; font-weight: 100;\">PATIENT'S ID: " + patientInfo.id +"</h5><br><br><a href='index.html' class=\"btn btn-info\">Return to Dashboard</a href='index.html'><br><br><a class=\"btn btn-info\" onclick=\"patientNavigation(localStorage.getItem('lang'))\">Navigate Patients</a href='index.html'></div>";
           break;
         }
         document.getElementById("animationWindow").innerHTML = msg;
@@ -126,7 +129,15 @@ $(document).ready(function() {
 
       };
 
-      transmission.insert("patient", information, success);
+      // transmission.insert("patient", information, success);
+      var information = {
+        type : "post",
+        body : data,
+        uri : `/patients/`,
+        on_success : success,
+        on_failed : failed
+      }
+      transmission_new(information);
       return false;
     };
 
@@ -147,6 +158,7 @@ $(document).ready(function() {
     }
   } else {
     var success = function(patient) {
+      patient = patient[0]
       var form = document.forms["request_form"];
 
       form.id.value = JSON.parse(sessionStorage.getItem("patient")).id;
@@ -191,7 +203,14 @@ $(document).ready(function() {
     }
     var failed = function() {}
     var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
-    transmission.fetch("patient", success, failed, patient_id);
+    // transmission.fetch("patient", success, failed, null, patient_id);
+    var information = {
+      type : "get",
+      uri : `/patients/${patient_id}`,
+      on_success : success,
+      on_failed : failed
+    }
+    transmission_new(information);
   }
 
 });

@@ -139,7 +139,8 @@
         specimenHistory.default();
 
         var success = function(specimens) {
-          if(typeof(specimens) != 'undefined') {
+          specimens = specimens[specimens.length-1]
+          if(typeof(specimens) != 'undefined' || specimens != null) {
             console.warn("Here even though I should not be!");
             sessionStorage.setItem("specimen", "set");
             var period1 = specimens.period_1;
@@ -168,9 +169,13 @@
 
         var failed = function(sr) {}
 
-        var id = sessionStorage.getItem("userId");
-        console.log("user id: " + id);
-        transmission.fetch("patient", success, failed, "specimen");
+        var information = {
+          type : "get",
+          uri : `/patients/${JSON.parse(sessionStorage.getItem("patient")).id}/specimen`,
+          on_success : success,
+          on_failed : failed
+        }
+        transmission_new(information);
 
         translate("specimen_collection");
         // var patient = JSON.parse(sessionStorage.getItem("patient"));
