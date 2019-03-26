@@ -141,8 +141,21 @@ document.forms['smear_results_form'].onsubmit = function() {
   var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
   var community_id = JSON.parse(sessionStorage.getItem("patient")).community_id;
 
+<<<<<<< HEAD
   var data = {
     "user_id" : JSON.parse(localStorage.getItem("user")).id,
+=======
+  //for sms purposes
+  var patient_name = JSON.parse(sessionStorage.getItem("patient")).name;
+  var user_name = JSON.parse(localStorage.getItem("user")).name;
+
+
+  var information = {
+    "pathway" : pathway,
+    "patient_id" : patient_id,
+    "patient_name" : patient_name,
+    "user_name" : user_name,
+>>>>>>> b61dafe44db4a11a1f16caa71483a22bfd72e9b1
     "date_specimen_received" : date_specimen_received,
     "received_by" : received_by,
     "lab_serial_number" : lab_serial_number,
