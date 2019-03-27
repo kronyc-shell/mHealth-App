@@ -165,8 +165,6 @@ document.forms['smear_results_form'].onsubmit = function() {
 
     var success = function(users) {
       console.log("Sending users sms success");
-      var url = "http://localhost:8080";
-      // var url = "http://tbappbamenda.com:8080";
       var information = [];
       var result_type;
       if(data.smr_result_1 == "no_afb" && data.smr_result_2 == "no_afb" && data.mtb_result != "detected" && data.rif_result != "detected") result_type = "negative_results";
@@ -186,7 +184,7 @@ document.forms['smear_results_form'].onsubmit = function() {
       else result_xpert = "MTB NOT DETECTED";
 
       for(var i in users) {
-        console.log(users[i])
+        // console.log(users[i])
         if(users[i].notifications.includes(result_type) || users[i].notifications.includes("all")) {
           var userObject = {
             "number" : users[i].phonenumber,
@@ -198,20 +196,17 @@ document.forms['smear_results_form'].onsubmit = function() {
         }
       }
       console.log(information);
-      // var ajax = new XMLHttpRequest;
-      // ajax.onreadystatechange = function() {
-      //   if(this.readyState == 4 && this.status == 200) {
-      //     console.log("server said: " + this.responseText);
-      //     var serverResponse = JSON.parse(this.responseText);
-      //     if(serverResponse.code == 200)
-      //     success(serverResponse.data);
-      //     else {
-      //       if(typeof(failed) != "undefined") failed(serverResponse.data);
-      //     } //Failed here
-      //   }
-      // };
-      // ajax.open("GET", `${url}/sms/${JSON.stringify(information)}`, true);
-      // ajax.send();
+      var ajax = new XMLHttpRequest;
+      // var url = "http://localhost:8080";
+      var url = "http://tbappbamenda.com:8080";
+      ajax.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+          console.log("SMS sent");
+        }
+      };
+      ajax.open("GET", `${url}/sms/${JSON.stringify(information)}`, true);
+      ajax.setRequestHeader("Content-Type", "application/json");
+      ajax.send();
     }
     var failed = function() {}
 
