@@ -197,7 +197,7 @@ document.forms['smear_results_form'].onsubmit = function() {
           var userObject = {
             "number" : users[i].phonenumber,
             "service_provider" : users[i].service_provider,
-            "message" : `${users[i].name} ${data.date_specimen_received} ${JSON.parse(sessionStorage.getItem("patient")).name} ${result_smr} ${data.lab_serial_number} ${result_xpert} ${data.unique_code}\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
+            "message" : `${users[i].name} ${data.date_specimen_received} ${JSON.parse(sessionStorage.getItem("patient")).name} ${result_smr} ${data.lab_serial_number} ${result_xpert} ${data.unique_code}\n\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
           }
           console.log(userObject.message);
           information.push(userObject);
