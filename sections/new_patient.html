@@ -481,7 +481,7 @@
       // QUICK TEST SCRIPT
 
        // var form = document.forms['new_patient_form'];
-       // form.name.value = "Wisdom";
+       // form.name.value = "Automated Afkanerd User";
        // form.age.value = "16";
        // form.elements.gender.value = "male";
        // form.address.value ="metta quarters";
@@ -562,7 +562,7 @@
           // transmission.fetch("region", success, failed, "communities", id);
           var information = {
             type : "get",
-            uri : `/community?region_id=${id}`,
+            uri : `/community?region_id='${id}'`,
             on_success : success,
             on_failed : failed
           }
@@ -586,7 +586,7 @@
       };
       var information = {
         type : "get",
-        uri : `/community?region_id=${JSON.parse(localStorage.getItem("user")).region_id}`,
+        uri : `/community?region_id='${JSON.parse(localStorage.getItem("user")).region_id}'`,
         on_success : communities_success,
         on_failed : failed
       }
