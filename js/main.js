@@ -131,8 +131,8 @@ function translate(page) {
 
 function transmission_new(information) {
   var ajax_call = function(type, uri, body, success, failed) {
-    // var url = "http://localhost:8080";
-    var url = "http://tbappbamenda.com:8080";
+    var url = "http://localhost:8080";
+    // var url = "http://tbappbamenda.com:8080";
     var ajax = new XMLHttpRequest;
     ajax.onreadystatechange = function() {
       if(this.readyState == 4 && this.status == 200) {

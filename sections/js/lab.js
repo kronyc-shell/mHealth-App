@@ -158,7 +158,71 @@ document.forms['smear_results_form'].onsubmit = function() {
     "automatic" : automatic
   };
 
+  sessionStorage.setItem("data", JSON.stringify(data));
+
   var success = function() {
+    var data = JSON.parse(sessionStorage.getItem("data"));
+
+    var success = function(users) {
+      console.log("Sending users sms success");
+      var url = "http://localhost:8080";
+      // var url = "http://tbappbamenda.com:8080";
+      var information = [];
+      var result_type;
+      if(data.smr_result_1 == "no_afb" && data.smr_result_2 == "no_afb" && data.mtb_result != "detected" && data.rif_result != "detected") result_type = "negative_results";
+      else result_type = "positive_result";
+
+      var result_smr = "";
+      var result_xpert = "";
+
+      if(data.smr_result_1 != "no_afb") result_smr = "AFB," + data.smr_result_1;
+      else if(data.smr_result_2 != "no_afb") result_smr = "AFB," + data.smr_result_2;
+      else result_smr = "No AFB seen";
+      if(data.mtb_result == "detected") {
+        var rif_result = data.rif_result == "not_detected" ? "NOT DETECTED" : data.rif_result;
+        result_xpert = `MTB Detected (${data.mtb_grade}) RIF resistance ${rif_result.toUpperCase()}`
+      }
+      else if(data.mtb_result == "trace") result_xpert = "MTB TRACE";
+      else result_xpert = "MTB NOT DETECTED";
+
+      for(var i in users) {
+        console.log(users[i])
+        if(users[i].notifications.includes(result_type) || users[i].notifications.includes("all")) {
+          var userObject = {
+            "number" : users[i].phonenumber,
+            "service_provider" : users[i].service_provider,
+            "message" : `${users[i].name} ${data.date_specimen_received} ${JSON.parse(sessionStorage.getItem("patient")).name} ${result_smr} ${data.lab_serial_number} ${result_xpert} ${data.unique_code}`
+          }
+          console.log(userObject.message);
+          information.push(userObject);
+        }
+      }
+      console.log(information);
+      // var ajax = new XMLHttpRequest;
+      // ajax.onreadystatechange = function() {
+      //   if(this.readyState == 4 && this.status == 200) {
+      //     console.log("server said: " + this.responseText);
+      //     var serverResponse = JSON.parse(this.responseText);
+      //     if(serverResponse.code == 200)
+      //     success(serverResponse.data);
+      //     else {
+      //       if(typeof(failed) != "undefined") failed(serverResponse.data);
+      //     } //Failed here
+      //   }
+      // };
+      // ajax.open("GET", `${url}/sms/${JSON.stringify(information)}`, true);
+      // ajax.send();
+    }
+    var failed = function() {}
+
+    var information = {
+      type : "get",
+      uri : `/users?community_id='${JSON.parse(sessionStorage.getItem("patient")).community_id}'&service_provider=1`,
+      on_success : success,
+      on_failed : failed
+    }
+    transmission_new(information);
+
     var msg;
     var patient = JSON.parse(sessionStorage.getItem("patient"));
     patient.pathway = "lab";
@@ -192,6 +256,7 @@ document.forms['smear_results_form'].onsubmit = function() {
     on_success : success,
     on_failed : failed
   }
+
   information['type'] = sessionStorage.getItem("lab_fetch") != "fetched" || sessionStorage.getItem("lab_fetch") == null ? "post" : "put";
   console.log("labfetch: ", sessionStorage.getItem("lab_fetch"))
   console.log(information);

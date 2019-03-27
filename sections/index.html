@@ -184,7 +184,7 @@
 
         var information = {
           type : "get",
-          uri : `/patients?limit=20&community_id=${JSON.parse(localStorage.getItem("user")).community_id}&sort=id:desc`,
+          uri : `/patients?limit=20&community_id='${JSON.parse(localStorage.getItem("user")).community_id}'&sort=id:desc`,
           on_success : success,
           on_failed : failed
         }
