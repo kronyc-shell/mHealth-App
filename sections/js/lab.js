@@ -197,7 +197,7 @@ document.forms['smear_results_form'].onsubmit = function() {
           var userObject = {
             "number" : users[i].phonenumber,
             "service_provider" : users[i].service_provider,
-            "message" : `${users[i].name} ${data.date_specimen_received} ${JSON.parse(sessionStorage.getItem("patient")).name} ${result_smr} ${data.lab_serial_number} ${result_xpert} ${data.unique_code}`
+            "message" : `${users[i].name} ${data.date_specimen_received} ${JSON.parse(sessionStorage.getItem("patient")).name} ${result_smr} ${data.lab_serial_number} ${result_xpert} ${data.unique_code}\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
           }
           console.log(userObject.message);
           information.push(userObject);
@@ -212,7 +212,7 @@ document.forms['smear_results_form'].onsubmit = function() {
           console.log("SMS sent");
         }
       };
-      ajax.open("GET", `${url}/sms/${JSON.stringify(information)}`, true);
+      ajax.open("GET", `${url}/sms/${encodeURIComponent(JSON.stringify(information))}`, true);
       ajax.setRequestHeader("Content-Type", "application/json");
       ajax.send();
     }
@@ -220,7 +220,7 @@ document.forms['smear_results_form'].onsubmit = function() {
 
     var information = {
       type : "get",
-      uri : `/users?community_id='${JSON.parse(sessionStorage.getItem("patient")).community_id}'&service_provider=1`,
+      uri : `/users?community_id='${JSON.parse(sessionStorage.getItem("patient")).community_id}'&like=service_provider:`,
       on_success : success,
       on_failed : failed
     }
@@ -326,12 +326,6 @@ function trigger_toggle() {
       document.getElementById("indeterminate").checked = true;
 
     }
-    // else {
-    //   console.log("Elsing the shit sef")
-    //   document.getElementById("not_done_label").removeAttribute("hidden");
-    //   document.getElementById("high").checked = true;
-    //   document.getElementById("high").checked = false;
-    // }
 
     if(results[x].checked && (results[x].id == 'not_done' || results[x].id == 'not_detected' || results[x].id == 'error_invalid')) {
       document.getElementById("rif_results_group").setAttribute("hidden", "hidden");
