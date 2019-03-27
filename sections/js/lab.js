@@ -53,6 +53,14 @@ $(document).ready(function() {
             }
           }
         }
+        if(typeof sr.mtb_grade != 'undefined' && sr.mtb_grade != null) {
+          for(var i=0;i<_form_xpert.elements.grade.length; ++i) {
+            if(_form_xpert.elements.grade[i].value == sr.mtb_grade) {
+              _form_xpert.elements.grade[i].click();
+              break;
+            }
+          }
+        }
         if(typeof(sr.rif_result) != 'undefined') {
           console.log("GOT A RIF")
           // _form_xpert.elements.mtb_results = sr.xpert_results.mtb_results == 'undefined' ?
@@ -297,11 +305,14 @@ function trigger_toggle() {
       document.getElementById("not_detected_1").setAttribute("checked", "checked");
       document.getElementById("rif_results_group").removeAttribute("hidden");
       document.getElementById("mtb_grades").removeAttribute("hidden")
-      document.getElementById("high").checked = true;
       document.getElementById("detected_1").removeAttribute("disabled");
       document.getElementById("not_done_1").removeAttribute("disabled");
+      document.getElementById("not_detected_1").checked = true;
+
       document.getElementById("not_detected_1").removeAttribute("disabled");
       console.log("clicked DETECTED");
+      document.getElementById("high").checked = true;
+
     }
     else if(results[x].checked && results[x].id == "trace") {
       console.log("Trace clicked")
@@ -315,25 +326,20 @@ function trigger_toggle() {
       document.getElementById("indeterminate").checked = true;
 
     }
-    else {
-      document.getElementById("not_done_label").removeAttribute("hidden");
-      document.getElementById("high").checked = true;
-      document.getElementById("high").checked = false;
-    }
+    // else {
+    //   console.log("Elsing the shit sef")
+    //   document.getElementById("not_done_label").removeAttribute("hidden");
+    //   document.getElementById("high").checked = true;
+    //   document.getElementById("high").checked = false;
+    // }
 
     if(results[x].checked && (results[x].id == 'not_done' || results[x].id == 'not_detected' || results[x].id == 'error_invalid')) {
       document.getElementById("rif_results_group").setAttribute("hidden", "hidden");
       document.getElementById("mtb_grades").setAttribute("hidden", "hidden");
       document.getElementById("not_done_1").checked = true;
+      document.getElementById("high").checked = true;
+      document.getElementById("high").checked = false;
       break;
     }
-
-    // else if(results[x].checked && results[x].id == "detected") {
-    //   console.log("removing hidden result group");
-    //
-    //   document.getElementById("detected").checked == true ?  : document.getElementById("indeterminate").checked = true;
-    //   console.log("REsults = " + results[x].value);
-    //   break;
-    // }
   }
 }
