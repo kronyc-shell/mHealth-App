@@ -183,31 +183,38 @@ document.forms['smear_results_form'].onsubmit = function() {
 
       var result_smr = "";
       var result_xpert = "";
-      var date_specimen_received = data.mtb_date;
+      var date_specimen_received = data.xpert_date;
 
       if(data.smr_result_1 != "no_afb" || data.smr_result_1 != "not_done") {
+        console.log("smr");
         result_smr = "AFB," + data.smr_result_1;
         date_specimen_received = data.smr_date;
       }
       else if(data.smr_result_2 != "no_afb" || data.smr_result_1 != "not_done") {
+        console.log("no_afb");
         result_smr = "AFB," + data.smr_result_2;
         date_specimen_received = data.smr_date;
       }
-      else if(data.smr_result_1 == "not_done") result_smr = "NOT Done";
+      else if(data.smr_result_1 == "not_done") {
+        console.log("not_done");
+        result_smr = "NOT Done";
+      }
       else {
+        console.log("no_afb_seen");
         result_smr = "No AFB seen";
         date_specimen_received = data.smr_date;
       }
       if(data.mtb_result == "detected") {
+        console.log("detected");
         var rif_result = data.rif_result == "not_detected" ? "NOT DETECTED" : data.rif_result;
         result_xpert = `MTB Detected (${data.mtb_grade}) RIF resistance ${rif_result.toUpperCase()}`
-        date_specimen_received = data.mtb_date;
       }
       else if(data.mtb_result == "trace") {
+        console.log("trace");
         result_xpert = "MTB TRACE";
-        date_specimen_received = data.mtb_date;
       }
-      else result_xpert = "MTB NOT DETECTED";
+      else if(data.mtb_result == "not_detected") result_xpert = "MTB NOT DETECTED";
+      else result_xpert = "MTB NOT DONE";
 
       var result_type = sessionStorage.getItem("result_type");
 
@@ -234,7 +241,7 @@ document.forms['smear_results_form'].onsubmit = function() {
       };
       ajax.open("GET", `${url}/sms/${encodeURIComponent(JSON.stringify(information))}`, true);
       ajax.setRequestHeader("Content-Type", "application/json");
-      ajax.send(); //TODO: remove this comment
+      // ajax.send(); //TODO: remove this comment
     }
     var failed = function() {}
 
