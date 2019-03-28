@@ -166,6 +166,12 @@ document.forms['smear_results_form'].onsubmit = function() {
     "automatic" : automatic
   };
 
+  var information = [];
+  var result_type;
+  if(data.smr_result_1 == "no_afb" && data.smr_result_2 == "no_afb" && data.mtb_result != "detected" && data.rif_result != "detected") result_type = "negative_results";
+  else result_type = "positive_result";
+
+  sessionStorage.setItem("result_type", result_type);
   sessionStorage.setItem("data", JSON.stringify(data));
 
   var success = function() {
@@ -174,22 +180,36 @@ document.forms['smear_results_form'].onsubmit = function() {
     var success = function(users) {
       console.log("Sending users sms success");
       var information = [];
-      var result_type;
-      if(data.smr_result_1 == "no_afb" && data.smr_result_2 == "no_afb" && data.mtb_result != "detected" && data.rif_result != "detected") result_type = "negative_results";
-      else result_type = "positive_result";
 
       var result_smr = "";
       var result_xpert = "";
+      var date_specimen_received = data.mtb_date;
 
-      if(data.smr_result_1 != "no_afb") result_smr = "AFB," + data.smr_result_1;
-      else if(data.smr_result_2 != "no_afb") result_smr = "AFB," + data.smr_result_2;
-      else result_smr = "No AFB seen";
+      if(data.smr_result_1 != "no_afb" || data.smr_result_1 != "not_done") {
+        result_smr = "AFB," + data.smr_result_1;
+        date_specimen_received = data.smr_date;
+      }
+      else if(data.smr_result_2 != "no_afb" || data.smr_result_1 != "not_done") {
+        result_smr = "AFB," + data.smr_result_2;
+        date_specimen_received = data.smr_date;
+      }
+      else if(data.smr_result_1 == "not_done") result_smr = "NOT Done";
+      else {
+        result_smr = "No AFB seen";
+        date_specimen_received = data.smr_date;
+      }
       if(data.mtb_result == "detected") {
         var rif_result = data.rif_result == "not_detected" ? "NOT DETECTED" : data.rif_result;
         result_xpert = `MTB Detected (${data.mtb_grade}) RIF resistance ${rif_result.toUpperCase()}`
+        date_specimen_received = data.mtb_date;
       }
-      else if(data.mtb_result == "trace") result_xpert = "MTB TRACE";
+      else if(data.mtb_result == "trace") {
+        result_xpert = "MTB TRACE";
+        date_specimen_received = data.mtb_date;
+      }
       else result_xpert = "MTB NOT DETECTED";
+
+      var result_type = sessionStorage.getItem("result_type");
 
       for(var i in users) {
         // console.log(users[i])
@@ -197,7 +217,7 @@ document.forms['smear_results_form'].onsubmit = function() {
           var userObject = {
             "number" : users[i].phonenumber,
             "service_provider" : users[i].service_provider,
-            "message" : `${users[i].name} ${data.date_specimen_received} ${JSON.parse(sessionStorage.getItem("patient")).name} ${result_smr} ${data.lab_serial_number} ${result_xpert} ${data.unique_code}\n\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
+            "message" : `${users[i].name} ${date_specimen_received} ${JSON.parse(sessionStorage.getItem("patient")).name} ${result_smr} ${data.lab_serial_number} ${result_xpert} ${data.unique_code}\n\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
           }
           console.log(userObject.message);
           information.push(userObject);
@@ -214,7 +234,7 @@ document.forms['smear_results_form'].onsubmit = function() {
       };
       ajax.open("GET", `${url}/sms/${encodeURIComponent(JSON.stringify(information))}`, true);
       ajax.setRequestHeader("Content-Type", "application/json");
-      ajax.send();
+      ajax.send(); //TODO: remove this comment
     }
     var failed = function() {}
 
@@ -252,7 +272,6 @@ document.forms['smear_results_form'].onsubmit = function() {
   var anim = bodymovin.loadAnimation(animData);
   anim.setSpeed(3.4);
 
-  // transmission.insert("patient", information, success);
   var information = {
     uri : `/patients/${patient_id}/lab`,
     body : data,
@@ -263,7 +282,19 @@ document.forms['smear_results_form'].onsubmit = function() {
   information['type'] = sessionStorage.getItem("lab_fetch") != "fetched" || sessionStorage.getItem("lab_fetch") == null ? "post" : "put";
   console.log("labfetch: ", sessionStorage.getItem("lab_fetch"))
   console.log(information);
-  transmission_new(information);
+
+  if(result_type == "positive_result") {
+    $('#specimen_lab_results').modal({},'show');
+  }
+  else {
+    // transmission_new(information);
+  }
+
+  document.getElementById("43").onclick = function() {
+    console.log("Yes, can transmit now");
+    console.log(information);
+    transmission_new(information);
+  }
   return false;
 };
 

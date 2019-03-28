@@ -58,6 +58,32 @@
               </div>
             </div>
           </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="specimen_lab_results" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                  <!--TODO: include some translations here for french -->
+                  <h5 class="modal-title" id="41">Attention!!</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h5 id="42">You are about to record a positive result for this patient!</h5>
+                </div>
+                <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                  <button id="43" type="button" class="btn btn-main-2 btn-sm" name="button" data-dismiss="modal">Confirm Positive Result</button>
+
+                  <button onclick="window.location.replace('lab.html')" id="44" type="button" class="btn btn-main-2 btn-sm" name="button">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </div>
       <div class="row" id="lab_content_body">
@@ -317,7 +343,11 @@
       "Moyen",
       "Bas",
       "Très bas",
-      "Degrè"
+      "Degrè",
+      "Attention!",
+      "Vous ete au point d'enregistrer un resultat positif pour ce patient!",
+      "Confirmer le resultant positive",
+      "Annuler"
      ];
     </script>
     <script src="../js/main.js"></script>
