@@ -287,7 +287,7 @@ document.forms['smear_results_form'].onsubmit = function() {
     $('#specimen_lab_results').modal({},'show');
   }
   else {
-    // transmission_new(information);
+    transmission_new(information);
   }
 
   document.getElementById("43").onclick = function() {
