@@ -168,8 +168,16 @@ document.forms['smear_results_form'].onsubmit = function() {
 
   var information = [];
   var result_type;
-  if(data.smr_result_1 == "no_afb" && data.smr_result_2 == "no_afb" && data.mtb_result != "detected" && data.rif_result != "detected") result_type = "negative_results";
-  else result_type = "positive_result";
+  if(
+    (data.smr_result_1 == "no_afb" || data.smr_result_1 == "not_done")
+    &&
+    (data.smr_result_2 == "no_afb" || data.smr_result_2 == "not_done")
+    &&
+    (data.mtb_result != "detected" && data.mtb_result != "trace")
+    &&
+    (data.rif_result != "detected" && data.rif_result != "indeterminate")
+  ) result_type = "negative_results";
+  else result_type = "positive_results";
 
   sessionStorage.setItem("result_type", result_type);
   sessionStorage.setItem("data", JSON.stringify(data));
@@ -195,7 +203,7 @@ document.forms['smear_results_form'].onsubmit = function() {
         result_smr = "AFB," + data.smr_result_2;
         date_specimen_received = data.smr_date;
       }
-      else if(data.smr_result_1 == "not_done") {
+      else if(data.smr_result_1 == "not_done" || data.smr_result_2 == "not_done") {
         console.log("not_done");
         result_smr = "NOT Done";
       }
@@ -207,7 +215,7 @@ document.forms['smear_results_form'].onsubmit = function() {
       if(data.mtb_result == "detected") {
         console.log("detected");
         var rif_result = data.rif_result == "not_detected" ? "NOT DETECTED" : data.rif_result;
-        result_xpert = `MTB Detected (${data.mtb_grade}) RIF resistance ${rif_result.toUpperCase()}`
+        result_xpert = `MTB Detected (${data.mtb_grade.toUpperCase()}) RIF resistance ${rif_result.toUpperCase()}`
       }
       else if(data.mtb_result == "trace") {
         console.log("trace");
@@ -290,7 +298,7 @@ document.forms['smear_results_form'].onsubmit = function() {
   console.log("labfetch: ", sessionStorage.getItem("lab_fetch"))
   console.log(information);
 
-  if(result_type == "positive_result") {
+  if(result_type == "positive_results") {
     $('#specimen_lab_results').modal({},'show');
   }
   else {
