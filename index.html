@@ -142,16 +142,23 @@
 			var username = this.username.value;
 			var password = this.password.value;
 
-			var success = function(user) {
-				// console.log(user);
-				user = user[0];
-				localStorage.setItem("user", JSON.stringify(user));
-				window.location.replace("sections/index.html");
-			}
-
 			var failed = function() {
+				console.warn("Failed authenticating");
 				document.getElementById("failureMessage").removeAttribute("hidden");
 			}
+
+			var success = function(user) {
+				// console.log(user);
+				if(typeof user == "undefined" || user == null || user.length < 1 ) failed();
+				else {
+					console.info("Success authenticating");
+					user = user[0];
+					localStorage.setItem("user", JSON.stringify(user));
+					window.location.replace("sections/index.html");
+				}
+			}
+
+
 			// transmission.auth("user", information, success, failed);
 			var information = {
 				type : "post",
