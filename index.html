@@ -34,7 +34,7 @@
 	if(localStorage.getItem("lang") != "en" && localStorage.getItem("lang") != "fr") {
 		localStorage.setItem("lang", "en");
 	}
-	if(localStorage.getItem("user") !== null)
+	if(typeof localStorage.getItem("user") != "undefined" && localStorage.getItem("user") !== null)
 		window.location.replace("sections/index.html");
 	// localStorage.setItem("lang", "en");
 </script>
