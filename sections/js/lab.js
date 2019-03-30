@@ -249,7 +249,7 @@ document.forms['smear_results_form'].onsubmit = function() {
       };
       ajax.open("GET", `${url}/sms/${encodeURIComponent(JSON.stringify(information))}`, true);
       ajax.setRequestHeader("Content-Type", "application/json");
-      // ajax.send(); //TODO: remove this comment
+      ajax.send(); //TODO: remove this comment
     }
     var failed = function() {}
 
