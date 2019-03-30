@@ -193,12 +193,12 @@ document.forms['smear_results_form'].onsubmit = function() {
       var result_xpert = "";
       var date_specimen_received = data.xpert_date;
 
-      if(data.smr_result_1 != "no_afb" || data.smr_result_1 != "not_done") {
+      if(data.smr_result_1 != "no_afb" && data.smr_result_1 != "not_done") {
         console.log("smr");
         result_smr = "AFB," + data.smr_result_1;
         date_specimen_received = data.smr_date;
       }
-      else if(data.smr_result_2 != "no_afb" || data.smr_result_1 != "not_done") {
+      else if(data.smr_result_2 != "no_afb" && data.smr_result_2 != "not_done") {
         console.log("no_afb");
         result_smr = "AFB," + data.smr_result_2;
         date_specimen_received = data.smr_date;
@@ -249,13 +249,13 @@ document.forms['smear_results_form'].onsubmit = function() {
       };
       ajax.open("GET", `${url}/sms/${encodeURIComponent(JSON.stringify(information))}`, true);
       ajax.setRequestHeader("Content-Type", "application/json");
-      ajax.send(); //TODO: remove this comment
+      // ajax.send(); //TODO: remove this comment
     }
     var failed = function() {}
 
     var information = {
       type : "get",
-      uri : `/users?community_id='${JSON.parse(sessionStorage.getItem("patient")).community_id}'&like=service_provider:`,
+      uri : `/users?community_id='${JSON.parse(localStorage.getItem("user")).community_id}'&like=service_provider:`,
       on_success : success,
       on_failed : failed
     }
@@ -275,9 +275,6 @@ document.forms['smear_results_form'].onsubmit = function() {
       break;
     }
     document.getElementById("animationWindow").innerHTML = msg;
-    // setTimeout(function(){
-    //   window.location.replace("index.html");
-    // }, 3000);
   };
 
   var failed = function() {}
@@ -295,8 +292,7 @@ document.forms['smear_results_form'].onsubmit = function() {
   }
 
   information['type'] = sessionStorage.getItem("lab_fetch") != "fetched" || sessionStorage.getItem("lab_fetch") == null ? "post" : "put";
-  console.log("labfetch: ", sessionStorage.getItem("lab_fetch"))
-  console.log(information);
+
 
   if(result_type == "positive_results") {
     $('#specimen_lab_results').modal({},'show');
