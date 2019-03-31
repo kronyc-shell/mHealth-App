@@ -205,7 +205,7 @@ document.forms['smear_results_form'].onsubmit = function() {
       }
       else if(data.smr_result_1 == "not_done" || data.smr_result_2 == "not_done") {
         console.log("not_done");
-        result_smr = "NOT Done";
+        result_smr = "AFB, not done";
       }
       else {
         console.log("no_afb_seen");
@@ -219,10 +219,10 @@ document.forms['smear_results_form'].onsubmit = function() {
       }
       else if(data.mtb_result == "trace") {
         console.log("trace");
-        result_xpert = "MTB TRACE";
+        result_xpert = "MTB trace";
       }
       else if(data.mtb_result == "not_detected") result_xpert = "MTB NOT DETECTED";
-      else result_xpert = "MTB NOT DONE";
+      else result_xpert = "Xpert, Not done";
 
       var result_type = sessionStorage.getItem("result_type");
 
@@ -232,7 +232,8 @@ document.forms['smear_results_form'].onsubmit = function() {
           var userObject = {
             "number" : users[i].phonenumber,
             "service_provider" : users[i].service_provider,
-            "message" : `${users[i].name} ${date_specimen_received} ${JSON.parse(sessionStorage.getItem("patient")).name} ${result_smr} ${data.lab_serial_number} ${result_xpert} ${data.unique_code}\n\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
+            "message" :
+            `${users[i].name} ${date_specimen_received}\n${JSON.parse(sessionStorage.getItem("patient")).name}\n${result_smr}\n${data.lab_serial_number}\n${result_xpert}\n${data.unique_code}\n\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
           }
           console.log(userObject.message);
           information.push(userObject);
@@ -249,7 +250,7 @@ document.forms['smear_results_form'].onsubmit = function() {
       };
       ajax.open("GET", `${url}/sms/${encodeURIComponent(JSON.stringify(information))}`, true);
       ajax.setRequestHeader("Content-Type", "application/json");
-      ajax.send(); //TODO: remove this comment
+      // ajax.send(); //TODO: remove this comment
     }
     var failed = function() {}
 
