@@ -195,12 +195,12 @@ document.forms['smear_results_form'].onsubmit = function() {
 
       if(data.smr_result_1 != "no_afb" && data.smr_result_1 != "not_done") {
         console.log("smr");
-        result_smr = "AFB," + data.smr_result_1;
+        result_smr = "AFB, " + data.smr_result_1;
         date_specimen_received = data.smr_date;
       }
       else if(data.smr_result_2 != "no_afb" && data.smr_result_2 != "not_done") {
         console.log("no_afb");
-        result_smr = "AFB," + data.smr_result_2;
+        result_smr = "AFB, " + data.smr_result_2;
         date_specimen_received = data.smr_date;
       }
       else if(data.smr_result_1 == "not_done" || data.smr_result_2 == "not_done") {
@@ -215,14 +215,14 @@ document.forms['smear_results_form'].onsubmit = function() {
       if(data.mtb_result == "detected") {
         console.log("detected");
         var rif_result = data.rif_result == "not_detected" ? "NOT DETECTED" : data.rif_result;
-        result_xpert = `MTB Detected (${data.mtb_grade.toUpperCase()}) RIF resistance ${rif_result.toUpperCase()}`
+        result_xpert = `Xpert, MTB detected (${data.mtb_grade.toUpperCase()}) RIF resistance ${rif_result=="detected" ? rif_result.toUpperCase() : rif_result}`
       }
       else if(data.mtb_result == "trace") {
         console.log("trace");
-        result_xpert = "MTB trace";
+        result_xpert = "Xpert, MTB Trace";
       }
-      else if(data.mtb_result == "not_detected") result_xpert = "MTB NOT DETECTED";
-      else result_xpert = "Xpert, Not done";
+      else if(data.mtb_result == "not_detected") result_xpert = "Xpert, MTB not detected";
+      else result_xpert = "Xpert, not done";
 
       var result_type = sessionStorage.getItem("result_type");
 
@@ -233,7 +233,7 @@ document.forms['smear_results_form'].onsubmit = function() {
             "number" : users[i].phonenumber,
             "service_provider" : users[i].service_provider,
             "message" :
-            `${users[i].name} ${date_specimen_received}\n${JSON.parse(sessionStorage.getItem("patient")).name}\n${result_smr}\n${data.lab_serial_number}\n${result_xpert}\n${data.unique_code}\n\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
+            `${users[i].name}\n${date_specimen_received}\n${JSON.parse(sessionStorage.getItem("patient")).name}\n${result_smr}\n${data.lab_serial_number}\n${result_xpert}\n${data.unique_code}\n\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
           }
           console.log(userObject.message);
           information.push(userObject);
