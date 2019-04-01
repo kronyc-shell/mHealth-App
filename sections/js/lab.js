@@ -209,13 +209,19 @@ document.forms['smear_results_form'].onsubmit = function() {
       }
       else {
         console.log("no_afb_seen");
-        result_smr = "No AFB seen";
+        result_smr = localStorage.getItem("lang") == "en" ? "No AFB seen" : "Aucun BAAR Vu"
         date_specimen_received = data.smr_date;
       }
       if(data.mtb_result == "detected") {
         console.log("detected");
-        var rif_result = data.rif_result == "not_detected" ? "NOT DETECTED" : data.rif_result;
-        result_xpert = `Xpert, MTB detected (${data.mtb_grade.toUpperCase()}) RIF resistance ${rif_result=="detected" ? rif_result.toUpperCase() : rif_result}`
+        var mtb_grade_fr = {
+          "high" : "Haute",
+          "medium" : "Moyen",
+          "low" : "Bas",
+          "very_low" : "Très bas"
+        };
+        var rif_result = data.rif_result == "not_detected" ? localStorage.getItem("lang") == "en" ? "NOT DETECTED" : "Non Détecté" : localStorage.getItem("lang") == "en" ? data.rif_result : "Détecté"
+        result_xpert = `Xpert, MTB ${localStorage.getItem("lang") == "en" ? 'DETECTED' : 'Détecté'} (${localStorage.getItem("lang") == "en" ? data.mtb_grade == "very_low" ? "VERY LOW" : data.mtb_grade.toUpperCase() : mtb_grade_fr[data.mtb_grade] }) RIF resistance ${rif_result=="detected" ? rif_result.toUpperCase() : rif_result}`
       }
       else if(data.mtb_result == "trace") {
         console.log("trace");
@@ -250,7 +256,7 @@ document.forms['smear_results_form'].onsubmit = function() {
       };
       ajax.open("GET", `${url}/sms/${encodeURIComponent(JSON.stringify(information))}`, true);
       ajax.setRequestHeader("Content-Type", "application/json");
-      ajax.send(); //TODO: remove this comment
+      // ajax.send(); //TODO: remove this comment
     }
     var failed = function() {}
 
