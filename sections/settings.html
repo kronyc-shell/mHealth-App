@@ -150,14 +150,16 @@
       var user = JSON.parse(localStorage.getItem("user"));
       var user_settings = document.forms['user_settings'];
       if(typeof user.notifications != "undefined") {
-        var notifications = JSON.parse(user.notifications);
+        var notifications = JSON.parse(JSON.parse(user.notifications));
+        // var notifications = user.notifications;
         for(var i in notifications) {
+          // console.log(JSON.parse(notifications))
           if(notifications[i] == "positive_results")
           document.getElementById("positive_results").checked = true;
 
           else if(notifications[i] == "negative_results")
           document.getElementById("negative_results").checked = true;
-          
+
           else if(notifications[i] == "errors")
           document.getElementById("error").checked = true;
 
