@@ -254,9 +254,9 @@ document.forms['smear_results_form'].onsubmit = function() {
           console.log("SMS sent");
         }
       };
-      ajax.open("GET", `${url}/sms/${encodeURIComponent(JSON.stringify(information))}`, true);
+      ajax.open("POST", `${url}/sms/`, true);
       ajax.setRequestHeader("Content-Type", "application/json");
-      ajax.send(); //TODO: remove this comment
+      ajax.send(JSON.stringify(information)); //TODO: remove this comment
     }
     var failed = function() {}
 

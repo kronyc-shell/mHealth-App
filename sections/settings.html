@@ -159,8 +159,6 @@
       var user = JSON.parse(localStorage.getItem("user"));
       var user_settings = document.forms['user_settings'];
       if(typeof user.notifications != "undefined") {
-        console.log(typeof user.notifications);
-        console.log(JSON.parse(user.notifications));
         var notifications = JSON.parse(user.notifications);
         // var notifications = user.notifications;
         for(var i in notifications) {
