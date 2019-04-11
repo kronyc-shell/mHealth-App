@@ -8,6 +8,8 @@ document.forms['user_settings'].onsubmit = function() {
   var service_provider = this.service_provider.value;
   var password = this.password.value;
   var re_password = this.re_password.value;
+  var region_id = this.region.value;
+  var community_id = this.sub_region.value;
 
   if(password != re_password) {
     document.getElementById("error_passwords_do_not_match").removeAttribute("hidden");
@@ -26,7 +28,9 @@ document.forms['user_settings'].onsubmit = function() {
     "phonenumber" : phonenumber,
     "password" : password,
     "email" : email,
-    "service_provider" : service_provider
+    "service_provider" : service_provider,
+    "region_id" : region_id,
+    "community_id" : community_id
   }
 
   var success = function() {
@@ -38,6 +42,8 @@ document.forms['user_settings'].onsubmit = function() {
     user.service_provider = data.service_provider;
     user.notifications = data.notifications;
     user.phonenumber = data.phonenumber;
+    user.region_id = data.region_id;
+    user.community_id = data.community_id;
     localStorage.setItem("user", JSON.stringify(user));
     window.location.reload(1);
   }
