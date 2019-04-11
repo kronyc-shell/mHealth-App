@@ -109,7 +109,7 @@
                     <option value="nextel">Nextell</option>
                   </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="change_community">
                   <label for="region" id="17" style="font-size: 14px">Community</label>
                   <select class="custom-select" id="region">
                     <!-- important information goes in here  -->
@@ -178,12 +178,17 @@
         }
       }
 
+      if(user.privilege == "worker") {
+        document.getElementById("change_community").setAttribute("hidden", "hidden");
+      }
       user_settings.username.value = user.username;
       user_settings.password.value = user.password;
       user_settings.re_password.value = user.password;
       user_settings.phonenumber.value = user.phonenumber;
       user_settings.email.value = user.email;
       user_settings.service_provider.value = user.service_provider.toLowerCase();
+      user_settings.region.value = user.region_id;
+      user_settings.sub_region.value = user.community_id;
 
       function disable_other_notification_options() {
         if(document.getElementById("all").checked) {
