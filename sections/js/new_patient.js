@@ -58,8 +58,10 @@ $(document).ready(function() {
       tb_treatment_history['tb_treatment_history'] =
       extract_radio(this.elements.tb_treatment_history);
 
-      tb_treatment_history["contact"] =
-      this.contact.value;
+      if(this.contact.checked == true) {
+        tb_treatment_history["contact"] =
+        this.contact.value;
+      }
 
       tb_treatment_history["tb_his_other"] =
       this.tb_his_other.value;

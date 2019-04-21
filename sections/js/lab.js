@@ -186,83 +186,95 @@ document.forms['smear_results_form'].onsubmit = function() {
     var data = JSON.parse(sessionStorage.getItem("data"));
 
     var success = function(users) {
-      console.log("Sending users sms success");
-      var information = [];
+      var success = function(community) {
+        community = community[0];
+        console.log("Sending users sms success");
+        var information = [];
 
-      var result_smr = "";
-      var result_xpert = "";
-      var date_specimen_received = data.xpert_date;
+        var result_smr = "";
+        var result_xpert = "";
+        var date_specimen_received = data.xpert_date;
 
-      if(data.smr_result_1 != "no_afb" && data.smr_result_1 != "not_done") {
-        console.log("smr");
-        result_smr = "AFB, " + data.smr_result_1;
-        date_specimen_received = data.smr_date;
-      }
-      else if(data.smr_result_2 != "no_afb" && data.smr_result_2 != "not_done") {
-        console.log("no_afb");
-        result_smr = "AFB, " + data.smr_result_2;
-        date_specimen_received = data.smr_date;
-      }
-      else if(data.smr_result_1 == "not_done" || data.smr_result_2 == "not_done") {
-        console.log("not_done");
-        result_smr = "AFB, not done";
-      }
-      else {
-        console.log("no_afb_seen");
-        result_smr = localStorage.getItem("lang") == "en" ? "No AFB seen" : "Aucun BAAR Vu"
-        date_specimen_received = data.smr_date;
-      }
-      if(data.mtb_result == "detected") {
-        console.log("detected");
-        var mtb_grade_fr = {
-          "high" : "Haute",
-          "medium" : "Moyen",
-          "low" : "Bas",
-          "very_low" : "Très bas"
-        };
-        var rif_result = data.rif_result == "not_detected" ? localStorage.getItem("lang") == "en" ? "NOT DETECTED" : "Non Détecté" : localStorage.getItem("lang") == "en" ? data.rif_result : "Détecté"
-        result_xpert = `Xpert, MTB ${localStorage.getItem("lang") == "en" ? 'DETECTED' : 'Détecté'} (${localStorage.getItem("lang") == "en" ? data.mtb_grade == "very_low" ? "VERY LOW" : data.mtb_grade.toUpperCase() : mtb_grade_fr[data.mtb_grade] }) RIF resistance ${rif_result=="detected" ? rif_result.toUpperCase() : rif_result}`
-      }
-      else if(data.mtb_result == "trace") {
-        console.log("trace");
-        result_xpert = "Xpert, MTB Trace";
-      }
-      else if(data.mtb_result == "not_detected") result_xpert = "Xpert, MTB not detected";
-      else result_xpert = "Xpert, not done";
+        if(data.smr_result_1 != "no_afb" && data.smr_result_1 != "not_done") {
+          console.log("smr");
+          result_smr = "AFB, " + data.smr_result_1;
+          date_specimen_received = data.smr_date;
+        }
+        else if(data.smr_result_2 != "no_afb" && data.smr_result_2 != "not_done") {
+          console.log("no_afb");
+          result_smr = "AFB, " + data.smr_result_2;
+          date_specimen_received = data.smr_date;
+        }
+        else if(data.smr_result_1 == "not_done" || data.smr_result_2 == "not_done") {
+          console.log("not_done");
+          result_smr = "AFB, not done";
+        }
+        else {
+          console.log("no_afb_seen");
+          result_smr = localStorage.getItem("lang") == "en" ? "No AFB seen" : "Aucun BAAR Vu"
+          date_specimen_received = data.smr_date;
+        }
+        if(data.mtb_result == "detected") {
+          console.log("detected");
+          var mtb_grade_fr = {
+            "high" : "Haute",
+            "medium" : "Moyen",
+            "low" : "Bas",
+            "very_low" : "Très bas"
+          };
+          var rif_result = data.rif_result == "not_detected" ? localStorage.getItem("lang") == "en" ? "NOT DETECTED" : "Non Détecté" : localStorage.getItem("lang") == "en" ? data.rif_result : "Détecté"
+          result_xpert = `Xpert, MTB ${localStorage.getItem("lang") == "en" ? 'DETECTED' : 'Détecté'} (${localStorage.getItem("lang") == "en" ? data.mtb_grade == "very_low" ? "VERY LOW" : data.mtb_grade.toUpperCase() : mtb_grade_fr[data.mtb_grade] }) RIF resistance ${rif_result=="detected" ? rif_result.toUpperCase() : rif_result}`
+        }
+        else if(data.mtb_result == "trace") {
+          console.log("trace");
+          result_xpert = "Xpert, MTB Trace";
+        }
+        else if(data.mtb_result == "not_detected") result_xpert = "Xpert, MTB not detected";
+        else result_xpert = "Xpert, not done";
 
-      var result_type = sessionStorage.getItem("result_type");
+        var result_type = sessionStorage.getItem("result_type");
 
-      for(var i in users) {
-        // console.log(users[i])
-        if(users[i].notifications.includes(result_type) || users[i].notifications.includes("all")) {
-          var userObject = {
-            "number" : users[i].phonenumber,
-            "service_provider" : users[i].service_provider,
-            "message" :
-            `${users[i].name}\n${date_specimen_received}\n${JSON.parse(sessionStorage.getItem("patient")).name}\n${result_smr}\n${data.lab_serial_number}\n${result_xpert}\n${data.unique_code}\n\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
+        for(var i in users) {
+          // console.log(users[i])
+          if(users[i].notifications.includes(result_type) || users[i].notifications.includes("all")) {
+            var userObject = {
+              "number" : users[i].phonenumber,
+              "service_provider" : users[i].service_provider,
+              "message" :
+              `${users[i].name}\n${date_specimen_received}\n${JSON.parse(sessionStorage.getItem("patient")).id}\n${JSON.parse(sessionStorage.getItem("patient")).name}\n${community.region_name}, ${community.shortcode}\n${result_smr}\n${data.lab_serial_number}\n${result_xpert}\n${data.unique_code}\n\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
+            }
+            console.log(userObject.message);
+            information.push(userObject);
           }
-          console.log(userObject.message);
-          information.push(userObject);
         }
+        console.log(information);
+        var ajax = new XMLHttpRequest;
+        var url = "http://localhost:8080";
+        // var url = "http://tbappbamenda.com:8080";
+        ajax.onreadystatechange = function() {
+          if(this.readyState == 4 && this.status == 200) {
+            console.log("SMS sent");
+          }
+        };
+        ajax.open("POST", `${url}/sms/`, true);
+        ajax.setRequestHeader("Content-Type", "application/json");
+        ajax.send(JSON.stringify(information)); //TODO: remove this comment
       }
-      console.log(information);
-      var ajax = new XMLHttpRequest;
-      // var url = "http://localhost:8080";
-      var url = "http://tbappbamenda.com:8080";
-      ajax.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-          console.log("SMS sent");
-        }
-      };
-      ajax.open("POST", `${url}/sms/`, true);
-      ajax.setRequestHeader("Content-Type", "application/json");
-      ajax.send(JSON.stringify(information)); //TODO: remove this comment
+      var information = {
+        type : "get",
+        uri : `/community?Community.id='${JSON.parse(localStorage.getItem("user")).community_id}'&Regions.id=Community.region_id`,
+        on_success : success,
+        on_failed : failed
+      }
+      transmission_new(information);
     }
     var failed = function() {}
 
+    var patient = JSON.parse(sessionStorage.getItem("patient"))
+
     var information = {
       type : "get",
-      uri : `/users?community_id='${JSON.parse(localStorage.getItem("user")).community_id}'&like=service_provider:`,
+      uri : `/users?community_id='${JSON.parse(localStorage.getItem("user")).community_id}','${patient.community_id}'&like=service_provider:`,
       on_success : success,
       on_failed : failed
     }
