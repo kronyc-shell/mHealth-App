@@ -249,8 +249,8 @@ document.forms['smear_results_form'].onsubmit = function() {
         }
         console.log(information);
         var ajax = new XMLHttpRequest;
-        var url = "http://localhost:8080";
-        // var url = "http://tbappbamenda.com:8080";
+        // var url = "http://localhost:8080";
+        var url = "http://tbappbamenda.com:8080";
         ajax.onreadystatechange = function() {
           if(this.readyState == 4 && this.status == 200) {
             console.log("SMS sent");

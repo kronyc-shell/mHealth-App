@@ -226,10 +226,11 @@
 
           var information = {
             type : "get",
-            uri : `/patients?like=name:${query}&sort=id:asc`,
+            uri : `/patients?like=name:${query}&sort=id:asc&region_id='${JSON.parse(localStorage.getItem("user")).region_id}'`,
             on_success : success,
             on_failed : failed
           }
+          console.log(information);
           transmission_new(information);
         });
 
