@@ -60,10 +60,9 @@
             </div>
             <div class="form-group">
               <label for="service_provider" style="font-size: 14px" id="5">Service Provider</label>
-              <select class="custom-select" id="service_provider">
-                <option></option>
+              <select class="custom-select" id="service_provider" required>
                 <option value="mtn">MTN</option>
-                <option value="orange">Orange</option>
+                <option value="orange" selected>Orange</option>
                 <option value="nextel">Nextell</option>
               </select>
             </div>
@@ -183,7 +182,7 @@
           var failed = function() {}
           var information = {
             type : "get",
-            uri : `/community?region_id='${id}'`,
+            uri : `/community?region_id='${id}'&sort=name:asc`,
             on_success : success,
             on_failed : failed
           }
@@ -207,13 +206,13 @@
       };
       var information = {
         type : "get",
-        uri : `/community?region_id='${JSON.parse(localStorage.getItem("user")).region_id}'`,
+        uri : `/community?region_id='${JSON.parse(localStorage.getItem("user")).region_id}'&sort=name:asc`,
         on_success : communities_success,
         on_failed : failed
       }
       var information2 = {
         type : "get",
-        uri : `/regions`,
+        uri : `/regions?sort=name:asc`,
         on_success : regions_success,
         on_failed : failed
       }

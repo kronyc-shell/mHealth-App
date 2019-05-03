@@ -562,7 +562,7 @@
           // transmission.fetch("region", success, failed, "communities", id);
           var information = {
             type : "get",
-            uri : `/community?region_id='${id}'`,
+            uri : `/community?region_id='${id}'&name:asc`,
             on_success : success,
             on_failed : failed
           }

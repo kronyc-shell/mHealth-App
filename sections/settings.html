@@ -231,7 +231,7 @@
           // transmission.fetch("region", success, failed, "communities", id);
           var information = {
             type : "get",
-            uri : `/community?region_id='${id}'`,
+            uri : `/community?region_id='${id}'&sort=name:asc`,
             on_success : success,
             on_failed : failed
           }
@@ -255,14 +255,14 @@
 
       var information = {
         type : "get",
-        uri : `/community?region_id='${JSON.parse(localStorage.getItem("user")).region_id}'`,
+        uri : `/community?region_id='${JSON.parse(localStorage.getItem("user")).region_id}'&sort=name:asc`,
         on_success : communities_success,
         on_failed : failed
       }
 
       var information2 = {
         type : "get",
-        uri : `/regions`,
+        uri : `/regions?sort=name:asc`,
         on_success : regions_success,
         on_failed : failed
       }
