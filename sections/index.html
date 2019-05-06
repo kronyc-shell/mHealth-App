@@ -203,18 +203,8 @@
           anim.setSpeed(2.6);
 
           var query = this.search_query.value
-          var success = function(patients) {
-            document.getElementById("animationWindow").innerHTML = "";
-            var ch = document.getElementById("main_card_header");
-            ch.removeAttribute("hidden");
-            ch.innerHTML = localStorage.getItem("lang") == "en" ?  "Search Results - " + query : "Résultats de la recherche - " + query;
 
-            var pc = new PatientCard;
-            for(var i in patients) {
-              pc.patient = patients[i];
-              dashboard.addPatient(pc);
-            }
-          };
+          // console.log("Search type says: ", /^\d+$/.test(query))
 
           var failure = function() {
             document.getElementById("animationWindow").innerHTML = "";
@@ -224,11 +214,32 @@
             localStorage.getItem("lang") == "en" ? dashboard.log("Nothing found!", "<br><a style='font-size: 12px' href='' onclick='window.location.reload(1)'>Click here to refresh</a>") : dashboard.log("Rien n'a été trouvé!", "<br><a style='font-size: 12px' href='' onclick='window.location.reload(1)'>Cliquez ici pour actualiser</a>");
           };
 
+
+          var success = function(patients) {
+            if(patients.length < 1) failure();
+            else {
+              document.getElementById("animationWindow").innerHTML = "";
+              var ch = document.getElementById("main_card_header");
+              ch.removeAttribute("hidden");
+              ch.innerHTML = localStorage.getItem("lang") == "en" ?  "Search Results - " + query : "Résultats de la recherche - " + query;
+
+              var pc = new PatientCard;
+              for(var i in patients) {
+                pc.patient = patients[i];
+                dashboard.addPatient(pc);
+              }
+            }
+          };
+
           var information = {
             type : "get",
             uri : `/patients?like=name:${query}&sort=id:asc&region_id='${JSON.parse(localStorage.getItem("user")).region_id}'`,
             on_success : success,
             on_failed : failed
+          }
+
+          if(/^\d+$/.test(query)) {
+            information.uri = `/patients?like=telephone1:${query}&sort=id:asc&region_id='${JSON.parse(localStorage.getItem("user")).region_id}'&telephone2='',${query}`
           }
           console.log(information);
           transmission_new(information);
