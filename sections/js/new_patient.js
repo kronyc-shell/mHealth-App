@@ -160,48 +160,67 @@ $(document).ready(function() {
     }
   } else {
     var success = function(patient) {
-      patient = patient[0]
-      var form = document.forms["request_form"];
+      var success = function(community) {
+        patient = patient[0]
+        community = community[0]
 
-      form.id.value = JSON.parse(sessionStorage.getItem("patient")).id;
-      form.id.setAttribute("disabled", "disabled");
+        var form = document.forms["request_form"];
 
-      form.name.value = patient.name;
-      form.name.setAttribute("disabled", "disabled");
+        form.id.value = JSON.parse(sessionStorage.getItem("patient")).id;
+        form.id.setAttribute("disabled", "disabled");
 
-      form.age.value = patient.age;
-      form.age.setAttribute("disabled", "disabled");
+        form.name.value = patient.name;
+        form.name.setAttribute("disabled", "disabled");
 
-      form.gender.value = patient.gender;
-      form.gender.setAttribute("disabled", "disabled");
+        form.age.value = patient.age;
+        form.age.setAttribute("disabled", "disabled");
 
-      form.date_of_test_request.valueAsDate = new Date(patient.date_of_test_request);
-      form.date_of_test_request.setAttribute("disabled", "disabled");
+        form.gender.value = patient.gender;
+        form.gender.setAttribute("disabled", "disabled");
 
-      form.address.value = patient.address;
-      form.address.setAttribute("disabled", "disabled");
+        form.date_of_test_request.valueAsDate = new Date(patient.date_of_test_request);
+        form.date_of_test_request.setAttribute("disabled", "disabled");
 
-      form.telephone.value = patient.telephone1;
-      form.telephone.setAttribute("disabled", "disabled");
+        form.address.value = patient.address;
+        form.address.setAttribute("disabled", "disabled");
 
-      form.telephone_2.value = patient.telephone2;
-      form.telephone_2.setAttribute("disabled", "disabled");
+        form.telephone.value = patient.telephone1;
+        form.telephone.setAttribute("disabled", "disabled");
 
-      form.art.value = patient.art_code;
-      form.art.setAttribute("disabled", "disabled");
+        form.telephone_2.value = patient.telephone2;
+        form.telephone_2.setAttribute("disabled", "disabled");
 
-      form.status.value = patient.ward_bed_number;
-      form.status.setAttribute("disabled", "disabled");
+        form.art.value = patient.art_code;
+        form.art.setAttribute("disabled", "disabled");
 
-      form.symptoms.value = JSON.parse(patient.symptoms);
-      form.symptoms.setAttribute("disabled", "disabled");
+        form.status.value = patient.ward_bed_number;
+        form.status.setAttribute("disabled", "disabled");
 
-      form.reason_for_test.value = patient.reason_for_test;
-      form.reason_for_test.setAttribute("disabled", "disabled");
+        form.symptoms.value = JSON.parse(patient.symptoms);
+        form.symptoms.setAttribute("disabled", "disabled");
 
-      form.patient_category.value = patient.patient_category;
-      form.patient_category.setAttribute("disabled", "disabled");
+        form.reason_for_test.value = patient.reason_for_test;
+        form.reason_for_test.setAttribute("disabled", "disabled");
 
+        form.patient_category.value = patient.patient_category;
+        form.patient_category.setAttribute("disabled", "disabled");
+
+        form.region.value = community.region_name;
+        form.region.setAttribute("disabled", "disabled")
+
+        form.site.value = community.name;
+        form.site.setAttribute("disabled", "disabled")
+      }
+
+      var failed = function() {}
+
+      var information = {
+        type : 'get',
+        uri : `/community?Community.id='${JSON.parse(sessionStorage.getItem("patient")).community_id}'&Regions.id=region_id`,
+        on_success : success,
+        on_failed : failed
+      }
+      transmission_new(information);
     }
     var failed = function() {}
     var patient_id = JSON.parse(sessionStorage.getItem("patient")).id;
