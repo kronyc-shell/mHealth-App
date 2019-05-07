@@ -291,6 +291,12 @@
                       Out Patient
                     </label>
                   </div>
+                  <div class="custom-control custom-checkbox">
+                    <input name="patient_category" onclick="disable_pc(this)" class="custom-control-input" type="checkbox" value="opd" id="anc">
+                    <label class="custom-control-label" for="anc" id="62">
+                      ANC
+                    </label>
+                  </div>
                   <script>
                   document.getElementById("hos").onchange = function() {
                     if(this.checked == true)
@@ -520,7 +526,8 @@
         "Demandeur", "Nom d'utilisateur", "Numéro de téléphone", "pas mon compte",
         "Un autre demandeur", "Bon travail! <br>Tout revoir et cliquer sur enregistrés", "Enregistrer!", "prénom", "Téléphone", "Autres", "Communauté", "Date demandée", "Annuler",
         "Inconnu", "Code unique", "Statut", "Ambulatoire", "Quartier - Lit", "Quartier - Lit nombre",
-        "Date de la demande d'essai"
+        "Date de la demande d'essai",
+        "CPN"
       ];
     </script>
 
