@@ -42,7 +42,19 @@ document.forms['create_user_form'].onsubmit = function() {
     console.log("user created successfully");
     console.log("ID| ", user_id);
     sessionStorage.removeItem("user_new_information");
-    window.location.reload(1);
+    switch(localStorage.getItem("lang")) {
+      case "fr":
+      msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Bien joué!</h5><br><br></div>";
+      break;
+
+      case "en":
+      msg = "<div class='jumbotron text-center' style='background-color:#09d033; color: white; font-weight: 100'><h5>Well Done!</h5><br><br></div>";
+      break;
+    }
+    document.getElementById("animationWindow").innerHTML = msg;
+    setTimeout(function() {
+      window.location.reload(1);
+    }, 3000);
   }
 
   var failed = function(data) {
