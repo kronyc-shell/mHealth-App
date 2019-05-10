@@ -169,9 +169,9 @@ document.forms['smear_results_form'].onsubmit = function() {
   var information = [];
   var result_type;
   if(
-    (data.smr_result_1 == "no_afb" || data.smr_result_1 == "not_done")
+    (data.smr_result_1 == "no_afb_seen" || data.smr_result_1 == "not_done")
     &&
-    (data.smr_result_2 == "no_afb" || data.smr_result_2 == "not_done")
+    (data.smr_result_2 == "no_afb_seen" || data.smr_result_2 == "not_done")
     &&
     (data.mtb_result != "detected" && data.mtb_result != "trace")
     &&
@@ -195,13 +195,13 @@ document.forms['smear_results_form'].onsubmit = function() {
         var result_xpert = "";
         var date_specimen_received = data.xpert_date;
 
-        if(data.smr_result_1 != "no_afb" && data.smr_result_1 != "not_done") {
+        if(data.smr_result_1 != "no_afb_seen" && data.smr_result_1 != "not_done") {
           console.log("smr");
           result_smr = "AFB, " + data.smr_result_1;
           date_specimen_received = data.smr_date;
         }
-        else if(data.smr_result_2 != "no_afb" && data.smr_result_2 != "not_done") {
-          console.log("no_afb");
+        else if(data.smr_result_2 != "no_afb_seen" && data.smr_result_2 != "not_done") {
+          console.log("no_afb_seen");
           result_smr = "AFB, " + data.smr_result_2;
           date_specimen_received = data.smr_date;
         }
