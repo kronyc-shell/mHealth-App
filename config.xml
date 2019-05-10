@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!-- <allow-intent href="*" /> -->
-<widget id="com.afkanerd.tbbamenda" version="2.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="https://phonegap.com/ns/1.0">
+<widget id="com.afkanerd.tbbamenda" version="2.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="https://phonegap.com/ns/1.0">
 	<name>CHECk TB CM</name>
 	<description>
 		You've got a TB Patient, register and run to the lab now!
