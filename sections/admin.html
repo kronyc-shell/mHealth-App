@@ -72,11 +72,11 @@
             </div>
             <div class="form-group">
               <label for="password" id="7">Password</label>
-              <input required type="password" class="form-control" id="password">
+              <input required pattern='.{8,}' type="password" class="form-control" id="password" title="8 characters minimum">
             </div>
             <div class="form-group">
               <label for="re_password" id="8">Re-Enter password</label>
-              <input required type="password" class="form-control" id="re_password">
+              <input required type="password" pattern='.{8,}' class="form-control" id="re_password" title="8 characters minimum">
             </div>
             <div class="form-group">
               <label for="region" id="9">Site <small>site of user</small></label>
