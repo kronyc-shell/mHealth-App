@@ -96,6 +96,42 @@
           </div>
           <br><br>
         </main>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="reset_password_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="10">Security Check - Improve Your Password<br>
+                  <small style="color:grey">A minimum of 8 alphanumeric characters is required.<br>Your new password should be used for logging</small>
+                </h5>
+              </div>
+              <div class="modal-body">
+                <div hidden id="error_passwords_do_not_match" class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong id="15">Check your password</strong> <span id="16">The passwords you entered below do not match! Please verify and try again.</span>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form id="password_reset">
+                  <div class="form-group">
+                    <label for="password" id="11">Password</label>
+                    <input required pattern='.{8,}' type="password" class="form-control" id="password" title="8 characters minimum">
+                  </div>
+                  <div class="form-group">
+                    <label for="password" id="12">Re-enter Password</label>
+                    <input required minlength="8" type="password" class="form-control" id="re_password" title="8 characters minimum">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="logout()" id="13">Exit</button>
+                <button type="submit" class="btn btn-primary" form="password_reset" id="14">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -119,11 +155,69 @@
         "Utiliser hors ligne",
         "Nouveau patient",
         "Pas d'enregistrements",
-        "Paramètres du compte"
+        "Paramètres du compte",
+        "Administration",
+        "Vérification de sécurité - Améliorez votre mot de passe<br><small style='color:grey'>Un minimum de 8 caractères alphanumériques est requis.<br>Votre nouveau mot de passe doit être utilisé pour l'exploitation forestière</small>",
+        "Mot de passe",
+        "Retaper le mot de passe",
+        "Sortie",
+        "Enregistrer",
+        "Vérifiez votre mot de passe",
+        "Les mots de passe que vous avez entrés ci-dessous ne correspondent pas! Veuillez vérifier et réessayer"
       ];
     </script>
 
     <script>
+
+      //update password column
+      document.forms['password_reset'].onsubmit = function() {
+        console.log("reseting password");
+
+        var password = this.password.value;
+        var re_password = this.re_password.value;
+
+        if(password != re_password ) {
+          document.getElementById("error_passwords_do_not_match").removeAttribute("hidden")
+          return false;
+        }
+
+        if(password.length < 8 || re_password.length < 8) {
+          //do something awful
+        }
+
+        document.getElementById("patientDisplay").innerHTML = "";
+        // document.getElementById("patientCard").innerHTML = "";
+
+        $('#reset_password_modal').modal('hide');
+
+        var anim = bodymovin.loadAnimation(animData);
+        anim.setSpeed(2.6);
+
+        var data = {
+          "password" : password
+        }
+
+        var success = function() {
+          console.log("Reloaded quite well");
+          localStorage.setItem("8lpwd", "true");
+          window.location.reload(1);
+        }
+
+        var failed = function() {}
+
+        var user_id = JSON.parse(localStorage.getItem("user")).id;
+        var information = {
+          type : "put",
+          uri : `/users/${user_id}`,
+          body : data,
+          on_success : success,
+          on_failed : failed
+        }
+
+        transmission_new(information);
+
+        return false;
+      }
 
       function logout() {
         sessionStorage.removeItem("userId");
@@ -142,6 +236,14 @@
       $(document).ready(function() {
         // Default on load behaviour
         $('body').bootstrapMaterialDesign();
+
+        if(localStorage.getItem("8lpwd") != "true") {
+          $('#reset_password_modal').modal({
+            backdrop: 'static'
+          })
+          $('#reset_password_modal').modal('show')
+        }
+
         var lang = localStorage.getItem("lang");
 
         //TODO: explain why this code later
