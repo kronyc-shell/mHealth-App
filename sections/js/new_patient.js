@@ -31,7 +31,8 @@ $(document).ready(function() {
       var patient_category =
       extract_checkbox(this.elements.patient_category);
 
-      patient_category.push({"other":this.pc_other.value});
+      if(this.pc_other.value.length > 0) patient_category.push({"other":this.pc_other.value});
+      
       if(art_code == "") {
         art_code =
         extract_radio(this.elements.has_art);
