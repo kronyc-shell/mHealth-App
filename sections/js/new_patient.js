@@ -31,8 +31,10 @@ $(document).ready(function() {
       var patient_category =
       extract_checkbox(this.elements.patient_category);
 
+      console.log(patient_category);
+
       if(this.pc_other.value.length > 0) patient_category.push({"other":this.pc_other.value});
-      
+
       if(art_code == "") {
         art_code =
         extract_radio(this.elements.has_art);
@@ -241,4 +243,6 @@ $(document).ready(function() {
 function disable_pc(id) {
   if(id.checked)
     document.getElementById("pc_other").removeAttribute("required");
+  else
+    document.getElementById("pc_other").setAttribute("required", "required");
 }

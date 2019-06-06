@@ -54,7 +54,14 @@
                     <label for="specimen_date">Date</label>
                     <input name="specimen_date" required type="date" id="date" class="form-control">
                     <script>
-                      document.getElementById('date').valueAsDate = new Date();
+                      var date = document.getElementById("date");
+                      var dd = new Date();
+                      var Month = dd.getMonth() < 10 ? '0' + dd.getMonth() : dd.getMonth();
+                      var day = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate();
+                      date.setAttribute("max", `${dd.getFullYear()}-${Month}-${day}`);
+                      // console.log("Max = " , date.getAttribute("max"))
+                      date.valueAsDate = new Date();
+
                     </script>
                   </div>
 

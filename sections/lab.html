@@ -103,7 +103,16 @@
               <div class="form-group">
                 <label for="date_specimen_received" id="0">Date specimen received</label>
                 <input required type="date" name="date_specimen_received" class="form-control" id="date_specimen_received" value="">
-                  <script>document.getElementById("date_specimen_received").valueAsDate = new Date();</script>
+                <script>
+                  var date = document.getElementById("date_specimen_received");
+                  var dd = new Date();
+                  var Month = dd.getMonth() < 10 ? '0' + dd.getMonth() : dd.getMonth();
+                  var day = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate();
+                  date.setAttribute("max", `${dd.getFullYear()}-${Month}-${day}`);
+                  // console.log("Max = " , date.getAttribute("max"))
+                  date.valueAsDate = new Date();
+
+                </script>
                 </input>
               </div>
               <div class="form-group">
@@ -178,7 +187,14 @@
                     <input required type="date" class="form-control" id="date1" value="">
                   </div>
                   <script>
-                    document.getElementById("date1").value = sessionStorage.getItem("_todays_date");
+                    var date = document.getElementById("date1");
+                    var dd = new Date();
+                    var Month = dd.getMonth() < 10 ? '0' + dd.getMonth() : dd.getMonth();
+                    var day = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate();
+                    date.setAttribute("max", `${dd.getFullYear()}-${Month}-${day}`);
+                    // console.log("Max = " , date.getAttribute("max"))
+                    date.valueAsDate = new Date();
+
                   </script>
                 </div>
               </div>
@@ -299,7 +315,14 @@
                     <label for="mtb_date">Date</label>
                     <input type="date" required class="form-control" id="mtb_date">
                     <script>
-                      document.getElementById('mtb_date').valueAsDate = new Date();
+                      var date = document.getElementById("mtb_date");
+                      var dd = new Date();
+                      var Month = dd.getMonth() < 10 ? '0' + dd.getMonth() : dd.getMonth();
+                      var day = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate();
+                      date.setAttribute("max", `${dd.getFullYear()}-${Month}-${day}`);
+                      // console.log("Max = " , date.getAttribute("max"))
+                      date.valueAsDate = new Date();
+
                     </script>
                   </div><br>
                 </form>

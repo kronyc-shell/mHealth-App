@@ -45,31 +45,31 @@
             </div>
             <div class="col-12">
               <div id="checkboxes">
-                <div class="custom-control custom-checkbox">
-                  <input name="notifications" class="custom-control-input" type="checkbox" id="positive_results" value="positive_results">
+                <div class="custom-control custom-radio">
+                  <input name="notifications" class="custom-control-input" type="radio" id="positive_results" value="positive_results" onclick="disable_other_notification_options()">
                   <label class="custom-control-label" for="positive_results" id="3">
                     Positive Results
                   </label>
                 </div>
 
-                <div class="custom-control custom-checkbox">
-                  <input name="notifications" class="custom-control-input" type="checkbox" id="negative_results" value="negative_results">
+                <div hidden class="custom-control custom-radio">
+                  <input disabled name="notifications" class="custom-control-input" type="radio" id="negative_results" value="negative_results">
                   <label class="custom-control-label" for="negative_results" id="4">
                     Negative Results
                   </label>
                 </div>
 
-                <div class="custom-control custom-checkbox">
-                  <input name="notifications" class="custom-control-input" type="checkbox" id="error" value="errors">
+                <div hidden class="custom-control custom-checkbox">
+                  <input disabled name="notifications" class="custom-control-input" type="checkbox" id="error" value="errors">
                   <label class="custom-control-label" for="error" id="5">
                     Errors
                   </label>
                 </div>
 
-                <div class="custom-control custom-checkbox">
-                  <input name="notifications" onclick="disable_other_notification_options()" class="custom-control-input" type="checkbox" id="all" value="all">
+                <div class="custom-control custom-radio">
+                  <input name="notifications" class="custom-control-input" type="radio" id="all" value="all">
                   <label class="custom-control-label" for="all" id="6">
-                    All
+                    Positive/Negative Results
                   </label>
                 </div>
               </div>
@@ -135,7 +135,7 @@
       "Résultats positifs",
       "Résultats négatifs",
       "les erreurs",
-      "Tous",
+      "Résultats positifs/négatifs",
       "Compte mis à jour",
       "Nom d'utilisateur",
       "Mot de passe",
@@ -167,10 +167,10 @@
           document.getElementById("positive_results").checked = true;
 
           else if(notifications[i] == "negative_results")
-          document.getElementById("negative_results").checked = true;
+          document.getElementById("all").checked = true;
 
           else if(notifications[i] == "errors")
-          document.getElementById("error").checked = true;
+          document.getElementById("all").checked = true;
 
           else if(notifications[i] == "all")
           document.getElementById("all").checked = true;
@@ -189,14 +189,6 @@
       user_settings.service_provider.value = user.service_provider.toLowerCase();
       user_settings.region.value = user.region_id;
       user_settings.sub_region.value = user.community_id;
-
-      function disable_other_notification_options() {
-        if(document.getElementById("all").checked) {
-          document.getElementById("positive_results").checked = false;
-          document.getElementById("negative_results").checked = false;
-          document.getElementById("error").checked = false;
-        }
-      }
 
 
       translate("settings");

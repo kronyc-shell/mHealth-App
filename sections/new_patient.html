@@ -72,7 +72,14 @@
                   <label for="date_of_test_request" id="61">Date of Test Request</label>
                   <input required type="date" class="form-control" id='date_of_test_request' required>
                   <script>
-                  document.getElementById("date_of_test_request").valueAsDate = new Date();
+                    var date = document.getElementById("date_of_test_request");
+                    var dd = new Date();
+                    var Month = dd.getMonth() < 10 ? '0' + dd.getMonth() : dd.getMonth();
+                    var day = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate();
+                    date.setAttribute("max", `${dd.getFullYear()}-${Month}-${day}`);
+                    // console.log("Max = " , date.getAttribute("max"))
+                    date.valueAsDate = new Date();
+
                   </script>
                 </div>
 
