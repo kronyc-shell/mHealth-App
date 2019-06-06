@@ -56,7 +56,7 @@
                     <script>
                       var date = document.getElementById("date");
                       var dd = new Date();
-                      var Month = dd.getMonth() < 10 ? '0' + dd.getMonth() : dd.getMonth();
+                      var Month = dd.getMonth() < 10 ? '0' + (dd.getMonth()+1) : dd.getMonth()+1;
                       var day = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate();
                       date.setAttribute("max", `${dd.getFullYear()}-${Month}-${day}`);
                       // console.log("Max = " , date.getAttribute("max"))
