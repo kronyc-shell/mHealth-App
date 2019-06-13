@@ -169,6 +169,11 @@ document.forms['smear_results_form'].onsubmit = function() {
   var information = [];
   var result_type;
   if(
+    (data.smr_result_1 == "not_done" && data.smr_result_2 == "not_done")
+    &&
+    (data.mtb_result == "not_done" && data.rif_result == "not_done")
+  ) result_type = "invalid";
+  else if(
     (data.smr_result_1 == "no_afb_seen" || data.smr_result_1 == "not_done")
     &&
     (data.smr_result_2 == "no_afb_seen" || data.smr_result_2 == "not_done")
