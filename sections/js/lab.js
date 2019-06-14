@@ -241,7 +241,7 @@ document.forms['smear_results_form'].onsubmit = function() {
 
         for(var i in users) {
           // console.log(users[i])
-          if(users[i].notifications.includes(result_type) || users[i].notifications.includes("all")) {
+          if(users[i].notifications.includes(result_type) || users[i].notifications.includes("all") && result_type != "invalid") {
             var userObject = {
               "number" : users[i].phonenumber,
               "service_provider" : users[i].service_provider,
