@@ -246,7 +246,7 @@ document.forms['smear_results_form'].onsubmit = function() {
               "number" : users[i].phonenumber,
               "service_provider" : users[i].service_provider,
               "message" :
-              `${users[i].name}\n${date_specimen_received}\n${JSON.parse(sessionStorage.getItem("patient")).id}\n${JSON.parse(sessionStorage.getItem("patient")).name}\n${community.region_name}, ${community.shortcode}\n${result_smr}\n${data.lab_serial_number}\n${result_xpert}\n${data.unique_code}\n\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
+              `${users[i].name}\n${date_specimen_received}\n${JSON.parse(sessionStorage.getItem("patient")).id}\n${JSON.parse(sessionStorage.getItem("patient")).name.toUpperCase()}\n${community.region_name}, ${community.shortcode == null ? community.name : community.shortcode}\n${result_smr}\n${data.lab_serial_number}\n${result_xpert}\n${data.unique_code}\n\nPlease call 670656041 if you have any questions/Svp appelez 670656041 si vous avez des questions`
             }
             console.log(userObject.message);
             information.push(userObject);
@@ -277,7 +277,7 @@ document.forms['smear_results_form'].onsubmit = function() {
         };
         ajax.open("POST", `${url}/sms/`, true);
         ajax.setRequestHeader("Content-Type", "application/json");
-        ajax.send(JSON.stringify(information)); //TODO: remove this comment
+        // ajax.send(JSON.stringify(information)); //TODO: remove this comment
       }
       var information = {
         type : "get",
