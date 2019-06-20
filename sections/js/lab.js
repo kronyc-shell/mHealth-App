@@ -277,7 +277,7 @@ document.forms['smear_results_form'].onsubmit = function() {
         };
         ajax.open("POST", `${url}/sms/`, true);
         ajax.setRequestHeader("Content-Type", "application/json");
-        // ajax.send(JSON.stringify(information)); //TODO: remove this comment
+        ajax.send(JSON.stringify(information)); //TODO: remove this comment
       }
       var information = {
         type : "get",
