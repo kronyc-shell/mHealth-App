@@ -312,6 +312,28 @@
             var mtb_grade = document.getElementById("mtb_grade");
             var xpert_result2 = document.getElementById("result_2");
 
+            var result_type;
+            if(
+              (sr.smr_result_1 == "not_done" && sr.smr_result_2 == "not_done")
+              &&
+              (sr.mtb_result == "not_done" && sr.rif_result == "not_done")
+            ) result_type = "invalid";
+            else if(
+              (sr.smr_result_1 == "no_afb_seen" || sr.smr_result_1 == "not_done")
+              &&
+              (sr.smr_result_2 == "no_afb_seen" || sr.smr_result_2 == "not_done")
+              &&
+              (sr.mtb_result != "detected" && sr.mtb_result != "trace")
+              &&
+              (sr.rif_result != "detected" && sr.rif_result != "indeterminate")
+            ) result_type = "negative_results";
+            else {
+              result_type = "positive_results";
+              document.getElementById("started").click();
+              document.getElementById("lost").setAttribute("disabled", "disabled");
+              document.getElementById("improved").setAttribute("disabled", "disabled");
+            }
+
             if(localStorage.getItem("lang") == "en") {
               smr_result1.innerHTML += (sr.smr_result_1)
               smr_result2.innerHTML += (sr.smr_result_2)
