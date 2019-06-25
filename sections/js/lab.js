@@ -212,13 +212,20 @@ document.forms['smear_results_form'].onsubmit = function() {
         }
         else if(data.smr_result_1 == "not_done" || data.smr_result_2 == "not_done") {
           console.log("not_done");
-          result_smr = "AFB, not done";
+          // result_smr = data.smr_result_1 == "no_afb_seen" ? "AFB, not done";
+          if(data.smr_result_1 == "no_afb_seen") {
+            result_smr = "No AFB seen"
+          }
+          else if(data.smr_result_2 == "no_afb_seen") {
+            result_smr = "No AFB seen"
+          }
         }
         else {
           console.log("no_afb_seen");
           result_smr = localStorage.getItem("lang") == "en" ? "No AFB seen" : "Aucun BAAR Vu"
           date_specimen_received = data.smr_date;
         }
+        console.log("SMR result: ", result_smr);
         if(data.mtb_result == "detected") {
           console.log("detected");
           var mtb_grade_fr = {
@@ -278,7 +285,7 @@ document.forms['smear_results_form'].onsubmit = function() {
         };
         ajax.open("POST", `${url}/sms/`, true);
         ajax.setRequestHeader("Content-Type", "application/json");
-        ajax.send(JSON.stringify(information)); //TODO: remove this comment
+        // ajax.send(JSON.stringify(information)); //TODO: remove this comment
       }
       var information = {
         type : "get",
